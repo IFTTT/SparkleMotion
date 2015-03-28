@@ -13,12 +13,23 @@ import java.util.Collections;
 public class JazzHands {
 
     private JazzHandsViewPager mViewPager;
-    private ArrayList<Animation> mAnimations;
+    private JazzHandsAnimationPresenter mPresenter;
 
     private boolean mReversedOrder;
-    private JazzHandsAnimationPresenter mPresenter;
+
+    /**
+     * Animations to be used for a set of target Views. Will be cleared after calling {@link #on(int...)}.
+     */
+    private ArrayList<Animation> mAnimations;
+
     private int mBroughtToFrontChildIndex = -1;
 
+    /**
+     * Private constructor for initializing the instance with ViewPager {@link JazzHandsViewPager}
+     * and {@link JazzHandsAnimationPresenter} reference.
+     *
+     * @param viewPager JazzHandsViewPager object.
+     */
     private JazzHands(JazzHandsViewPager viewPager) {
         mViewPager = viewPager;
         if (mViewPager.hasPresenter()) {
@@ -27,7 +38,7 @@ public class JazzHands {
             mPresenter = new JazzHandsAnimationPresenter();
         }
 
-        mAnimations = new ArrayList<>();
+        mAnimations = new ArrayList<Animation>();
     }
 
     public static JazzHands with(JazzHandsViewPager viewPager) {
@@ -75,10 +86,6 @@ public class JazzHands {
      * @param ids Target View ids.
      */
     public void on(int... ids) {
-        if (mViewPager.getJazzHandsAnimationPresenter() != mPresenter) {
-            mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
-        }
-
         if (mBroughtToFrontChildIndex >= 0) {
             // Bring child to front if it is set.
             mViewPager.bringChildViewToFront(mBroughtToFrontChildIndex);
@@ -92,6 +99,8 @@ public class JazzHands {
         }
 
         mAnimations.clear();
+
+        mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
     }
 
 }

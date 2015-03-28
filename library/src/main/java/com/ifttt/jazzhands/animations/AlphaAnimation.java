@@ -1,6 +1,5 @@
 package com.ifttt.jazzhands.animations;
 
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -24,7 +23,6 @@ public class AlphaAnimation extends Animation {
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
-        Log.d(getClass().getSimpleName(), fraction + " ");
         v.setAlpha(mFromAlpha + fraction * (mToAlpha - mFromAlpha));
     }
 }

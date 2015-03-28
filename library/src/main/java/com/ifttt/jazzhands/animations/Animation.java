@@ -110,9 +110,14 @@ public abstract class Animation {
     }
 
     /**
-     * Animation callback for
+     * Animation callback interface for external use.
      */
     public interface AnimationListener {
+        /**
+         * Called when the animation is running.
+         *
+         * @param fraction Current fraction of the animation.
+         */
         void onAnimationRunning(float fraction);
     }
 
