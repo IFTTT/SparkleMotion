@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/second_page_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="128dp"
+        android:src="@drawable/instagram_to_dropbox"
+        android:layout_centerInParent="true"/>
+
+    <ImageView
+        android:id="@+id/recipe_maker"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:src="@drawable/recipe_marker"
+        android:layout_above="@id/second_page_icon"/>
+
+    <ImageView
+        android:id="@+id/recipe_description"
+        android:layout_width="wrap_content"
+        android:layout_height="128dp"
+        android:src="@drawable/recipe_description"
+        android:layout_marginTop="48dp"
+        android:layout_alignTop="@id/second_page_icon"/>
+
+</RelativeLayout>

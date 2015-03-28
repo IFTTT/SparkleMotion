@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/four_page_text1"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:src="@drawable/icon_location"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"/>
+
+        <ImageView
+            android:id="@+id/four_page_text2"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:src="@drawable/icon_photos"
+            android:padding="8dp"/>
+
+        <ImageView
+            android:id="@+id/four_page_text3"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:src="@drawable/icon_contacts"
+            android:layout_marginTop="32dp"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/bottom_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bottom_phone"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

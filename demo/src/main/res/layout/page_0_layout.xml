@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/icon_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginLeft="64dp"
+            android:layout_marginTop="16dp"/>
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="300dp"
+            android:src="@drawable/phone"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/icon_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_below="@id/icon_1"
+            android:layout_toRightOf="@id/icon_1"
+            android:layout_margin="32dp"
+            android:layout_alignParentRight="true"/>
+
+        <ImageView
+            android:id="@+id/icon_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_below="@id/icon_2"
+            android:layout_alignLeft="@id/icon_1"
+            android:layout_margin="32dp"/>
+
+        <ImageView
+            android:id="@+id/icon_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_toRightOf="@id/icon_1"
+            android:layout_below="@id/icon_2"
+            android:layout_margin="48dp"
+
+            android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+</FrameLayout>
