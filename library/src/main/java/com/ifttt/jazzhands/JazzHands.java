@@ -86,6 +86,8 @@ public class JazzHands {
      * @param ids Target View ids.
      */
     public void on(int... ids) {
+        mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
+
         if (mBroughtToFrontChildIndex >= 0) {
             // Bring child to front if it is set.
             mViewPager.bringChildViewToFront(mBroughtToFrontChildIndex);
@@ -100,7 +102,6 @@ public class JazzHands {
 
         mAnimations.clear();
 
-        mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
     }
 
 }
