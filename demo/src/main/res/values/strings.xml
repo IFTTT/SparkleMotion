@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="label_application">Sparkle Motion</string>
+    <string name="label_activity">@string/label_application</string>
+    <string name="action_settings">Settings</string>
+    <string name="alpha_animation">Alpha Animation</string>
+    <string name="scale_animation">Scale Animation</string>
+    <string name="rotation_animation">Rotation Animation</string>
+    <string name="path_and_translation_animation">Path and Translation Animation</string>
+    <string name="parallax_animation">Parallax Animation</string>
+    <string name="zoom_out_animation">Zoom Out Animation</string>
+    <string name="easy_view_pager_animations">Easy ViewPager animations</string>
+    <string name="free_and_open_source">Free and open source</string>
+    <string name="more_examples">More Sparkle Motion Examples:</string>
+
+</resources>

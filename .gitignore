@@ -1,0 +1,12 @@
+# IntelliJ IDEA
+.idea
+*.iml
+
+# Gradle
+.gradle
+gradlew.bat
+build
+local.properties
+
+# Mac OS
+.DS_Store

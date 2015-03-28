@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/testing_btn_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/more_examples"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        style="@style/SparkleButtonStyle"
+        android:id="@+id/alpha_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alpha_animation"/>
+
+    <Button
+        style="@style/SparkleButtonStyle"
+        android:id="@+id/scale_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/scale_animation"/>
+
+    <Button
+        style="@style/SparkleButtonStyle"
+        android:id="@+id/rotation_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rotation_animation"/>
+
+    <Button
+        style="@style/SparkleButtonStyle"
+        android:id="@+id/parallax_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/parallax_animation"/>
+
+    <Button
+        style="@style/SparkleButtonStyle"
+        android:id="@+id/zoom_out_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/zoom_out_animation"/>
+</LinearLayout>

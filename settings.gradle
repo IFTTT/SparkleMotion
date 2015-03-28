@@ -1,0 +1,3 @@
+rootProject.name = 'ifttt-sparklemotion'
+
+include ':demo', ':sparklemotion'
