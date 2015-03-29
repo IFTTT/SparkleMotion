@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,9 @@ import com.ifttt.jazzhands.animations.ScaleAnimation;
 import com.ifttt.jazzhands.animations.TranslationAnimation;
 
 /**
- * Comprehensive demo.
+ * Comprehensive demo for {@link PathAnimation} and {@link TranslationAnimation}.
  */
-public class StoryViewPagerActivity extends Activity {
+public class PathAndTranslationViewPagerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,15 @@ public class StoryViewPagerActivity extends Activity {
         buildPage0Animations(jazzHands);
         buildPage1Animations(jazzHands);
         buildPage2Animations(jazzHands);
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            viewPager.setPageTransformer(new ViewPager.PageTransformer() {
+                @Override
+                public void transformPage(View page, float position) {
+                    page.setTranslationX(1);
+                }
+            });
+        }
     }
 
 
@@ -97,17 +108,15 @@ public class StoryViewPagerActivity extends Activity {
                 case 1:
                     return mLayoutInflater.inflate(R.layout.story_page_1, container, false);
                 case 2:
-                case 3:
                     return mLayoutInflater.inflate(R.layout.story_page_2, container, false);
-
+                default:
+                    return null;
             }
-
-            return null;
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
     }
 }

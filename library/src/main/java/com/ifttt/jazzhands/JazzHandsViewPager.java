@@ -97,6 +97,16 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
                 Math.max(mJazzHandsAnimationPresenter.getMaxCrossPageAnimationPages(), MIM_OFFSCREEN_LIMIT) : limit);
     }
 
+    /**
+     * Convenient method to set {@link android.support.v4.view.ViewPager.PageTransformer} with pre-defined
+     * {@link #mReverseDrawingOrder}.
+     *
+     * @param transformer PageTransformer to use in this ViewPager.
+     */
+    public void setPageTransformer(PageTransformer transformer) {
+        this.setPageTransformer(mReverseDrawingOrder, transformer);
+    }
+
     @Override
     public void setPageTransformer(boolean reverseDrawingOrder, final PageTransformer transformer) {
         mReverseDrawingOrder = reverseDrawingOrder;

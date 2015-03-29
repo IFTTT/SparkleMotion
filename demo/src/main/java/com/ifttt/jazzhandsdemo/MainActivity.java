@@ -15,14 +15,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.view_pager_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, ViewPagerActivity.class);
-                startActivity(i);
-            }
-        });
-
         findViewById(R.id.alpha_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,33 +39,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        findViewById(R.id.path_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, PathViewPagerActivity.class);
-                startActivity(i);
-            }
-        });
-
         findViewById(R.id.story_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, StoryViewPagerActivity.class);
+                Intent i = new Intent(MainActivity.this, PathAndTranslationViewPagerActivity.class);
                 startActivity(i);
             }
         });
-
-        final View container = findViewById(R.id.testing_btn_container);
-        final View btn = findViewById(R.id.testing_btn);
-
-        container
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        container.animate().translationX(1000).setDuration(2000).start();
-                        btn.animate().translationX(-1000).setDuration(2000).start();
-                    }
-                });
     }
 
 

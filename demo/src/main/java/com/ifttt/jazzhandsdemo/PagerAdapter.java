@@ -12,26 +12,19 @@ public class PagerAdapter extends ViewPagerAdapter {
     protected View getView(int position, ViewGroup container) {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
 
-        ViewGroup v;
-        if (position == 0) {
-            v = (ViewGroup) inflater.inflate(R.layout.page_0_layout, container, false);
-        } else if (position == 1) {
-            v = (ViewGroup) inflater.inflate(R.layout.page_1_layout, container, false);
-        } else if (position == 2) {
-            v = (ViewGroup) inflater.inflate(R.layout.page_2_layout, container, false);
-        } else if (position == 3) {
-            v = (ViewGroup) inflater.inflate(R.layout.page_3_layout, container, false);
-        } else {
-            v = (ViewGroup) inflater.inflate(R.layout.page_layout, container, false);
+        switch(position) {
+            case 0:
+                return inflater.inflate(R.layout.sunrise_page, container, false);
+            case 1:
+                return inflater.inflate(R.layout.sunset_page, container, false);
+            default:
+                return null;
         }
-
-        v.setTag(position);
-        return v;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return 2;
     }
 }
 

@@ -9,7 +9,7 @@ import com.ifttt.jazzhands.JazzHandsViewPager;
 import com.ifttt.jazzhands.animations.AlphaAnimation;
 
 /**
- * Created by zhelu on 3/27/15.
+ * Demo Activity for {@link AlphaAnimation}.
  */
 public class AlphaViewPagerActivity extends Activity {
 
@@ -22,12 +22,12 @@ public class AlphaViewPagerActivity extends Activity {
         JazzHandsViewPager viewPager = (JazzHandsViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new PagerAdapter());
 
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 2, 1f, 0f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1, 1f, 0f);
         alphaAnimation.setInterpolator(new AccelerateInterpolator());
 
         JazzHands.with(viewPager)
                 .animate(alphaAnimation)
-                .on(R.id.second_page_icon);
+                .on(R.id.sunrise_img, R.id.sunset_img);
     }
 
 
