@@ -9,7 +9,7 @@ import com.ifttt.jazzhands.JazzHandsViewPager;
 import com.ifttt.jazzhands.animations.RotationAnimation;
 
 /**
- * Created by zhelu on 3/27/15.
+ * Demo Activity for {@link RotationAnimation}.
  */
 public class RotationViewPagerActivity extends Activity {
 
@@ -23,11 +23,11 @@ public class RotationViewPagerActivity extends Activity {
         viewPager.setAdapter(new PagerAdapter());
 
         RotationAnimation rotationAnimation =
-                new RotationAnimation(1, 2, 360);
+                new RotationAnimation(0, 1, 360);
         rotationAnimation.setInterpolator(new AccelerateInterpolator());
 
         JazzHands.with(viewPager)
                 .animate(rotationAnimation)
-                .on(R.id.second_page_icon);
+                .on(R.id.sunrise_img, R.id.sunset_img);
     }
 }

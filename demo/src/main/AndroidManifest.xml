@@ -12,13 +12,9 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="com.ifttt.jazzhandsdemo.ViewPagerActivity"/>
 
         <activity android:name=".AlphaViewPagerActivity" />
 
@@ -26,9 +22,7 @@
 
         <activity android:name=".RotationViewPagerActivity" />
 
-        <activity android:name=".PathViewPagerActivity" />
-
-        <activity android:name=".StoryViewPagerActivity" />
+        <activity android:name=".PathAndTranslationViewPagerActivity" />
 
     </application>
 
