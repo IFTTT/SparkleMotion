@@ -43,6 +43,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         buildPage2Animations(jazzHands);
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            //TODO: Fix pre-JB_MR1 transformer.
             viewPager.setPageTransformer(new ViewPager.PageTransformer() {
                 @Override
                 public void transformPage(View page, float position) {

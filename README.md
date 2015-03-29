@@ -11,6 +11,6 @@ A ViewPager animator that animates Views within pages.
 * Parallax translation effect
 
 ## TODO
-* Rewrite some of the demo, removed IF intro related stuff.
+* Fix pre-Jelly Bean MR2 animation issue when parent view is off screen.
 * Find a better interpretation of the methods in `Animation` and `JazzHandsViewPager`.
 * Find a better data structure for storing animations in `JazzHandsAnimationPresenter`.
