@@ -103,7 +103,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
 
         @Override
         protected View getView(int position, ViewGroup container) {
-            switch(position) {
+            switch (position) {
                 case 0:
                     return mLayoutInflater.inflate(R.layout.story_page_0, container, false);
                 case 1:
