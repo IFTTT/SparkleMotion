@@ -11,7 +11,7 @@ A ViewPager animator that animates Views within pages.
 * Parallax translation effect
 
 ### Limitation
-On Android 4.2 and below (`SDK_IND` < 18), if the parent view is moved off-screen, the child views will not be drawn even if they are still on screen by changing the translation properties. Therefore, cross page `PathAnimation` and `TranslationAnimation` will not work.
+On Android 4.2 and below (`SDK_INT` < 18), if the parent view is moved off-screen, the child views will not be drawn even if they are still on screen by changing the translation properties. Therefore, cross page `PathAnimation` and `TranslationAnimation` will not work.
 
 A workaround (very hacky) is to try to keep the parent view on screen by a very small amount (e.g. 1px). To do that, you can add a `PageTransformer` to `JazzHandsViewPager`:
 
