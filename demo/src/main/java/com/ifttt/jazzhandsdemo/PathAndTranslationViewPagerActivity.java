@@ -6,9 +6,7 @@ import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,16 +39,6 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         buildPage0Animations(jazzHands);
         buildPage1Animations(jazzHands);
         buildPage2Animations(jazzHands);
-
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            //TODO: Fix pre-JB_MR1 transformer.
-            viewPager.setPageTransformer(new ViewPager.PageTransformer() {
-                @Override
-                public void transformPage(View page, float position) {
-                    page.setTranslationX(1);
-                }
-            });
-        }
     }
 
 
@@ -89,7 +77,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
 
         RotationAnimation rotationAnimation = new RotationAnimation(1, 2, 360);
 
-        PathAnimation pathAnimation = new PathAnimation(1, 2, true, droid0Path);
+        PathAnimation pathAnimation = new PathAnimation(1, 1, true, droid0Path);
         jazzHands.animate(pathAnimation, rotationAnimation).on(R.id.page_0_droid);
     }
 
