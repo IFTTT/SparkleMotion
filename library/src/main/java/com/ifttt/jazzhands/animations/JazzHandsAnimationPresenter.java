@@ -54,16 +54,19 @@ public class JazzHandsAnimationPresenter {
     }
 
     public void presentAnimations(ViewGroup parent, float fraction, float xOffset) {
-        for (Map.Entry<Integer, ArrayList<Animation>> infos : mAnimations.entrySet()) {
-            for (Animation info : infos.getValue()) {
-                final View viewToMove = parent.findViewById(infos.getKey());
-                if (info == null
+        for (Map.Entry<Integer, ArrayList<Animation>> animations : mAnimations.entrySet()) {
+            for (Animation animation : animations.getValue()) {
+                final View viewToMove = parent.findViewById(animations.getKey());
+                if (animation == null
                         || viewToMove == null
-                        || !info.shouldAnimate(mCurrentPage)) {
+                        || !animation.shouldAnimate(mCurrentPage)) {
                     continue;
                 }
 
-                info.animate(viewToMove, fraction, xOffset);
+                // Pass ViewPager's ID to animation for setClipChildren and setClipToPadding
+                // in child Views.
+                animation.setViewPagerId(parent.getId());
+                animation.animate(viewToMove, fraction, xOffset);
             }
         }
     }

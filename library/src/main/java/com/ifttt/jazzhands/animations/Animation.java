@@ -1,6 +1,7 @@
 package com.ifttt.jazzhands.animations;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
 /**
@@ -10,7 +11,10 @@ import android.view.animation.Interpolator;
  */
 public abstract class Animation {
 
-    public static final String PAGE_ROOT_FLAG = "JazzHands_PageRoot";
+    /**
+     * Flag used to indicate that this animation should be run for every page.
+     */
+    public static final int ALL_PAGES = -1;
 
     /**
      * A boolean flag indicating whether this animation is relative to the parent page. If so, the animated
@@ -33,6 +37,8 @@ public abstract class Animation {
 
     private AnimationListener mAnimationListener;
 
+    private int mViewPagerId;
+
     /**
      * Base constructor of the class, accepting common information about the animation to this instance.
      *
@@ -47,6 +53,10 @@ public abstract class Animation {
         this.pageEnd = end;
 
         fractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
+    }
+
+    public void setViewPagerId(int id) {
+        mViewPagerId = id;
     }
 
     public void setInterpolator(Interpolator interpolator) {
@@ -79,6 +89,29 @@ public abstract class Animation {
             mAnimationListener.onAnimationRunning(fraction);
         }
 
+        ViewGroup parent = (ViewGroup) v.getParent();
+        if (absolute) {
+            // If the animation should be run based on the screen, set the parent and ancestors to not clip to
+            // padding or clip children.
+            while (parent != null
+                    && parent.getId() != mViewPagerId) {
+                parent.setClipToPadding(false);
+                parent.setClipChildren(false);
+
+                try {
+                    parent = (ViewGroup) parent.getParent();
+                } catch (ClassCastException e) {
+                    parent = null;
+                }
+            }
+
+            if (parent != null) {
+                // Also set ViewPager's clip children and padding.
+                parent.setClipToPadding(false);
+                parent.setClipChildren(false);
+            }
+        }
+
         onAnimate(v, fraction, offset);
     }
 
@@ -101,7 +134,7 @@ public abstract class Animation {
      * @return True if the animation should run, false otherwise.
      */
     protected boolean shouldAnimate(int currentPage) {
-        return pageStart <= currentPage
+        return (pageStart == pageEnd && pageStart == Animation.ALL_PAGES) || pageStart <= currentPage
                 && pageEnd >= currentPage;
     }
 
