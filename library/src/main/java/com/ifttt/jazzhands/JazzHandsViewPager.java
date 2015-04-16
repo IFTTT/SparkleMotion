@@ -122,7 +122,7 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
                     float offset = pageWidth * -position;
 
                     mJazzHandsAnimationPresenter
-                            .presentAnimations((ViewGroup) page, Math.abs(position), offset);
+                            .presentAnimations((ViewGroup) page, position, offset);
 
                     if (transformer != null) {
                         transformer.transformPage(page, position);

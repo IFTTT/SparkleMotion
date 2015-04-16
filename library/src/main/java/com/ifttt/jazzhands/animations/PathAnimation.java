@@ -23,6 +23,8 @@ public class PathAnimation extends Animation {
             offset = 0;
         }
 
+        fraction = Math.abs(fraction);
+
         float[] coordinates = new float[2];
         mPathMeasure.getPosTan(mPathMeasure.getLength() * fraction, coordinates, null);
         v.setTranslationX(coordinates[0] + offset);

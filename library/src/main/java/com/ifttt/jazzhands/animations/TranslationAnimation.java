@@ -24,6 +24,8 @@ public class TranslationAnimation extends Animation {
             offset = 0;
         }
 
+        fraction = Math.abs(fraction);
+
         v.setTranslationX(fraction * mTranslationX + offset);
         v.setTranslationY(fraction * mTranslationY);
     }

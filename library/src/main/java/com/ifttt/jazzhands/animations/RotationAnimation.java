@@ -34,6 +34,8 @@ public class RotationAnimation extends Animation {
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
+        fraction = Math.abs(fraction);
+
         if (mRotationX > 0) {
             v.setRotationX(fraction * mRotationX);
         }

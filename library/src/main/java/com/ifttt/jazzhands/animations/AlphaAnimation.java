@@ -23,6 +23,7 @@ public class AlphaAnimation extends Animation {
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
+        fraction = Math.abs(fraction);
         v.setAlpha(mFromAlpha + fraction * (mToAlpha - mFromAlpha));
     }
 }
