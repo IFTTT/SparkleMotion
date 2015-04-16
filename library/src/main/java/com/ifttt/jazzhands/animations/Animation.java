@@ -11,9 +11,10 @@ import android.view.animation.Interpolator;
  */
 public abstract class Animation {
 
+    /**
+     * Flag used to indicate that this animation should be run for every page.
+     */
     public static final int ALL_PAGES = -1;
-
-    public static final String PAGE_ROOT_FLAG = "JazzHands_PageRoot";
 
     /**
      * A boolean flag indicating whether this animation is relative to the parent page. If so, the animated
