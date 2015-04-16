@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ifttt.jazzhands.animations.Animation;
 import com.ifttt.jazzhands.animations.JazzHandsAnimationPresenter;
 
 /**
@@ -46,10 +45,6 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
 
     public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter director, boolean reverseDrawingOrder) {
         mJazzHandsAnimationPresenter = director;
-
-        setClipChildren(false);
-        setClipToPadding(false);
-
         setPageTransformer(reverseDrawingOrder, null);
     }
 
@@ -117,10 +112,6 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
             PageTransformer jazzHandsTransformer = new PageTransformer() {
                 @Override
                 public void transformPage(View page, float position) {
-                    if (page.getTag(R.id.page_root_flag) == null) {
-                        page.setTag(R.id.page_root_flag, Animation.PAGE_ROOT_FLAG);
-                    }
-
                     if (page.getLayerType() != View.LAYER_TYPE_NONE
                             && mJazzHandsAnimationPresenter.hasCrossPageAnimation()) {
                         // Layer type has to be NONE if we want to play cross page animations.
@@ -148,7 +139,9 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
     @Override
     protected void onPageScrolled(int position, float offset, int offsetPixels) {
         mCurrentScrollPage = position;
-        mJazzHandsAnimationPresenter.setCurrentPage(position);
+        if (mJazzHandsAnimationPresenter != null) {
+            mJazzHandsAnimationPresenter.setCurrentPage(position);
+        }
         super.onPageScrolled(position, offset, offsetPixels);
     }
 
