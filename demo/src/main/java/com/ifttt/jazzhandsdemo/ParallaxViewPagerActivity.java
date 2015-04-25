@@ -9,7 +9,7 @@ import com.ifttt.jazzhands.animations.Animation;
 import com.ifttt.jazzhands.animations.ParallaxAnimation;
 
 /**
- * Created by zhelu on 4/25/15.
+ * Demo activity for {@link ParallaxAnimation}.
  */
 public class ParallaxViewPagerActivity extends Activity {
 
