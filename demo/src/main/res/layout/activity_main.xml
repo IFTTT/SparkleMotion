@@ -42,8 +42,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/parallax_animation"
+            android:id="@+id/parallax_btn"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/path_and_translation_animation"
-            android:id="@+id/story_btn"/>
+            android:id="@+id/path_and_translation_btn"/>
 
     </LinearLayout>
 

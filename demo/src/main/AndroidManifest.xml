@@ -22,6 +22,8 @@
 
         <activity android:name=".RotationViewPagerActivity" />
 
+        <activity android:name=".ParallaxViewPagerActivity" />
+
         <activity android:name=".PathAndTranslationViewPagerActivity" />
 
     </application>
