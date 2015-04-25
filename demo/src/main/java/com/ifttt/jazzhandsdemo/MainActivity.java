@@ -39,7 +39,15 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        findViewById(R.id.story_btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.parallax_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ParallaxViewPagerActivity.class);
+                startActivity(i);
+            }
+        });
+
+        findViewById(R.id.path_and_translation_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, PathAndTranslationViewPagerActivity.class);

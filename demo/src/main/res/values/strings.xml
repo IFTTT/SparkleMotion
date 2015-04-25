@@ -5,4 +5,5 @@
     <string name="scale_animation">Scale Animation</string>
     <string name="rotation_animation">Rotation Animation</string>
     <string name="path_and_translation_animation">Path and Translation Animation</string>
+    <string name="parallax_animation">Parallax Animation</string>
 </resources>
