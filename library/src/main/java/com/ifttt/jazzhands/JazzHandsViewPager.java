@@ -43,8 +43,10 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
         setJazzHandsAnimationPresenter(director, false);
     }
 
-    public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter director, boolean reverseDrawingOrder) {
-        mJazzHandsAnimationPresenter = director;
+    public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter presenter, boolean reverseDrawingOrder) {
+        mJazzHandsAnimationPresenter = presenter;
+        mJazzHandsAnimationPresenter.setViewPagerId(getId());
+
         setPageTransformer(reverseDrawingOrder, null);
     }
 

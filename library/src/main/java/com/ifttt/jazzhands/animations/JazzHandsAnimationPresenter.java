@@ -30,6 +30,8 @@ public class JazzHandsAnimationPresenter {
      */
     private int mMaxPageDistance = -1;
 
+    private int mViewPagerId;
+
     public JazzHandsAnimationPresenter() {
         mAnimations = new HashMap<Integer, ArrayList<Animation>>();
     }
@@ -72,10 +74,14 @@ public class JazzHandsAnimationPresenter {
 
                 // Pass ViewPager's ID to animation for setClipChildren and setClipToPadding
                 // in child Views.
-                animation.setViewPagerId(parent.getId());
+                animation.setViewPagerId(mViewPagerId);
                 animation.animate(viewToAnimate, fraction, xOffset);
             }
         }
+    }
+
+    public void setViewPagerId(int viewPagerId) {
+        mViewPagerId = viewPagerId;
     }
 
     public void setCurrentPage(int currentPage) {
