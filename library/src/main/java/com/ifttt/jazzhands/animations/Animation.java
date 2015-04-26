@@ -80,10 +80,13 @@ public abstract class Animation {
             fraction = interpolator.getInterpolation(fraction);
         }
 
-        if (absolute && fraction > pageStart) {
-            fraction -= pageStart;
+        if (absolute && pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
+            if (fraction > pageStart) {
+                fraction -= pageStart;
+            }
+
+            fraction = fraction / fractionAdjustment;
         }
-        fraction = fraction / fractionAdjustment;
 
         if (mAnimationListener != null) {
             mAnimationListener.onAnimationRunning(fraction);

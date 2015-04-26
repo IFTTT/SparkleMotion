@@ -6,6 +6,7 @@ import android.view.animation.AccelerateInterpolator;
 
 import com.ifttt.jazzhands.JazzHands;
 import com.ifttt.jazzhands.JazzHandsViewPager;
+import com.ifttt.jazzhands.animations.Animation;
 import com.ifttt.jazzhands.animations.RotationAnimation;
 
 /**
@@ -23,11 +24,11 @@ public class RotationViewPagerActivity extends Activity {
         viewPager.setAdapter(new PagerAdapter());
 
         RotationAnimation rotationAnimation =
-                new RotationAnimation(0, 1, 360);
+                new RotationAnimation(Animation.ALL_PAGES, 360);
         rotationAnimation.setInterpolator(new AccelerateInterpolator());
 
         JazzHands.with(viewPager)
                 .animate(rotationAnimation)
-                .on(R.id.sunrise_img, R.id.sunset_img);
+                .on(R.id.pic_img_view);
     }
 }

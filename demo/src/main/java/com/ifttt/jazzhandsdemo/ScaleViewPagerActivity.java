@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.ifttt.jazzhands.JazzHands;
 import com.ifttt.jazzhands.JazzHandsViewPager;
+import com.ifttt.jazzhands.animations.Animation;
 import com.ifttt.jazzhands.animations.ScaleAnimation;
 
 /**
@@ -21,10 +22,10 @@ public class ScaleViewPagerActivity extends Activity {
         JazzHandsViewPager viewPager = (JazzHandsViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new PagerAdapter());
 
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1, 1f, 0.3f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(Animation.ALL_PAGES, 1f, 0.3f);
 
         JazzHands.with(viewPager)
                 .animate(scaleAnimation)
-                .on(R.id.sunrise_img, R.id.sunset_img);
+                .on(R.id.pic_img_view);
     }
 }
