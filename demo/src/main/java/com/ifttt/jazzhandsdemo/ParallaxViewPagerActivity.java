@@ -26,6 +26,6 @@ public class ParallaxViewPagerActivity extends Activity {
 
         JazzHands.with(jazzHandsViewPager)
                 .animate(parallaxAnimation)
-                .on(R.id.sunset_img, R.id.sunrise_img);
+                .on(R.id.pic_img_view);
     }
 }

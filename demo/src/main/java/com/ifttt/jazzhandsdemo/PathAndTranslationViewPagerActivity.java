@@ -93,11 +93,11 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         protected View getView(int position, ViewGroup container) {
             switch (position) {
                 case 0:
-                    return mLayoutInflater.inflate(R.layout.story_page_0, container, false);
+                    return mLayoutInflater.inflate(R.layout.path_translation_page_0, container, false);
                 case 1:
-                    return mLayoutInflater.inflate(R.layout.story_page_1, container, false);
+                    return mLayoutInflater.inflate(R.layout.path_translation_page_1, container, false);
                 case 2:
-                    return mLayoutInflater.inflate(R.layout.story_page_2, container, false);
+                    return mLayoutInflater.inflate(R.layout.path_translation_page_2, container, false);
                 default:
                     return null;
             }
