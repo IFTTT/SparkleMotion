@@ -80,7 +80,7 @@ public abstract class Animation {
             fraction = interpolator.getInterpolation(fraction);
         }
 
-        if (absolute) {
+        if (absolute && pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
             if (fraction > pageStart) {
                 fraction -= pageStart;
             }
