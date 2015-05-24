@@ -12,6 +12,10 @@ public class PathAnimation extends Animation {
 
     private PathMeasure mPathMeasure;
 
+    public PathAnimation(int page, boolean absolute, Path path) {
+        this(page, page, absolute, path);
+    }
+
     public PathAnimation(int start, int end, boolean absolute, Path path) {
         super(start, end, absolute);
         mPathMeasure = new PathMeasure(path, false);
