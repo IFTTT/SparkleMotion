@@ -137,8 +137,8 @@ public abstract class Animation {
      * @return True if the animation should run, false otherwise.
      */
     protected boolean shouldAnimate(int currentPage) {
-        return (pageStart == pageEnd && pageStart == Animation.ALL_PAGES) || pageStart <= currentPage
-                && pageEnd >= currentPage;
+        return (pageStart == pageEnd && pageStart == Animation.ALL_PAGES)
+                || pageStart <= currentPage && pageEnd >= currentPage;
     }
 
     public void setAnimationListener(AnimationListener listener) {
