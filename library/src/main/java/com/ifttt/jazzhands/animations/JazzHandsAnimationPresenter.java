@@ -55,7 +55,7 @@ public class JazzHandsAnimationPresenter {
         }
     }
 
-    public void presentAnimations(ViewGroup parent, float fraction, float xOffset) {
+    public void presentAnimations(View parent, float fraction, float xOffset) {
         for (Map.Entry<Integer, ArrayList<Animation>> animations : mAnimations.entrySet()) {
             for (Animation animation : animations.getValue()) {
                 final View viewToAnimate;

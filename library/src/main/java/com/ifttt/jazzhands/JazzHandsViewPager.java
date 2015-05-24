@@ -3,7 +3,6 @@ package com.ifttt.jazzhands;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.ifttt.jazzhands.animations.JazzHandsAnimationPresenter;
 
@@ -124,7 +123,7 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
                     float offset = pageWidth * -position;
 
                     mJazzHandsAnimationPresenter
-                            .presentAnimations((ViewGroup) page, position, offset);
+                            .presentAnimations(page, position, offset);
 
                     if (transformer != null) {
                         transformer.transformPage(page, position);
