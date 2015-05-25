@@ -23,7 +23,7 @@ public class AlphaViewPagerActivity extends Activity {
         JazzHandsViewPager viewPager = (JazzHandsViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new PagerAdapter());
 
-        AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 1f, 0f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 0f, 1f);
         alphaAnimation.setInterpolator(new AccelerateInterpolator());
 
         JazzHands.with(viewPager)

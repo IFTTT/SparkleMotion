@@ -7,23 +7,23 @@ import android.view.View;
  */
 public class AlphaAnimation extends Animation {
 
-    private float mFromAlpha;
-    private float mToAlpha;
+    private float mOutAlpha;
+    private float mInAlpha;
 
-    public AlphaAnimation(int page, float fromAlpha, float toAlpha) {
-        this(page, page, fromAlpha, toAlpha);
+    public AlphaAnimation(int page, float outAlpha, float inAlpha) {
+        this(page, page, outAlpha, inAlpha);
     }
 
-    public AlphaAnimation(int start, int end, float fromAlpha, float toAlpha) {
+    public AlphaAnimation(int start, int end, float outAlpha, float inAlpha) {
         super(start, end, false);
 
-        this.mFromAlpha = fromAlpha;
-        this.mToAlpha = toAlpha;
+        this.mOutAlpha = outAlpha;
+        this.mInAlpha = inAlpha;
     }
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
         fraction = Math.abs(fraction);
-        v.setAlpha(mFromAlpha + fraction * (mToAlpha - mFromAlpha));
+        v.setAlpha(mInAlpha + fraction * (mOutAlpha - mInAlpha));
     }
 }

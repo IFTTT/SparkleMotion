@@ -7,42 +7,42 @@ import android.view.View;
  */
 public class ScaleAnimation extends Animation {
 
-    private float mFromScaleX;
-    private float mFromScaleY;
+    private float mOutScaleX;
+    private float mOutScaleY;
 
-    private float mToScaleX;
-    private float mToScaleY;
+    private float mInScaleX;
+    private float mInScaleY;
 
 
-    public ScaleAnimation(int page, float fromScale, float toScale) {
-        this(page, fromScale, fromScale, toScale, toScale);
+    public ScaleAnimation(int page, float outScale, float inScale) {
+        this(page, outScale, outScale, inScale, inScale);
     }
 
     public ScaleAnimation(int page,
-                          float fromScaleX, float fromScaleY, float toScaleX, float toScaleY) {
-        this(page, page, fromScaleX, fromScaleY, toScaleX, toScaleY);
+                          float outScaleX, float outScaleY, float inScaleX, float inScaleY) {
+        this(page, page, outScaleX, outScaleY, inScaleX, inScaleY);
     }
 
-    public ScaleAnimation(int start, int end, float fromScale, float toScale) {
-        this(start, end, fromScale, fromScale, toScale, toScale);
+    public ScaleAnimation(int start, int end, float outScale, float inScale) {
+        this(start, end, outScale, outScale, inScale, inScale);
     }
 
     public ScaleAnimation(int start, int end,
-                          float fromScaleX, float fromScaleY, float toScaleX, float toScaleY) {
+                          float outScaleX, float outScaleY, float inScaleX, float inScaleY) {
         super(start, end, false);
 
-        this.mFromScaleX = fromScaleX;
-        this.mFromScaleY = fromScaleY;
+        this.mOutScaleX = outScaleX;
+        this.mOutScaleY = outScaleY;
 
-        this.mToScaleX = toScaleX;
-        this.mToScaleY = toScaleY;
+        this.mInScaleX = inScaleX;
+        this.mInScaleY = inScaleY;
     }
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
         fraction = Math.abs(fraction);
 
-        v.setScaleX(mFromScaleX + fraction * (mToScaleX - mFromScaleX));
-        v.setScaleY(mFromScaleY + fraction * (mToScaleY - mFromScaleY));
+        v.setScaleX(mInScaleX + fraction * (mOutScaleX - mInScaleX));
+        v.setScaleY(mInScaleY + fraction * (mOutScaleY - mInScaleY));
     }
 }
