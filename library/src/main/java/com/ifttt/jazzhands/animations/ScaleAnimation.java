@@ -7,11 +7,11 @@ import android.view.View;
  */
 public class ScaleAnimation extends Animation {
 
-    private float mFromScaleX;
-    private float mFromScaleY;
+    private float mOutScaleX;
+    private float mOutScaleY;
 
-    private float mToScaleX;
-    private float mToScaleY;
+    private float mInScaleX;
+    private float mInScaleY;
 
 
     public ScaleAnimation(int page, float outScale, float inScale) {
@@ -31,18 +31,18 @@ public class ScaleAnimation extends Animation {
                           float outScaleX, float outScaleY, float inScaleX, float inScaleY) {
         super(start, end, false);
 
-        this.mFromScaleX = outScaleX;
-        this.mFromScaleY = outScaleY;
+        this.mOutScaleX = outScaleX;
+        this.mOutScaleY = outScaleY;
 
-        this.mToScaleX = inScaleX;
-        this.mToScaleY = inScaleY;
+        this.mInScaleX = inScaleX;
+        this.mInScaleY = inScaleY;
     }
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
         fraction = Math.abs(fraction);
 
-        v.setScaleX(mFromScaleX + fraction * (mToScaleX - mFromScaleX));
-        v.setScaleY(mFromScaleY + fraction * (mToScaleY - mFromScaleY));
+        v.setScaleX(mInScaleX + fraction * (mOutScaleX - mInScaleX));
+        v.setScaleY(mInScaleY + fraction * (mOutScaleY - mInScaleY));
     }
 }
