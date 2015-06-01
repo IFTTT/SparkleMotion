@@ -14,7 +14,7 @@ import com.ifttt.jazzhands.animations.JazzHandsAnimationPresenter;
  */
 public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
 
-    public static final int MIM_OFFSCREEN_LIMIT = 2;
+    public static final int MIN_OFFSCREEN_LIMIT = 2;
 
     /**
      * {@link JazzHandsAnimationPresenter} instance that stores all animations within this ViewPager.
@@ -72,8 +72,10 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
         }
 
         // Set offscreen page limit so that page will not be destroyed if it is offscreen.
-        setOffscreenPageLimit(
-                Math.max(mJazzHandsAnimationPresenter.getMaxCrossPageAnimationPages(), MIM_OFFSCREEN_LIMIT));
+        if (getOffscreenPageLimit() < MIN_OFFSCREEN_LIMIT) {
+            setOffscreenPageLimit(
+                    Math.max(mJazzHandsAnimationPresenter.getMaxCrossPageAnimationPages(), MIN_OFFSCREEN_LIMIT));
+        }
 
         if (!isWithinBoundary(index)) {
             throw new IllegalArgumentException("Invalid index: [" + index + "], exceeding offscreen limit: " + getOffscreenPageLimit());
@@ -89,8 +91,14 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
     @Override
     public void setOffscreenPageLimit(int limit) {
         // If we need to bring a child view to front, a minimum of 2 offscreen pages is required.
-        super.setOffscreenPageLimit(mViewIndexBroughtToFront >= 0 ?
-                Math.max(mJazzHandsAnimationPresenter.getMaxCrossPageAnimationPages(), MIM_OFFSCREEN_LIMIT) : limit);
+        if (mJazzHandsAnimationPresenter == null || mViewIndexBroughtToFront < 0) {
+            super.setOffscreenPageLimit(limit);
+            return;
+        }
+
+        int minOffscreenLimit = Math.max(mJazzHandsAnimationPresenter.getMaxCrossPageAnimationPages(),
+                MIN_OFFSCREEN_LIMIT);
+        super.setOffscreenPageLimit(Math.max(minOffscreenLimit, limit));
     }
 
     /**
