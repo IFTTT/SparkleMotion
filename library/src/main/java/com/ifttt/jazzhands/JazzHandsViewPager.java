@@ -91,15 +91,14 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
     @Override
     public void setOffscreenPageLimit(int limit) {
         // If we need to bring a child view to front, a minimum of 2 offscreen pages is required.
-        if (mJazzHandsAnimationPresenter == null) {
+        if (mJazzHandsAnimationPresenter == null || mViewIndexBroughtToFront < 0) {
             super.setOffscreenPageLimit(limit);
             return;
         }
 
         int minOffscreenLimit = Math.max(mJazzHandsAnimationPresenter.getMaxCrossPageAnimationPages(),
                 MIN_OFFSCREEN_LIMIT);
-        super.setOffscreenPageLimit(mViewIndexBroughtToFront >= 0 ?
-                Math.max(minOffscreenLimit, limit) : limit);
+        super.setOffscreenPageLimit(Math.max(minOffscreenLimit, limit));
     }
 
     /**
