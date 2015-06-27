@@ -1,14 +1,15 @@
 package com.ifttt.jazzhands;
 
+import com.ifttt.jazzhands.animations.JazzHandsAnimationPresenter;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.ifttt.jazzhands.animations.JazzHandsAnimationPresenter;
-
 /**
  * Extending {@link android.support.v4.view.ViewPager} to reference a {@link JazzHandsAnimationPresenter}
- * and run animations based on its scroll X. This subclass contains a default {@link android.support.v4.view.ViewPager.PageTransformer}
+ * and run animations based on its scroll X. This subclass contains a default {@link
+ * android.support.v4.view.ViewPager.PageTransformer}
  * that passes the page View and its position to the JazzHandsAnimationPresenter, which will then run all
  * animations stored.
  */
@@ -24,7 +25,8 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
     private boolean mReverseDrawingOrder;
 
     /**
-     * An index of the View to be brought to front regardless the drawing order. Used by {@link #bringChildViewToFront(int)}.
+     * An index of the View to be brought to front regardless the drawing order. Used by {@link
+     * #bringChildViewToFront(int)}.
      */
     private int mViewIndexBroughtToFront = -1;
 
@@ -78,7 +80,8 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
         }
 
         if (!isWithinBoundary(index)) {
-            throw new IllegalArgumentException("Invalid index: [" + index + "], exceeding offscreen limit: " + getOffscreenPageLimit());
+            throw new IllegalArgumentException(
+                    "Invalid index: [" + index + "], exceeding offscreen limit: " + getOffscreenPageLimit());
         }
 
         mViewIndexBroughtToFront = index;
@@ -96,7 +99,8 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
             return;
         }
 
-        int minOffscreenLimit = Math.max(mJazzHandsAnimationPresenter.getMaxCrossPageAnimationPages(),
+        int minOffscreenLimit = Math.max(
+                mJazzHandsAnimationPresenter.getMaxCrossPageAnimationPages(),
                 MIN_OFFSCREEN_LIMIT);
         super.setOffscreenPageLimit(Math.max(minOffscreenLimit, limit));
     }
@@ -168,7 +172,8 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
 
 
     /**
-     * Get the re-ordered child drawing order for a certain iteration. This method is used if {@link #bringChildViewToFront(int)}
+     * Get the re-ordered child drawing order for a certain iteration. This method is used if {@link
+     * #bringChildViewToFront(int)}
      * is used and a View is to be brought to front.
      *
      * @param childCount Child count of ViewPager.

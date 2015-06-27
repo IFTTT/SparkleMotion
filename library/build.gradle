@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'checkstyle'
 
 android {
     compileSdkVersion 22
@@ -21,3 +22,14 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
 }
+
+task checkstyle(type: Checkstyle) {
+    configFile file("${project.rootDir}/checkstyle.xml")
+    source 'src/main/java/com/ifttt/jazzhands'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/IntroCustomViewPager.java'
+
+    classpath = files()
+}
+

@@ -79,8 +79,10 @@ public class JazzHands {
 
     /**
      * Assign target Views to JazzHands, which will assign the animations stored in {@link #animate(Animation...)}
-     * to {@link JazzHandsAnimationPresenter}. This is the last method to call in order to build a functional JazzHandsViewPager.
-     * Once this is called, a {@link JazzHandsAnimationPresenter} will be associated to the ViewPager, and the animations
+     * to {@link JazzHandsAnimationPresenter}. This is the last method to call in order to build a functional
+     * JazzHandsViewPager.
+     * Once this is called, a {@link JazzHandsAnimationPresenter} will be associated to the ViewPager, and the
+     * animations
      * will be run when scrolling.
      *
      * @param ids Target View ids.

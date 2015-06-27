@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JazzHands animation driver, used to store all {@link Animation} assigned to it. {@link com.ifttt.jazzhands.JazzHandsViewPager}
- * then uses {@link #presentAnimations(View, float, float)} with a {@link android.support.v4.view.ViewPager.PageTransformer} to run
+ * JazzHands animation driver, used to store all {@link Animation} assigned to it. {@link
+ * com.ifttt.jazzhands.JazzHandsViewPager}
+ * then uses {@link #presentAnimations(View, float, float)} with a
+ * {@link android.support.v4.view.ViewPager.PageTransformer} to run
  * any animation that should be run at any given circumstance (e.g. current page).
  */
 public class JazzHandsAnimationPresenter {
