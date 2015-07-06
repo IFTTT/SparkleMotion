@@ -22,16 +22,16 @@ public abstract class Animation {
      * will be animated based on the screen and will ignore the moving parent page. This means that the view
      * can potentially be animated across different pages.
      */
-    protected boolean absolute;
+    private boolean mAbsolute;
 
-    protected int pageStart;
-    protected int pageEnd;
+    int pageStart;
+    int pageEnd;
 
     /**
      * Adjustment to page fraction taking animating pages into account. If an animation is going to run
      * cross multiple pages, the progress will be evenly distributed to the pages.
      */
-    protected float fractionAdjustment;
+    private float fractionAdjustment;
 
     private Interpolator mInterpolator;
 
@@ -48,7 +48,7 @@ public abstract class Animation {
      */
     public Animation(
             int start, int end, boolean absolute) {
-        this.absolute = absolute;
+        this.mAbsolute = absolute;
         this.pageStart = start;
         this.pageEnd = end;
 
@@ -80,7 +80,7 @@ public abstract class Animation {
             fraction = interpolator.getInterpolation(fraction);
         }
 
-        if (absolute && pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
+        if (mAbsolute && pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
             if (fraction > pageStart) {
                 fraction -= pageStart;
             }
@@ -93,7 +93,7 @@ public abstract class Animation {
         }
 
         ViewGroup parent = (ViewGroup) v.getParent();
-        if (absolute) {
+        if (mAbsolute) {
             // If the animation should be run based on the screen, set the parent and ancestors to not clip to
             // padding or clip children.
             while (parent != null
@@ -113,6 +113,9 @@ public abstract class Animation {
                 parent.setClipToPadding(false);
                 parent.setClipChildren(false);
             }
+        } else {
+            // No offset if the animation is not absolute.
+            offset = 0;
         }
 
         onAnimate(v, fraction, offset);

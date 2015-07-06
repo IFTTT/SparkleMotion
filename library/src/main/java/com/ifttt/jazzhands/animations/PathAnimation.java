@@ -23,10 +23,6 @@ public class PathAnimation extends Animation {
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
-        if (!absolute) {
-            offset = 0;
-        }
-
         fraction = Math.abs(fraction);
 
         float[] coordinates = new float[2];
