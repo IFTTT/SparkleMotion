@@ -30,6 +30,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         setContentView(R.layout.view_pager_layout);
 
         JazzHandsViewPager viewPager = (JazzHandsViewPager) findViewById(R.id.view_pager);
+        viewPager.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
         viewPager.setOffscreenPageLimit(4);
         viewPager.setPageMargin(5);
         viewPager.setPageMarginDrawable(new ColorDrawable(Color.BLACK));
