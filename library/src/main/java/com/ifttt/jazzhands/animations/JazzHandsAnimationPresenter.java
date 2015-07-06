@@ -1,10 +1,9 @@
 package com.ifttt.jazzhands.animations;
 
+import android.support.v4.util.SimpleArrayMap;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * JazzHands animation driver, used to store all {@link Animation} assigned to it. {@link
@@ -22,7 +21,7 @@ public class JazzHandsAnimationPresenter {
     /**
      * A HashMap that saves all animations with the target View's ID as key.
      */
-    private HashMap<Integer, ArrayList<Animation>> mAnimations;
+    private SimpleArrayMap<Integer, ArrayList<Animation>> mAnimations;
 
     /**
      * Used only for cross page animation. Stores the largest pages that the animations in
@@ -34,7 +33,7 @@ public class JazzHandsAnimationPresenter {
     private int mViewPagerId;
 
     public JazzHandsAnimationPresenter() {
-        mAnimations = new HashMap<Integer, ArrayList<Animation>>();
+        mAnimations = new SimpleArrayMap<Integer, ArrayList<Animation>>();
     }
 
     public void addAnimation(int id, Animation... animations) {
@@ -57,14 +56,21 @@ public class JazzHandsAnimationPresenter {
     }
 
     public void presentAnimations(View parent, float fraction, float xOffset) {
-        for (Map.Entry<Integer, ArrayList<Animation>> animations : mAnimations.entrySet()) {
-            for (Animation animation : animations.getValue()) {
+        int animMapSize = mAnimations.size();
+        for (int i = 0 ; i < animMapSize ; i++) {
+            int key = mAnimations.keyAt(i);
+            ArrayList<Animation> animations = mAnimations.get(key);
+
+            int animListSize = animations.size();
+            for (int j = 0 ; j < animListSize ; j++) {
+                Animation animation = animations.get(j);
+
                 final View viewToAnimate;
 
-                if (animations.getKey() == parent.getId()) {
+                if (key == parent.getId()) {
                     viewToAnimate = parent;
                 } else {
-                    viewToAnimate = parent.findViewById(animations.getKey());
+                    viewToAnimate = parent.findViewById(key);
                 }
 
                 if (animation == null
