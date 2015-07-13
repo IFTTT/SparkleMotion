@@ -57,12 +57,12 @@ public class JazzHandsAnimationPresenter {
 
     public void presentAnimations(View parent, float fraction, float xOffset) {
         int animMapSize = mAnimations.size();
-        for (int i = 0 ; i < animMapSize ; i++) {
+        for (int i = 0; i < animMapSize; i++) {
             int key = mAnimations.keyAt(i);
             ArrayList<Animation> animations = mAnimations.get(key);
 
             int animListSize = animations.size();
-            for (int j = 0 ; j < animListSize ; j++) {
+            for (int j = 0; j < animListSize; j++) {
                 Animation animation = animations.get(j);
 
                 final View viewToAnimate;
