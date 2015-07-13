@@ -5,6 +5,7 @@ import com.ifttt.jazzhands.animations.JazzHandsAnimationPresenter;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Extending {@link android.support.v4.view.ViewPager} to reference a {@link JazzHandsAnimationPresenter}
@@ -125,12 +126,6 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
             PageTransformer jazzHandsTransformer = new PageTransformer() {
                 @Override
                 public void transformPage(View page, float position) {
-                    if (page.getLayerType() != View.LAYER_TYPE_NONE
-                            && mJazzHandsAnimationPresenter.hasCrossPageAnimation()) {
-                        // Layer type has to be NONE if we want to play cross page animations.
-                        page.setLayerType(View.LAYER_TYPE_NONE, null);
-                    }
-
                     int pageWidth = page.getWidth();
                     float offset = pageWidth * -position;
 
@@ -155,6 +150,7 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
         if (mJazzHandsAnimationPresenter != null) {
             mJazzHandsAnimationPresenter.setCurrentPage(position);
         }
+
         super.onPageScrolled(position, offset, offsetPixels);
     }
 

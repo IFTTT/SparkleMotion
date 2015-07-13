@@ -3,7 +3,9 @@ package com.ifttt.jazzhands.animations;
 import android.support.v4.util.SimpleArrayMap;
 import android.view.View;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.WeakHashMap;
 
 /**
  * JazzHands animation driver, used to store all {@link Animation} assigned to it. {@link
@@ -23,6 +25,8 @@ public class JazzHandsAnimationPresenter {
      */
     private SimpleArrayMap<Integer, ArrayList<Animation>> mAnimations;
 
+    private WeakHashMap<View, ArrayList<Animation>> mDecorAnimations;
+
     /**
      * Used only for cross page animation. Stores the largest pages that the animations in
      * this instance should travel. This is used to determine the offscreen page limit of
@@ -33,7 +37,8 @@ public class JazzHandsAnimationPresenter {
     private int mViewPagerId;
 
     public JazzHandsAnimationPresenter() {
-        mAnimations = new SimpleArrayMap<Integer, ArrayList<Animation>>();
+        mAnimations = new SimpleArrayMap<Integer, ArrayList<Animation>>(3);
+        mDecorAnimations = new WeakHashMap<View, ArrayList<Animation>>(3);
     }
 
     public void addAnimation(int id, Animation... animations) {
@@ -41,7 +46,7 @@ public class JazzHandsAnimationPresenter {
             mAnimations.put(id, new ArrayList<Animation>());
         }
 
-        ArrayList<Animation> infos = mAnimations.get(id);
+        ArrayList<Animation> anims = mAnimations.get(id);
         for (Animation animation : animations) {
             if (animation instanceof TranslationAnimation
                     || animation instanceof PathAnimation) {
@@ -51,18 +56,39 @@ public class JazzHandsAnimationPresenter {
                 }
             }
 
-            infos.add(animation);
+            anims.add(animation);
+        }
+    }
+
+    public void addAnimation(View view, Animation... animations) {
+        if (mDecorAnimations.get(view) == null) {
+            mDecorAnimations.put(view, new ArrayList<Animation>());
+        }
+
+        ArrayList<Animation> anims = mAnimations.get(view);
+        if (anims != null) {
+            for (Animation animation : animations) {
+                if (animation instanceof TranslationAnimation
+                        || animation instanceof PathAnimation) {
+                    int distance = animation.pageEnd - animation.pageStart;
+                    if (distance > mMaxPageDistance) {
+                        mMaxPageDistance = distance;
+                    }
+                }
+
+                anims.add(animation);
+            }
         }
     }
 
     public void presentAnimations(View parent, float fraction, float xOffset) {
         int animMapSize = mAnimations.size();
-        for (int i = 0 ; i < animMapSize ; i++) {
+        for (int i = 0; i < animMapSize; i++) {
             int key = mAnimations.keyAt(i);
             ArrayList<Animation> animations = mAnimations.get(key);
 
             int animListSize = animations.size();
-            for (int j = 0 ; j < animListSize ; j++) {
+            for (int j = 0; j < animListSize; j++) {
                 Animation animation = animations.get(j);
 
                 final View viewToAnimate;

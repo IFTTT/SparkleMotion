@@ -92,28 +92,7 @@ public abstract class Animation {
             mAnimationListener.onAnimationRunning(fraction);
         }
 
-        ViewGroup parent = (ViewGroup) v.getParent();
-        if (mAbsolute) {
-            // If the animation should be run based on the screen, set the parent and ancestors to not clip to
-            // padding or clip children.
-            while (parent != null
-                    && parent.getId() != mViewPagerId) {
-                parent.setClipToPadding(false);
-                parent.setClipChildren(false);
-
-                try {
-                    parent = (ViewGroup) parent.getParent();
-                } catch (ClassCastException e) {
-                    parent = null;
-                }
-            }
-
-            if (parent != null) {
-                // Also set ViewPager's clip children and padding.
-                parent.setClipToPadding(false);
-                parent.setClipChildren(false);
-            }
-        } else {
+        if (!mAbsolute) {
             // No offset if the animation is not absolute.
             offset = 0;
         }
