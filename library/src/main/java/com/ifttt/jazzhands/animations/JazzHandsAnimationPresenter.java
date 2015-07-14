@@ -5,6 +5,7 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
@@ -83,6 +84,8 @@ public class JazzHandsAnimationPresenter {
 
     public void presentAnimations(View parent, float fraction, float xOffset) {
         int animMapSize = mAnimations.size();
+
+        // Animate all in-page animations.
         for (int i = 0; i < animMapSize; i++) {
             int key = mAnimations.keyAt(i);
             ArrayList<Animation> animations = mAnimations.get(key);
@@ -102,6 +105,30 @@ public class JazzHandsAnimationPresenter {
                 if (animation == null
                         || viewToAnimate == null
                         || !animation.shouldAnimate(mCurrentPage)) {
+                    continue;
+                }
+
+                // Pass ViewPager's ID to animation for setClipChildren and setClipToPadding
+                // in child Views.
+                animation.setViewPagerId(mViewPagerId);
+                animation.animate(viewToAnimate, fraction, xOffset);
+            }
+        }
+
+        // Animate all decor or other View animations.
+        for (Map.Entry<View, ArrayList<Animation>> entry : mDecorAnimations.entrySet()) {
+            if (entry.getKey() == null) {
+                continue;
+            }
+
+            ArrayList<Animation> animations = entry.getValue();
+            View viewToAnimate = entry.getKey();
+
+            int animListSize = animations.size();
+            for (int j = 0; j < animListSize; j++) {
+                Animation animation = animations.get(j);
+
+                if (animation == null || !animation.shouldAnimate(mCurrentPage)) {
                     continue;
                 }
 

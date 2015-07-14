@@ -3,6 +3,7 @@ package com.ifttt.jazzhands;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by zhelu on 7/12/15.
  */
-public class JazzHandsViewPagerLayout extends FrameLayout {
+public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
 
     private JazzHandsViewPager mJazzHandsViewPager;
 
@@ -42,10 +43,11 @@ public class JazzHandsViewPagerLayout extends FrameLayout {
     }
 
     private void init() {
-
         // Add JazzHandsViewPager.
         mJazzHandsViewPager = new JazzHandsViewPager(getContext());
         addView(mJazzHandsViewPager);
+
+        mJazzHandsViewPager.addOnPageChangeListener(this);
     }
 
     public JazzHandsViewPager getViewPager() {
@@ -62,6 +64,37 @@ public class JazzHandsViewPagerLayout extends FrameLayout {
         return super.getChildDrawingOrder(childCount, i);
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        if (state == ViewPager.SCROLL_STATE_IDLE) {
+            layoutDecors();
+        }
+    }
+
+    private void layoutDecors() {
+        final int currentPage = mJazzHandsViewPager.getCurrentItem();
+        for (Decor decor : mDecors) {
+            if ((decor.startPage > currentPage || decor.endPage < currentPage)
+                    && decor.isAdded) {
+                decor.isAdded = false;
+                removeView(decor.contentView);
+            } else if (!decor.isAdded) {
+                decor.isAdded = true;
+                addView(decor.contentView);
+            }
+        }
+    }
+
     public static class Decor {
         final View contentView;
 
@@ -70,6 +103,8 @@ public class JazzHandsViewPagerLayout extends FrameLayout {
 
         final int layoutBehind;
         final int layoutAbove;
+
+        boolean isAdded;
 
         public Decor(View contentView, int startPage, int endPage, int layoutBehind, int layoutAbove) {
             this.contentView = contentView;
