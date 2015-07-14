@@ -18,6 +18,8 @@ public class JazzHandsViewPagerLayout extends FrameLayout {
 
     private JazzHandsViewPager mJazzHandsViewPager;
 
+    private ArrayList<Decor> mDecors = new ArrayList<>();
+
     public JazzHandsViewPagerLayout(Context context) {
         super(context);
         init();
@@ -40,6 +42,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout {
     }
 
     private void init() {
+
         // Add JazzHandsViewPager.
         mJazzHandsViewPager = new JazzHandsViewPager(getContext());
         addView(mJazzHandsViewPager);
@@ -49,12 +52,67 @@ public class JazzHandsViewPagerLayout extends FrameLayout {
         return mJazzHandsViewPager;
     }
 
-    public void addDecorViewAnimations(View decorView, Animation... animations) {
-        mJazzHandsViewPager.getJazzHandsAnimationPresenter().addAnimation(decorView, animations);
+    public void addDecorViewAnimations(Decor decor, Animation... animations) {
+        mDecors.add(decor);
+        mJazzHandsViewPager.getJazzHandsAnimationPresenter().addAnimation(decor.contentView, animations);
     }
 
     @Override
     protected int getChildDrawingOrder(int childCount, int i) {
         return super.getChildDrawingOrder(childCount, i);
+    }
+
+    public static class Decor {
+        final View contentView;
+
+        final int startPage;
+        final int endPage;
+
+        final int layoutBehind;
+        final int layoutAbove;
+
+        public Decor(View contentView, int startPage, int endPage, int layoutBehind, int layoutAbove) {
+            this.contentView = contentView;
+            this.startPage = startPage;
+            this.endPage = endPage;
+            this.layoutBehind = layoutBehind;
+            this.layoutAbove = layoutAbove;
+        }
+
+        public static class Builder {
+            private View mContentView;
+
+            private int mStartPage;
+            private int mEndPage;
+
+            private int mLayoutBehind;
+            private int mLayoutAbove;
+
+            public Builder setContentView(View contentView) {
+                mContentView = contentView;
+                return this;
+            }
+
+            public Builder setStartPage(int startPage) {
+                mStartPage = startPage;
+                return this;
+            }
+
+            public Builder setEndPage(int endPage) {
+                mEndPage = endPage;
+                return this;
+            }
+
+            public Builder setLayoutBehind(int layoutBehind) {
+                mLayoutBehind = layoutBehind;
+                return this;
+            }
+
+            public Builder setLayoutAbove(int layoutAbove) {
+                mLayoutAbove = layoutAbove;
+                return this;
+            }
+        }
+
     }
 }
