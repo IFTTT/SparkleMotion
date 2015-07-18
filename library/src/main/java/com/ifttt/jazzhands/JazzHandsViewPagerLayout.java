@@ -1,16 +1,13 @@
 package com.ifttt.jazzhands;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.ifttt.jazzhands.animations.Animation;
-
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by zhelu on 7/12/15.
@@ -36,12 +33,6 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public JazzHandsViewPagerLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void init() {
         // Add JazzHandsViewPager.
         mJazzHandsViewPager = new JazzHandsViewPager(getContext());
@@ -54,9 +45,9 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
         return mJazzHandsViewPager;
     }
 
-    public void addDecorViewAnimations(Decor decor, Animation... animations) {
-        mDecors.add(decor);
-        mJazzHandsViewPager.getJazzHandsAnimationPresenter().addAnimation(decor.contentView, animations);
+    public void addDecors(Decor... decors) {
+        Collections.addAll(mDecors, decors);
+        layoutDecors();
     }
 
     @Override
@@ -66,7 +57,6 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
@@ -77,7 +67,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     @Override
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_IDLE) {
-            layoutDecors();
+//            layoutDecors();
         }
     }
 
@@ -96,10 +86,10 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     }
 
     public static class Decor {
-        final View contentView;
+        public final View contentView;
 
-        final int startPage;
-        final int endPage;
+        public final int startPage;
+        public final int endPage;
 
         final int layoutBehind;
         final int layoutAbove;
@@ -146,6 +136,10 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
             public Builder setLayoutAbove(int layoutAbove) {
                 mLayoutAbove = layoutAbove;
                 return this;
+            }
+
+            public Decor build() {
+                return new Decor(mContentView, mStartPage, mEndPage, mLayoutBehind, mLayoutAbove);
             }
         }
 

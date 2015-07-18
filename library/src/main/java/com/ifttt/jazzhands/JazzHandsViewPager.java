@@ -5,7 +5,6 @@ import com.ifttt.jazzhands.animations.JazzHandsAnimationPresenter;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * Extending {@link android.support.v4.view.ViewPager} to reference a {@link JazzHandsAnimationPresenter}
@@ -47,7 +46,6 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
 
     public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter presenter, boolean reverseDrawingOrder) {
         mJazzHandsAnimationPresenter = presenter;
-        mJazzHandsAnimationPresenter.setViewPagerId(getId());
 
         setPageTransformer(reverseDrawingOrder, null);
     }
@@ -129,8 +127,7 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
                     int pageWidth = page.getWidth();
                     float offset = pageWidth * -position;
 
-                    mJazzHandsAnimationPresenter
-                            .presentAnimations(page, position, offset);
+                    mJazzHandsAnimationPresenter.presentAnimations(page, position, offset);
 
                     if (transformer != null) {
                         transformer.transformPage(page, position);
@@ -149,6 +146,7 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
         mCurrentScrollPage = position;
         if (mJazzHandsAnimationPresenter != null) {
             mJazzHandsAnimationPresenter.setCurrentPage(position);
+            mJazzHandsAnimationPresenter.presentDecorAnimations(position, offset, 0);
         }
 
         super.onPageScrolled(position, offset, offsetPixels);

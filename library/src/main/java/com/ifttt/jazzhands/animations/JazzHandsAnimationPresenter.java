@@ -1,12 +1,11 @@
 package com.ifttt.jazzhands.animations;
 
+import com.ifttt.jazzhands.JazzHandsViewPagerLayout;
+
 import android.support.v4.util.SimpleArrayMap;
 import android.view.View;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  * JazzHands animation driver, used to store all {@link Animation} assigned to it. {@link
@@ -26,7 +25,7 @@ public class JazzHandsAnimationPresenter {
      */
     private SimpleArrayMap<Integer, ArrayList<Animation>> mAnimations;
 
-    private WeakHashMap<View, ArrayList<Animation>> mDecorAnimations;
+    private SimpleArrayMap<JazzHandsViewPagerLayout.Decor, ArrayList<Animation>> mDecorAnimations;
 
     /**
      * Used only for cross page animation. Stores the largest pages that the animations in
@@ -35,11 +34,9 @@ public class JazzHandsAnimationPresenter {
      */
     private int mMaxPageDistance = -1;
 
-    private int mViewPagerId;
-
     public JazzHandsAnimationPresenter() {
         mAnimations = new SimpleArrayMap<Integer, ArrayList<Animation>>(3);
-        mDecorAnimations = new WeakHashMap<View, ArrayList<Animation>>(3);
+        mDecorAnimations = new SimpleArrayMap<JazzHandsViewPagerLayout.Decor, ArrayList<Animation>>(3);
     }
 
     public void addAnimation(int id, Animation... animations) {
@@ -61,12 +58,12 @@ public class JazzHandsAnimationPresenter {
         }
     }
 
-    public void addAnimation(View view, Animation... animations) {
-        if (mDecorAnimations.get(view) == null) {
-            mDecorAnimations.put(view, new ArrayList<Animation>());
+    public void addAnimation(JazzHandsViewPagerLayout.Decor decor, Animation... animations) {
+        if (mDecorAnimations.get(decor) == null) {
+            mDecorAnimations.put(decor, new ArrayList<Animation>());
         }
 
-        ArrayList<Animation> anims = mAnimations.get(view);
+        ArrayList<Animation> anims = mDecorAnimations.get(decor);
         if (anims != null) {
             for (Animation animation : animations) {
                 if (animation instanceof TranslationAnimation
@@ -108,40 +105,31 @@ public class JazzHandsAnimationPresenter {
                     continue;
                 }
 
-                // Pass ViewPager's ID to animation for setClipChildren and setClipToPadding
-                // in child Views.
-                animation.setViewPagerId(mViewPagerId);
-                animation.animate(viewToAnimate, fraction, xOffset);
-            }
-        }
-
-        // Animate all decor or other View animations.
-        for (Map.Entry<View, ArrayList<Animation>> entry : mDecorAnimations.entrySet()) {
-            if (entry.getKey() == null) {
-                continue;
-            }
-
-            ArrayList<Animation> animations = entry.getValue();
-            View viewToAnimate = entry.getKey();
-
-            int animListSize = animations.size();
-            for (int j = 0; j < animListSize; j++) {
-                Animation animation = animations.get(j);
-
-                if (animation == null || !animation.shouldAnimate(mCurrentPage)) {
-                    continue;
-                }
-
-                // Pass ViewPager's ID to animation for setClipChildren and setClipToPadding
-                // in child Views.
-                animation.setViewPagerId(mViewPagerId);
                 animation.animate(viewToAnimate, fraction, xOffset);
             }
         }
     }
 
-    public void setViewPagerId(int viewPagerId) {
-        mViewPagerId = viewPagerId;
+    public void presentDecorAnimations(float position, float fraction, float xOffset) {
+        // Animate all decor or other View animations.
+        int animMapSize = mDecorAnimations.size();
+        for (int i = 0; i < animMapSize; i++) {
+            JazzHandsViewPagerLayout.Decor decor = mDecorAnimations.keyAt(i);
+            ArrayList<Animation> animations = mDecorAnimations.get(decor);
+
+            int animListSize = animations.size();
+            for (int j = 0; j < animListSize; j++) {
+                Animation animation = animations.get(j);
+                if (animation == null
+                        || position > decor.endPage
+                        || position < decor.startPage
+                        || !animation.shouldAnimate(mCurrentPage)) {
+                    continue;
+                }
+
+                animation.animate(decor.contentView, fraction, xOffset);
+            }
+        }
     }
 
     public void setCurrentPage(int currentPage) {

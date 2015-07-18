@@ -1,5 +1,12 @@
 package com.ifttt.jazzhandsdemo;
 
+import com.ifttt.jazzhands.JazzHands;
+import com.ifttt.jazzhands.JazzHandsViewPagerLayout;
+import com.ifttt.jazzhands.animations.PathAnimation;
+import com.ifttt.jazzhands.animations.RotationAnimation;
+import com.ifttt.jazzhands.animations.ScaleAnimation;
+import com.ifttt.jazzhands.animations.TranslationAnimation;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -7,16 +14,12 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.ifttt.jazzhands.JazzHands;
-import com.ifttt.jazzhands.JazzHandsViewPager;
-import com.ifttt.jazzhands.animations.PathAnimation;
-import com.ifttt.jazzhands.animations.RotationAnimation;
-import com.ifttt.jazzhands.animations.ScaleAnimation;
-import com.ifttt.jazzhands.animations.TranslationAnimation;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 /**
  * Comprehensive demo for {@link PathAnimation} and {@link TranslationAnimation}.
@@ -29,21 +32,33 @@ public class PathAndTranslationViewPagerActivity extends Activity {
 
         setContentView(R.layout.view_pager_layout);
 
-        JazzHandsViewPager viewPager = (JazzHandsViewPager) findViewById(R.id.view_pager);
+        JazzHandsViewPagerLayout viewPager = (JazzHandsViewPagerLayout) findViewById(R.id.view_pager);
         viewPager.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
-        viewPager.setOffscreenPageLimit(4);
-        viewPager.setPageMargin(5);
-        viewPager.setPageMarginDrawable(new ColorDrawable(Color.BLACK));
-        viewPager.setAdapter(new PagerAdapter(this));
+        viewPager.getViewPager().setOffscreenPageLimit(4);
+        viewPager.getViewPager().setPageMargin(5);
+        viewPager.getViewPager().setPageMarginDrawable(new ColorDrawable(Color.BLACK));
+        viewPager.getViewPager().setAdapter(new PagerAdapter(this));
+
+        ImageView page0Droid = new ImageView(this);
+        page0Droid.setImageResource(R.mipmap.ic_launcher);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER_VERTICAL;
+        page0Droid.setLayoutParams(lp);
+        JazzHandsViewPagerLayout.Decor decor = new JazzHandsViewPagerLayout.Decor.Builder()
+                .setContentView(page0Droid)
+                .setStartPage(0)
+                .setEndPage(2)
+                .build();
 
         JazzHands jazzHands = JazzHands.with(viewPager).reverseDrawingOrder();
-        buildPage0Animations(jazzHands);
+        buildPage0Animations(jazzHands, decor);
         buildPage1Animations(jazzHands);
-        buildPage2Animations(jazzHands);
+        buildPage2Animations(jazzHands, decor);
     }
 
-
-    private void buildPage0Animations(JazzHands jazzHands) {
+    private void buildPage0Animations(JazzHands jazzHands, JazzHandsViewPagerLayout.Decor decor) {
         Path path = new Path();
         path.quadTo(75, 100, 150, 0);
         path.quadTo(225, -100, 300, 0);
@@ -51,8 +66,8 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         path.quadTo(525, -100, 600, 0);
 
         PathAnimation pathAnimation = new PathAnimation(0, 0, true, path);
-
-        jazzHands.animate(pathAnimation).on(R.id.page_0_droid);
+        jazzHands.animate(pathAnimation)
+                .on(decor);
     }
 
     private void buildPage1Animations(JazzHands jazzHands) {
@@ -71,7 +86,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         jazzHands.animate(droid3Translation).on(R.id.page_1_drod_3);
     }
 
-    private void buildPage2Animations(JazzHands jazzHands) {
+    private void buildPage2Animations(JazzHands jazzHands, JazzHandsViewPagerLayout.Decor decor) {
         Path droid0Path = new Path();
         RectF droid0Rect = new RectF(0, -300, 600, 300);
         droid0Path.addOval(droid0Rect, Path.Direction.CW);
@@ -79,7 +94,8 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         RotationAnimation rotationAnimation = new RotationAnimation(1, 2, 360);
 
         PathAnimation pathAnimation = new PathAnimation(1, 1, true, droid0Path);
-        jazzHands.animate(pathAnimation, rotationAnimation).on(R.id.page_0_droid);
+        jazzHands.animate(rotationAnimation, pathAnimation)
+                .on(decor);
     }
 
     private static class PagerAdapter extends ViewPagerAdapter {

@@ -1,7 +1,6 @@
 package com.ifttt.jazzhands.animations;
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
 /**
@@ -37,8 +36,6 @@ public abstract class Animation {
 
     private AnimationListener mAnimationListener;
 
-    private int mViewPagerId;
-
     /**
      * Base constructor of the class, accepting common information about the animation to this instance.
      *
@@ -53,10 +50,6 @@ public abstract class Animation {
         this.pageEnd = end;
 
         fractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
-    }
-
-    public void setViewPagerId(int id) {
-        mViewPagerId = id;
     }
 
     public void setInterpolator(Interpolator interpolator) {
