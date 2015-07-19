@@ -1,4 +1,4 @@
-package com.ifttt.jazzhands.animations;
+package com.ifttt.jazzhands;
 
 import android.view.View;
 import android.view.animation.Interpolator;

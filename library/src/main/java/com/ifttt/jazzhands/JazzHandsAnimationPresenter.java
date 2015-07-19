@@ -1,6 +1,7 @@
-package com.ifttt.jazzhands.animations;
+package com.ifttt.jazzhands;
 
-import com.ifttt.jazzhands.JazzHandsViewPagerLayout;
+import com.ifttt.jazzhands.animations.PathAnimation;
+import com.ifttt.jazzhands.animations.TranslationAnimation;
 
 import android.support.v4.util.SimpleArrayMap;
 import android.view.View;
@@ -79,7 +80,7 @@ public class JazzHandsAnimationPresenter {
         }
     }
 
-    public void presentAnimations(View parent, float fraction, float xOffset) {
+    void presentAnimations(View parent, float fraction, float xOffset) {
         int animMapSize = mAnimations.size();
 
         // Animate all in-page animations.
@@ -110,7 +111,7 @@ public class JazzHandsAnimationPresenter {
         }
     }
 
-    public void presentDecorAnimations(float position, float fraction, float xOffset) {
+    void presentDecorAnimations(float position, float fraction, float xOffset) {
         // Animate all decor or other View animations.
         int animMapSize = mDecorAnimations.size();
         for (int i = 0; i < animMapSize; i++) {
@@ -121,6 +122,8 @@ public class JazzHandsAnimationPresenter {
             for (int j = 0; j < animListSize; j++) {
                 Animation animation = animations.get(j);
                 if (animation == null
+                        || decor.contentView == null
+                        || decor.contentView.getParent() == null
                         || position > decor.endPage
                         || position < decor.startPage
                         || !animation.shouldAnimate(mCurrentPage)) {

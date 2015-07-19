@@ -2,6 +2,8 @@ package com.ifttt.jazzhands.animations;
 
 import android.view.View;
 
+import com.ifttt.jazzhands.Animation;
+
 /**
  * Subclass of {@link Animation} that changes View's scale x and y from a value to another.
  */

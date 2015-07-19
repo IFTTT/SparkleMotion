@@ -1,8 +1,5 @@
 package com.ifttt.jazzhands;
 
-import com.ifttt.jazzhands.animations.Animation;
-import com.ifttt.jazzhands.animations.JazzHandsAnimationPresenter;
-
 import java.util.ArrayList;
 import java.util.Collections;
 

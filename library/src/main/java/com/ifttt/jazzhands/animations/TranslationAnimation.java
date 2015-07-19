@@ -2,6 +2,8 @@ package com.ifttt.jazzhands.animations;
 
 import android.view.View;
 
+import com.ifttt.jazzhands.Animation;
+
 /**
  * Subclass of {@link Animation} that changes the View's translation x and y.
  */

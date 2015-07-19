@@ -2,7 +2,7 @@ package com.ifttt.jazzhandsdemo;
 
 import com.ifttt.jazzhands.JazzHands;
 import com.ifttt.jazzhands.JazzHandsViewPagerLayout;
-import com.ifttt.jazzhands.animations.Animation;
+import com.ifttt.jazzhands.Animation;
 import com.ifttt.jazzhands.animations.ParallaxAnimation;
 
 import android.app.Activity;

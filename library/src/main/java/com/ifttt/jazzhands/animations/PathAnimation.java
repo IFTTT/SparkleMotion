@@ -4,6 +4,8 @@ import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.view.View;
 
+import com.ifttt.jazzhands.Animation;
+
 /**
  * Subclass of {@link Animation} that animates the view based on a {@link Path}. It is essentially a translation
  * animation, but the translation x and y is changed to follow the path.
