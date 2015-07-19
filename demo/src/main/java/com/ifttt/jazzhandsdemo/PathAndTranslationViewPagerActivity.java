@@ -49,6 +49,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
                 .setContentView(page0Droid)
                 .setStartPage(0)
                 .setEndPage(2)
+                .behindViewPage()
                 .build();
 
         JazzHands jazzHands = JazzHands.with(viewPager).reverseDrawingOrder();

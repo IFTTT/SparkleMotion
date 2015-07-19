@@ -4,19 +4,28 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Created by zhelu on 7/12/15.
+ * A wrapper FrameLayout containing a {@link JazzHandsViewPager}. This class supports adding
+ * {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor} to the ViewPager, which can be animated across pages.
+ * <p/>
+ * A Decor of the ViewPager is only for animation purpose, which means if there's no animation associated with it,
+ * it will stay at the original position when it is added to the parent.
  */
 public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
 
     private JazzHandsViewPager mJazzHandsViewPager;
 
-    private final TreeSet<Decor> mDecors = new TreeSet<Decor>();
+    private final ArrayList<Decor> mDecors = new ArrayList<Decor>();
 
     public JazzHandsViewPagerLayout(Context context) {
         super(context);
@@ -46,25 +55,53 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     }
 
     public void addDecors(Decor... decors) {
-        boolean needChildDrawingOrder = false;
         for (Decor decor : decors) {
-            decor.index = mDecors.size();
+            if (mDecors.contains(decor)) {
+                continue;
+            }
+
             mDecors.add(decor);
-
-            needChildDrawingOrder = decor.layoutAbovePage >= 0 || decor.layoutBehindPage >= 0;
         }
-
         layoutDecors(mJazzHandsViewPager.getCurrentItem());
 
-        if (needChildDrawingOrder) {
-            // If there is request to put Decor above or below certain page, enable drawing order.
-            setChildrenDrawingOrderEnabled(true);
-        }
+        Collections.sort(mDecors);
+        checkChildrenDrawingOrderNeeded();
     }
+
+    public void removeDecors(Decor... decors) {
+        for (Decor decor : decors) {
+            mDecors.remove(decor);
+        }
+
+        checkChildrenDrawingOrderNeeded();
+    }
+
+    private void checkChildrenDrawingOrderNeeded() {
+        for (Decor decor : mDecors) {
+            if (decor.layoutBehindViewPage) {
+                setChildrenDrawingOrderEnabled(true);
+                return;
+            }
+        }
+
+        setChildrenDrawingOrderEnabled(false);
+    }
+
 
     @Override
     protected int getChildDrawingOrder(int childCount, int i) {
-        return super.getChildDrawingOrder(childCount, i);
+        if (i < mDecors.size() && childCount > mDecors.size()) {
+            if (mDecors.get(i).layoutBehindViewPage) {
+                return i + 1;
+            }
+
+            if (i - 1 >= 0 && mDecors.get(i - 1).layoutBehindViewPage
+                    && !mDecors.get(i).layoutBehindViewPage) {
+                return 0;
+            }
+        }
+
+        return 0;
     }
 
     @Override
@@ -79,9 +116,6 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (state != ViewPager.SCROLL_STATE_IDLE) {
-
-        }
     }
 
     private void layoutDecors(float currentPage) {
@@ -91,37 +125,44 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
                 decor.isAdded = false;
                 removeView(decor.contentView);
             } else if (decor.startPage <= currentPage
-                && decor.endPage >= currentPage
-                && !decor.isAdded) {
+                    && decor.endPage >= currentPage
+                    && !decor.isAdded) {
                 decor.isAdded = true;
+
                 addView(decor.contentView);
             }
         }
     }
 
+    /**
+     * An animation decoration of the {@link JazzHandsViewPager}. A Decor will respond to the scrolling of the ViewPager
+     * and run animations based on it.
+     */
     public static class Decor implements Comparable<Decor> {
         public final View contentView;
 
         public final int startPage;
         public final int endPage;
 
-        int layoutBehindPage = -1;
-        int layoutAbovePage = -1;
+        boolean layoutBehindViewPage = false;
 
         boolean isAdded;
 
         int index;
 
-        public Decor(View contentView, int startPage, int endPage, int layoutBehind, int layoutAbove) {
+        public Decor(@NonNull View contentView, int startPage, int endPage, boolean layoutBehind) {
             this.contentView = contentView;
             this.startPage = startPage;
             this.endPage = endPage;
-            this.layoutBehindPage = layoutBehind;
-            this.layoutAbovePage = layoutAbove;
+            this.layoutBehindViewPage = layoutBehind;
         }
 
         @Override
         public int compareTo(@NonNull Decor another) {
+            if (layoutBehindViewPage && !another.layoutBehindViewPage) {
+                return -1;
+            }
+
             return index - another.index;
         }
 
@@ -131,8 +172,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
             private int mStartPage;
             private int mEndPage;
 
-            private int mLayoutBehindPage;
-            private int mLayoutAbovePage;
+            private boolean mLayoutBehindViewPage;
 
             public Builder setContentView(View contentView) {
                 mContentView = contentView;
@@ -149,18 +189,17 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
                 return this;
             }
 
-            public Builder setLayoutBehindPage(int layoutBehindPage) {
-                mLayoutBehindPage = layoutBehindPage;
-                return this;
-            }
-
-            public Builder setLayoutAbovePage(int layoutAbovePage) {
-                mLayoutAbovePage = layoutAbovePage;
+            public Builder behindViewPage() {
+                mLayoutBehindViewPage = true;
                 return this;
             }
 
             public Decor build() {
-                return new Decor(mContentView, mStartPage, mEndPage, mLayoutBehindPage, mLayoutAbovePage);
+                if (mStartPage > mEndPage) {
+                    throw new IllegalArgumentException("Start page is larger than end page");
+                }
+
+                return new Decor(mContentView, mStartPage, mEndPage, mLayoutBehindViewPage);
             }
         }
 

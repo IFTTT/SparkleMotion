@@ -111,7 +111,7 @@ public class JazzHandsAnimationPresenter {
         }
     }
 
-    void presentDecorAnimations(float position, float fraction, float xOffset) {
+    void presentDecorAnimations(float position, float fraction) {
         // Animate all decor or other View animations.
         int animMapSize = mDecorAnimations.size();
         for (int i = 0; i < animMapSize; i++) {
@@ -130,7 +130,7 @@ public class JazzHandsAnimationPresenter {
                     continue;
                 }
 
-                animation.animate(decor.contentView, fraction, xOffset);
+                animation.animate(decor.contentView, fraction, 0);
             }
         }
     }

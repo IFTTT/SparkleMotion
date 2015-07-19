@@ -18,8 +18,7 @@ public abstract class Animation {
     /**
      * A boolean flag indicating whether this animation is relative to the parent page. If so, the animated
      * view will still be scrolled to the side along with it's parent page while animating. If not, the view
-     * will be animated based on the screen and will ignore the moving parent page. This means that the view
-     * can potentially be animated across different pages.
+     * will be animated based on the screen and will ignore the moving parent page.
      */
     protected boolean absolute;
 

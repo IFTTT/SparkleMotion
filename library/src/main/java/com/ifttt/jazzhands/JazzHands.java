@@ -20,8 +20,6 @@ public class JazzHands {
      */
     private ArrayList<Animation> mAnimations;
 
-    private int mBroughtToFrontChildIndex = -1;
-
     /**
      * Start constructing a {@link JazzHands} builder with a {@link JazzHandsViewPager} instance. Animations assigned
      * to this builder will be assigned to the ViewPager.
@@ -89,17 +87,6 @@ public class JazzHands {
     }
 
     /**
-     * Bring the child page at a given index to front by {@link JazzHandsViewPager#bringChildViewToFront(int)}.
-     *
-     * @param index Page index to be brought to front.
-     * @return this instance to chain functions.
-     */
-    public JazzHands lift(int index) {
-        mBroughtToFrontChildIndex = index;
-        return this;
-    }
-
-    /**
      * Assign animations to JazzHands, which will then associate the animations to target Views.
      *
      * @param animations Animations to run.
@@ -126,7 +113,7 @@ public class JazzHands {
             throw new IllegalStateException("A JazzHandsViewPagerLayout must be provided");
         }
 
-        setupViewPager();
+        mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
 
         Animation[] animations = new Animation[mAnimations.size()];
         mAnimations.toArray(animations);
@@ -150,7 +137,7 @@ public class JazzHands {
      * @param ids Target View ids.
      */
     public void on(int... ids) {
-        setupViewPager();
+        mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
 
         Animation[] anims = new Animation[mAnimations.size()];
         mAnimations.toArray(anims);
@@ -163,13 +150,5 @@ public class JazzHands {
 
     }
 
-    private void setupViewPager() {
-        mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
-
-        if (mBroughtToFrontChildIndex >= 0) {
-            // Bring child to front if it is set.
-            mViewPager.bringChildViewToFront(mBroughtToFrontChildIndex);
-        }
-    }
 
 }
