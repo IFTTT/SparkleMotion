@@ -64,44 +64,12 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
         }
         layoutDecors(mJazzHandsViewPager.getCurrentItem());
 
-        Collections.sort(mDecors);
-        checkChildrenDrawingOrderNeeded();
     }
 
     public void removeDecors(Decor... decors) {
         for (Decor decor : decors) {
             mDecors.remove(decor);
         }
-
-        checkChildrenDrawingOrderNeeded();
-    }
-
-    private void checkChildrenDrawingOrderNeeded() {
-        for (Decor decor : mDecors) {
-            if (decor.layoutBehindViewPage) {
-                setChildrenDrawingOrderEnabled(true);
-                return;
-            }
-        }
-
-        setChildrenDrawingOrderEnabled(false);
-    }
-
-
-    @Override
-    protected int getChildDrawingOrder(int childCount, int i) {
-        if (i < mDecors.size() && childCount > mDecors.size()) {
-            if (mDecors.get(i).layoutBehindViewPage) {
-                return i + 1;
-            }
-
-            if (i - 1 >= 0 && mDecors.get(i - 1).layoutBehindViewPage
-                    && !mDecors.get(i).layoutBehindViewPage) {
-                return 0;
-            }
-        }
-
-        return 0;
     }
 
     @Override
@@ -129,7 +97,8 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
                     && !decor.isAdded) {
                 decor.isAdded = true;
 
-                addView(decor.contentView);
+                int index = decor.layoutBehindViewPage ? 0 : -1;
+                addView(decor.contentView, index);
             }
         }
     }
