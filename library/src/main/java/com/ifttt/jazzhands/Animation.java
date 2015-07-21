@@ -86,7 +86,14 @@ public abstract class Animation {
             mAnimationListener.onAnimationRunning(fraction);
         }
 
-        onAnimate(v, fraction, offset);
+        if (fraction < -1) {
+            animateOffScreenLeft(v, fraction, offset);
+        } else if (fraction <= 1) {
+            onAnimate(v, fraction, offset);
+        } else {
+            animateOffScreenRight(v, fraction, offset);
+        }
+
     }
 
     /**
@@ -98,6 +105,14 @@ public abstract class Animation {
      * @param offset   Page width offset.
      */
     protected abstract void onAnimate(View v, float fraction, float offset);
+
+    @SuppressWarnings("unused")
+    protected void animateOffScreenLeft(View v, float fraction, float offset) {
+    }
+
+    @SuppressWarnings("unused")
+    protected void animateOffScreenRight(View v, float fraction, float offset) {
+    }
 
 
     /**

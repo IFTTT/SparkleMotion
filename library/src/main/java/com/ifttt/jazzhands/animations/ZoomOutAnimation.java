@@ -53,4 +53,6 @@ public class ZoomOutAnimation extends Animation {
                 (scaleFactor - MIN_SCALE) /
                         (1 - MIN_SCALE) * (1 - MIN_ALPHA));
     }
+
+
 }
