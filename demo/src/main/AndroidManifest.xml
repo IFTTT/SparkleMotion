@@ -24,6 +24,8 @@
 
         <activity android:name=".ParallaxViewPagerActivity" />
 
+        <activity android:name=".ZoomOutViewPagerActivity" />
+
         <activity android:name=".PathAndTranslationViewPagerActivity" />
 
     </application>

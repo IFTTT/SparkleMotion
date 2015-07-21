@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * JazzHands animation driver, used to store all {@link Animation} assigned to it. {@link
@@ -29,13 +30,6 @@ public class JazzHandsAnimationPresenter {
 
     private SimpleArrayMap<JazzHandsViewPagerLayout.Decor, ArrayList<Animation>> mDecorAnimations;
 
-    /**
-     * Used only for cross page animation. Stores the largest pages that the animations in
-     * this instance should travel. This is used to determine the offscreen page limit of
-     * ViewPager.
-     */
-    private int mMaxPageDistance = -1;
-
     public JazzHandsAnimationPresenter() {
         mAnimations = new SimpleArrayMap<Integer, ArrayList<Animation>>(3);
         mDecorAnimations = new SimpleArrayMap<JazzHandsViewPagerLayout.Decor, ArrayList<Animation>>(3);
@@ -47,17 +41,7 @@ public class JazzHandsAnimationPresenter {
         }
 
         ArrayList<Animation> anims = mAnimations.get(id);
-        for (Animation animation : animations) {
-            if (animation instanceof TranslationAnimation
-                    || animation instanceof PathAnimation) {
-                int distance = animation.pageEnd - animation.pageStart;
-                if (distance > mMaxPageDistance) {
-                    mMaxPageDistance = distance;
-                }
-            }
-
-            anims.add(animation);
-        }
+        Collections.addAll(anims, animations);
     }
 
     public void addAnimation(JazzHandsViewPagerLayout.Decor decor, Animation... animations) {
@@ -67,17 +51,7 @@ public class JazzHandsAnimationPresenter {
 
         ArrayList<Animation> anims = mDecorAnimations.get(decor);
         if (anims != null) {
-            for (Animation animation : animations) {
-                if (animation instanceof TranslationAnimation
-                        || animation instanceof PathAnimation) {
-                    int distance = animation.pageEnd - animation.pageStart;
-                    if (distance > mMaxPageDistance) {
-                        mMaxPageDistance = distance;
-                    }
-                }
-
-                anims.add(animation);
-            }
+            Collections.addAll(anims, animations);
         }
     }
 
@@ -95,7 +69,7 @@ public class JazzHandsAnimationPresenter {
 
                 final View viewToAnimate;
 
-                if (key == parent.getId()) {
+                if (key == parent.getId() || key == Animation.ANIMATION_ID_PAGE) {
                     viewToAnimate = parent;
                 } else {
                     viewToAnimate = parent.findViewById(key);
@@ -137,13 +111,5 @@ public class JazzHandsAnimationPresenter {
 
     public void setCurrentPage(int currentPage) {
         this.mCurrentPage = currentPage;
-    }
-
-    public int getMaxCrossPageAnimationPages() {
-        return mMaxPageDistance;
-    }
-
-    public boolean hasCrossPageAnimation() {
-        return mMaxPageDistance > 0;
     }
 }

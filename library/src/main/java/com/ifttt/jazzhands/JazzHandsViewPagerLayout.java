@@ -84,8 +84,35 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
     @Override
     public void onPageScrollStateChanged(int state) {
+        enableLayer(state != ViewPager.SCROLL_STATE_IDLE);
     }
 
+    /**
+     * If the ViewPager is scrolling and there are Decors that are running animations, enable their content Views'
+     * hardware layer. Otherwise, switch back to no layer.
+     *
+     * @param enable    Whether or not hardware layer should be used for Decor content views.
+     */
+    private void enableLayer(boolean enable) {
+        for (Decor decor : mDecors) {
+            if (!decor.isAdded) {
+                continue;
+            }
+
+            if (enable && decor.contentView.getLayerType() != LAYER_TYPE_HARDWARE) {
+                decor.contentView.setLayerType(LAYER_TYPE_HARDWARE, null);
+            } else if (!enable && decor.contentView.getLayerType() != LAYER_TYPE_NONE) {
+                decor.contentView.setLayerType(LAYER_TYPE_NONE, null);
+            }
+        }
+    }
+
+    /**
+     * Based on the {@code startPage}, {@code endPage} and {@code layoutBehindViewPager} from
+     * {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor}, add or remove Decors to this FrameLayout.
+     *
+     * @param currentPage Currently displayed ViewPager page.
+     */
     private void layoutDecors(float currentPage) {
         for (Decor decor : mDecors) {
             if ((decor.startPage > currentPage || decor.endPage < currentPage)

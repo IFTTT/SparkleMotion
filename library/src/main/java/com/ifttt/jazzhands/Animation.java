@@ -15,6 +15,8 @@ public abstract class Animation {
      */
     public static final int ALL_PAGES = -1;
 
+    public static final int ANIMATION_ID_PAGE = -2;
+
     /**
      * A boolean flag indicating whether this animation is relative to the parent page. If so, the animated
      * view will still be scrolled to the side along with it's parent page while animating. If not, the view
