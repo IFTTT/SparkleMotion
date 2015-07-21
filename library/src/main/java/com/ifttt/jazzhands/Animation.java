@@ -53,12 +53,8 @@ public abstract class Animation {
         fractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
     }
 
-    public void setInterpolator(Interpolator interpolator) {
+    public final void setInterpolator(Interpolator interpolator) {
         mInterpolator = interpolator;
-    }
-
-    public Interpolator getInterpolator() {
-        return mInterpolator;
     }
 
     /**
@@ -69,9 +65,8 @@ public abstract class Animation {
      * @param offset   Page width offset.
      */
     void animate(View v, float fraction, float offset) {
-        Interpolator interpolator = getInterpolator();
-        if (interpolator != null) {
-            fraction = interpolator.getInterpolation(fraction);
+        if (mInterpolator != null) {
+            fraction = mInterpolator.getInterpolation(fraction);
         }
 
         if (absolute && pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
@@ -122,12 +117,12 @@ public abstract class Animation {
      * @param currentPage Current page in ViewPager where the scroll starts.
      * @return True if the animation should run, false otherwise.
      */
-    protected boolean shouldAnimate(int currentPage) {
+    boolean shouldAnimate(int currentPage) {
         return (pageStart == pageEnd && pageStart == Animation.ALL_PAGES)
                 || pageStart <= currentPage && pageEnd >= currentPage;
     }
 
-    public void setAnimationListener(AnimationListener listener) {
+    public final void setAnimationListener(AnimationListener listener) {
         mAnimationListener = listener;
     }
 
