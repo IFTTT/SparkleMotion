@@ -4,6 +4,7 @@ import com.ifttt.jazzhands.animations.PathAnimation;
 import com.ifttt.jazzhands.animations.TranslationAnimation;
 
 import android.support.v4.util.SimpleArrayMap;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -122,7 +123,6 @@ public class JazzHandsAnimationPresenter {
             for (int j = 0; j < animListSize; j++) {
                 Animation animation = animations.get(j);
                 if (animation == null
-                        || decor.contentView == null
                         || decor.contentView.getParent() == null
                         || position > decor.endPage
                         || position < decor.startPage
