@@ -1,8 +1,8 @@
 package com.ifttt.jazzhands.animations;
 
-import android.view.View;
-
 import com.ifttt.jazzhands.Animation;
+
+import android.view.View;
 
 /**
  * Subclass of {@link Animation} that changes the View's translation x and y.
@@ -11,6 +11,10 @@ public class TranslationAnimation extends Animation {
 
     private float mTranslationX;
     private float mTranslationY;
+
+    private boolean mOriginalTranslationSet;
+    private float mOriginalTranslationX;
+    private float mOriginalTranslationY;
 
     public TranslationAnimation(
             int start, int end, boolean absolute,
@@ -27,9 +31,15 @@ public class TranslationAnimation extends Animation {
             offset = 0;
         }
 
+        if (!mOriginalTranslationSet) {
+            mOriginalTranslationX = v.getTranslationX();
+            mOriginalTranslationY = v.getTranslationY();
+            mOriginalTranslationSet = true;
+        }
+
         fraction = Math.abs(fraction);
 
-        v.setTranslationX(fraction * mTranslationX + offset);
-        v.setTranslationY(fraction * mTranslationY);
+        v.setTranslationX(mOriginalTranslationX + fraction * (mTranslationX - mOriginalTranslationX) + offset);
+        v.setTranslationY(mOriginalTranslationY + fraction * (mTranslationY - mOriginalTranslationY));
     }
 }
