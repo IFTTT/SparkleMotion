@@ -120,9 +120,9 @@ public class JazzHands {
 
         for (JazzHandsViewPagerLayout.Decor decor : decors) {
             mPresenter.addAnimation(decor, animations);
+            mViewPagerLayout.addDecor(decor);
         }
 
-        mViewPagerLayout.addDecors(decors);
         mAnimations.clear();
     }
 

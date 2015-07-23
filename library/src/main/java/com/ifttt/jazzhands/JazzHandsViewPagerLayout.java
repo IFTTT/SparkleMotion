@@ -89,20 +89,20 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
      * layout based on its start page and end page. Calling this method will also enables children drawing order, which
      * follows the order of the parameters, e.g the first Decor will be drawn first.
      *
-     * @param decors Decor objects to be added to this layout.
+     * @param decor Decor object to be added to this layout.
      */
-    public void addDecors(Decor... decors) {
-        if (decors == null) {
+    public void addDecor(Decor decor) {
+        if (decor == null) {
             return;
         }
 
-        for (Decor decor : decors) {
-            // Make sure there is no duplicate.
-            if (mDecors.contains(decor)) {
-                continue;
-            }
-            mDecors.add(decor);
+        // Make sure there is no duplicate.
+        if (mDecors.contains(decor)) {
+            return;
         }
+
+        decor.decorIndex = mDecors.size();
+        mDecors.add(decor);
 
         layoutDecors(mJazzHandsViewPager.getCurrentItem());
 
@@ -112,21 +112,22 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     /**
      * Remove Decor objects from this layout.
      *
-     * @param decors Decor objects to be removed.
+     * @param decor Decor objects to be removed.
      */
-    public void removeDecors(Decor... decors) {
-        if (decors == null) {
-            return;
+    public void removeDecor(Decor decor) {
+        int indexOfRemoved = mDecors.indexOf(decor);
+        if (indexOfRemoved < 0) {
+            throw new IllegalArgumentException("Decor is not added to JazzHandsViewPagerLayout");
         }
 
-        for (Decor decor : decors) {
-            boolean removed = mDecors.remove(decor);
-            if (removed && decor.isAdded) {
-                removeView(decor.contentView);
-                if (decor.layoutBehindViewPage) {
-                    mViewPagerIndex--;
-                }
-            }
+        if (decor.isAdded) {
+            mDecors.remove(decor);
+            removeDecorView(decor);
+        }
+
+        int decorSize = mDecors.size();
+        for (int i = indexOfRemoved + 1 ; i < decorSize; i++) {
+            mDecors.get(i).decorIndex = i;
         }
 
         if (mDecors.isEmpty()) {
@@ -146,7 +147,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
         }
 
         int index = i > mViewPagerIndex ? i - 1 : i;
-        return mDecors.get(index).index;
+        return mDecors.get(index).layoutIndex;
     }
 
     @Override
@@ -196,31 +197,39 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
                     && decor.isAdded) {
                 decor.isAdded = false;
                 Collections.sort(mDecors);
-                int indexOfRemoved = mDecors.indexOf(decor);
-                removeView(decor.contentView);
-
-                // Update affected Decors' indices to reflect the change.
-                for (int i = 0; i < indexOfRemoved; i++) {
-                    if (!mDecors.get(i).isAdded) {
-                        continue;
-                    }
-                    mDecors.get(i).index -= 1;
-                }
-
-                if (decor.layoutBehindViewPage) {
-                    mViewPagerIndex--;
-                }
+                removeDecorView(decor);
             } else if (decor.startPage <= currentPage
                     && decor.endPage >= currentPage
                     && !decor.isAdded) {
                 decor.isAdded = true;
-                decor.index = getChildCount();
+                decor.layoutIndex = getChildCount();
                 Collections.sort(mDecors);
                 addView(decor.contentView);
                 if (decor.layoutBehindViewPage) {
                     mViewPagerIndex++;
                 }
             }
+        }
+    }
+
+    private void removeDecorView(Decor decor) {
+        final int indexOfRemoved = decor.layoutIndex;
+        removeView(decor.contentView);
+
+        // Update affected Decors' indices to reflect the change.
+        int decorsSize = mDecors.size();
+        for (int i = 0; i < decorsSize; i++) {
+            if (!mDecors.get(i).isAdded) {
+                continue;
+            }
+
+            if (mDecors.get(i).layoutIndex > indexOfRemoved) {
+                mDecors.get(i).layoutIndex -= 1;
+            }
+        }
+
+        if (decor.layoutBehindViewPage) {
+            mViewPagerIndex--;
         }
     }
 
@@ -262,7 +271,9 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
         /**
          * Index of the Decor's content View within the layout.
          */
-        int index;
+        int layoutIndex;
+
+        int decorIndex;
 
         private Decor(@NonNull View contentView, int startPage, int endPage, boolean layoutBehind) {
             this.contentView = contentView;
@@ -281,7 +292,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
                 return layoutBehindViewPage ? -1 : 1;
             }
 
-            return another.index - index;
+            return decorIndex - another.decorIndex;
         }
 
         /**
