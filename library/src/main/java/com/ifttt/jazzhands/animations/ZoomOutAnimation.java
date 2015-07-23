@@ -1,8 +1,8 @@
 package com.ifttt.jazzhands.animations;
 
-import android.view.View;
-
 import com.ifttt.jazzhands.Animation;
+
+import android.view.View;
 
 /**
  * Subclass of {@link Animation} that runs a more complex animation, which scales the view down and fade out
@@ -27,7 +27,7 @@ public class ZoomOutAnimation extends Animation {
      * @param minAlpha Minimum alpha of the View when animating.
      */
     public ZoomOutAnimation(int start, int end, float minScale, float minAlpha) {
-        super(start, end, false);
+        super(start, end);
 
         mMinAlpha = minAlpha;
         mMinScale = minScale;

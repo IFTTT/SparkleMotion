@@ -1,8 +1,8 @@
 package com.ifttt.jazzhands.animations;
 
-import android.view.View;
-
 import com.ifttt.jazzhands.Animation;
+
+import android.view.View;
 
 /**
  * {@link Animation} subclass that simply takes the {@code offset} from {@link #onAnimate(View, float, float)}
@@ -16,7 +16,7 @@ public class NoMovementAnimation extends Animation {
     }
 
     public NoMovementAnimation(int start, int end, boolean absolute) {
-        super(start, end, absolute);
+        super(start, end);
     }
 
     @Override

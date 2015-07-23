@@ -1,10 +1,10 @@
 package com.ifttt.jazzhands.animations;
 
+import com.ifttt.jazzhands.Animation;
+
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.view.View;
-
-import com.ifttt.jazzhands.Animation;
 
 /**
  * Subclass of {@link Animation} that animates the view based on a {@link Path}. It is essentially a translation
@@ -19,15 +19,12 @@ public class PathAnimation extends Animation {
     }
 
     public PathAnimation(int start, int end, boolean absolute, Path path) {
-        super(start, end, absolute);
+        super(start, end);
         mPathMeasure = new PathMeasure(path, false);
     }
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
-        if (!absolute) {
-            offset = 0;
-        }
         fraction = Math.abs(fraction);
 
         float[] coordinates = new float[2];

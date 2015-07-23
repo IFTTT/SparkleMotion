@@ -17,13 +17,6 @@ public abstract class Animation {
 
     public static final int ANIMATION_ID_PAGE = -2;
 
-    /**
-     * A boolean flag indicating whether this animation is relative to the parent page. If so, the animated
-     * view will still be scrolled to the side along with it's parent page while animating. If not, the view
-     * will be animated based on the screen and will ignore the moving parent page.
-     */
-    protected boolean absolute;
-
     protected int pageStart;
     protected int pageEnd;
 
@@ -42,11 +35,9 @@ public abstract class Animation {
      *
      * @param start    Page index that this animation should start.
      * @param end      Page index that this animation should stop.
-     * @param absolute Whether or not this animation is absolute to the device screen.
      */
     public Animation(
-            int start, int end, boolean absolute) {
-        this.absolute = absolute;
+            int start, int end) {
         this.pageStart = start;
         this.pageEnd = end;
 
@@ -69,7 +60,7 @@ public abstract class Animation {
             fraction = mInterpolator.getInterpolation(fraction);
         }
 
-        if (absolute && pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
+        if (pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
             if (fraction > pageStart) {
                 fraction -= pageStart;
             }

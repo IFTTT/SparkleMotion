@@ -1,8 +1,8 @@
 package com.ifttt.jazzhands.animations;
 
-import android.view.View;
-
 import com.ifttt.jazzhands.Animation;
+
+import android.view.View;
 
 /**
  * Subclass of {@link Animation} that changes the view's translation by a {@link #mFactor} for parallax
@@ -17,7 +17,7 @@ public class ParallaxAnimation extends Animation {
     }
 
     public ParallaxAnimation(int start, int end, float factor) {
-        super(start, end, false);
+        super(start, end);
 
         mFactor = factor;
     }

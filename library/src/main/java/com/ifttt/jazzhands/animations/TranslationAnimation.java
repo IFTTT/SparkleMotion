@@ -20,17 +20,13 @@ public class TranslationAnimation extends Animation {
             int start, int end, boolean absolute,
             float translationX,
             float translationY) {
-        super(start, end, absolute);
+        super(start, end);
         this.mTranslationX = translationX;
         this.mTranslationY = translationY;
     }
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
-        if (!absolute) {
-            offset = 0;
-        }
-
         if (!mOriginalTranslationSet) {
             mOriginalTranslationX = v.getTranslationX();
             mOriginalTranslationY = v.getTranslationY();
