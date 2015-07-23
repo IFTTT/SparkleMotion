@@ -12,7 +12,13 @@ import android.view.View;
  */
 public class PathAnimation extends Animation {
 
-    private PathMeasure mPathMeasure;
+    private final PathMeasure mPathMeasure;
+
+    /**
+     * Flag to set whether this animation should be relative to the scrolling page or not. If set to true, the View
+     * being animated will ignore the scrolling of the parent View.
+     */
+    private final boolean mAbsolute;
 
     public PathAnimation(int page, boolean absolute, Path path) {
         this(page, page, absolute, path);
@@ -20,11 +26,15 @@ public class PathAnimation extends Animation {
 
     public PathAnimation(int start, int end, boolean absolute, Path path) {
         super(start, end);
+        mAbsolute = absolute;
         mPathMeasure = new PathMeasure(path, false);
     }
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
+        if (!mAbsolute) {
+            offset = 0;
+        }
         fraction = Math.abs(fraction);
 
         float[] coordinates = new float[2];

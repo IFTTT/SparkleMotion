@@ -9,8 +9,14 @@ import android.view.View;
  */
 public class TranslationAnimation extends Animation {
 
-    private float mTranslationX;
-    private float mTranslationY;
+    private final float mTranslationX;
+    private final float mTranslationY;
+
+    /**
+     * Flag to set whether this animation should be relative to the scrolling page or not. If set to true, the View
+     * being animated will ignore the scrolling of the parent View.
+     */
+    private final boolean mAbsolute;
 
     private boolean mOriginalTranslationSet;
     private float mOriginalTranslationX;
@@ -21,12 +27,17 @@ public class TranslationAnimation extends Animation {
             float translationX,
             float translationY) {
         super(start, end);
+        this.mAbsolute = absolute;
         this.mTranslationX = translationX;
         this.mTranslationY = translationY;
     }
 
     @Override
     public void onAnimate(View v, float fraction, float offset) {
+        if (!mAbsolute) {
+            offset = 0;
+        }
+
         if (!mOriginalTranslationSet) {
             mOriginalTranslationX = v.getTranslationX();
             mOriginalTranslationY = v.getTranslationY();
