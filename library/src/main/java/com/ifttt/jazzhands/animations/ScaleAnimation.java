@@ -1,5 +1,7 @@
 package com.ifttt.jazzhands.animations;
 
+import com.ifttt.jazzhands.Animation;
+
 import android.view.View;
 
 /**
@@ -29,7 +31,7 @@ public class ScaleAnimation extends Animation {
 
     public ScaleAnimation(int start, int end,
                           float outScaleX, float outScaleY, float inScaleX, float inScaleY) {
-        super(start, end, false);
+        super(start, end);
 
         this.mOutScaleX = outScaleX;
         this.mOutScaleY = outScaleY;

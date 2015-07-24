@@ -1,7 +1,6 @@
-package com.ifttt.jazzhands.animations;
+package com.ifttt.jazzhands;
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
 /**
@@ -16,13 +15,7 @@ public abstract class Animation {
      */
     public static final int ALL_PAGES = -1;
 
-    /**
-     * A boolean flag indicating whether this animation is relative to the parent page. If so, the animated
-     * view will still be scrolled to the side along with it's parent page while animating. If not, the view
-     * will be animated based on the screen and will ignore the moving parent page. This means that the view
-     * can potentially be animated across different pages.
-     */
-    protected boolean absolute;
+    public static final int ANIMATION_ID_PAGE = -2;
 
     protected int pageStart;
     protected int pageEnd;
@@ -37,34 +30,22 @@ public abstract class Animation {
 
     private AnimationListener mAnimationListener;
 
-    private int mViewPagerId;
-
     /**
      * Base constructor of the class, accepting common information about the animation to this instance.
      *
      * @param start    Page index that this animation should start.
      * @param end      Page index that this animation should stop.
-     * @param absolute Whether or not this animation is absolute to the device screen.
      */
     public Animation(
-            int start, int end, boolean absolute) {
-        this.absolute = absolute;
+            int start, int end) {
         this.pageStart = start;
         this.pageEnd = end;
 
         fractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
     }
 
-    public void setViewPagerId(int id) {
-        mViewPagerId = id;
-    }
-
-    public void setInterpolator(Interpolator interpolator) {
+    public final void setInterpolator(Interpolator interpolator) {
         mInterpolator = interpolator;
-    }
-
-    public Interpolator getInterpolator() {
-        return mInterpolator;
     }
 
     /**
@@ -75,12 +56,11 @@ public abstract class Animation {
      * @param offset   Page width offset.
      */
     void animate(View v, float fraction, float offset) {
-        Interpolator interpolator = getInterpolator();
-        if (interpolator != null) {
-            fraction = interpolator.getInterpolation(fraction);
+        if (mInterpolator != null) {
+            fraction = mInterpolator.getInterpolation(fraction);
         }
 
-        if (absolute && pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
+        if (pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
             if (fraction > pageStart) {
                 fraction -= pageStart;
             }
@@ -92,30 +72,14 @@ public abstract class Animation {
             mAnimationListener.onAnimationRunning(fraction);
         }
 
-        ViewGroup parent = (ViewGroup) v.getParent();
-        if (absolute) {
-            // If the animation should be run based on the screen, set the parent and ancestors to not clip to
-            // padding or clip children.
-            while (parent != null
-                    && parent.getId() != mViewPagerId) {
-                parent.setClipToPadding(false);
-                parent.setClipChildren(false);
-
-                try {
-                    parent = (ViewGroup) parent.getParent();
-                } catch (ClassCastException e) {
-                    parent = null;
-                }
-            }
-
-            if (parent != null) {
-                // Also set ViewPager's clip children and padding.
-                parent.setClipToPadding(false);
-                parent.setClipChildren(false);
-            }
+        if (fraction < -1) {
+            animateOffScreenLeft(v, fraction, offset);
+        } else if (fraction <= 1) {
+            onAnimate(v, fraction, offset);
+        } else {
+            animateOffScreenRight(v, fraction, offset);
         }
 
-        onAnimate(v, fraction, offset);
     }
 
     /**
@@ -128,6 +92,14 @@ public abstract class Animation {
      */
     protected abstract void onAnimate(View v, float fraction, float offset);
 
+    @SuppressWarnings("unused")
+    protected void animateOffScreenLeft(View v, float fraction, float offset) {
+    }
+
+    @SuppressWarnings("unused")
+    protected void animateOffScreenRight(View v, float fraction, float offset) {
+    }
+
 
     /**
      * Check the current page with {@link JazzHandsAnimationPresenter} and see if it is within {@link #pageStart}
@@ -136,12 +108,12 @@ public abstract class Animation {
      * @param currentPage Current page in ViewPager where the scroll starts.
      * @return True if the animation should run, false otherwise.
      */
-    protected boolean shouldAnimate(int currentPage) {
+    boolean shouldAnimate(int currentPage) {
         return (pageStart == pageEnd && pageStart == Animation.ALL_PAGES)
                 || pageStart <= currentPage && pageEnd >= currentPage;
     }
 
-    public void setAnimationListener(AnimationListener listener) {
+    public final void setAnimationListener(AnimationListener listener) {
         mAnimationListener = listener;
     }
 

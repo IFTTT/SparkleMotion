@@ -1,5 +1,7 @@
 package com.ifttt.jazzhands.animations;
 
+import com.ifttt.jazzhands.Animation;
+
 import android.view.View;
 
 /**
@@ -15,7 +17,7 @@ public class ParallaxAnimation extends Animation {
     }
 
     public ParallaxAnimation(int start, int end, float factor) {
-        super(start, end, false);
+        super(start, end);
 
         mFactor = factor;
     }

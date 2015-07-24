@@ -2,55 +2,69 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context=".MainActivity"
-                android:clipChildren="false"
-                android:clipToPadding="false">
+                tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/testing_btn_container"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:padding="20dp"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
-        <Button
+        <LinearLayout
+            android:id="@+id/testing_btn_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/alpha_animation"
-            android:id="@+id/alpha_btn"/>
+            android:layout_centerInParent="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/scale_animation"
-            android:id="@+id/scale_btn"/>
+            <Button
+                android:id="@+id/alpha_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alpha_animation"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/rotation_animation"
-            android:id="@+id/rotation_btn"/>
+            <Button
+                android:id="@+id/scale_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/scale_animation"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/parallax_animation"
-            android:id="@+id/parallax_btn"/>
+            <Button
+                android:id="@+id/rotation_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rotation_animation"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/path_and_translation_animation"
-            android:id="@+id/path_and_translation_btn"/>
+            <Button
+                android:id="@+id/parallax_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/parallax_animation"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/zoom_out_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/zoom_out_animation"/>
+
+            <Button
+                android:id="@+id/path_and_translation_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/path_and_translation_animation"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
 
 </RelativeLayout>

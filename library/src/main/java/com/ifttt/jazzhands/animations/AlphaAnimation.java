@@ -1,5 +1,7 @@
 package com.ifttt.jazzhands.animations;
 
+import com.ifttt.jazzhands.Animation;
+
 import android.view.View;
 
 /**
@@ -11,11 +13,14 @@ public class AlphaAnimation extends Animation {
     private float mInAlpha;
 
     public AlphaAnimation(int page, float outAlpha, float inAlpha) {
-        this(page, page, outAlpha, inAlpha);
+        super(page, page);
+
+        this.mOutAlpha = outAlpha;
+        this.mInAlpha = inAlpha;
     }
 
     public AlphaAnimation(int start, int end, float outAlpha, float inAlpha) {
-        super(start, end, false);
+        super(start, end);
 
         this.mOutAlpha = outAlpha;
         this.mInAlpha = inAlpha;

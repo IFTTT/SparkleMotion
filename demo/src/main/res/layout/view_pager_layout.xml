@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ifttt.jazzhands.JazzHandsViewPager
+    <com.ifttt.jazzhands.JazzHandsViewPagerLayout
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
