@@ -192,7 +192,9 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
      * @param currentPage Currently displayed ViewPager page.
      */
     private void layoutDecors(float currentPage) {
-        for (Decor decor : mDecors) {
+        int decorsSize = mDecors.size();
+        for (int i = 0 ; i < decorsSize ; i++) {
+            Decor decor = mDecors.get(i);
             if ((decor.startPage > currentPage || decor.endPage < currentPage)
                     && decor.isAdded) {
                 decor.isAdded = false;
