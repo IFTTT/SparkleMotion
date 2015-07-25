@@ -126,7 +126,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
         }
 
         int decorSize = mDecors.size();
-        for (int i = indexOfRemoved + 1 ; i < decorSize; i++) {
+        for (int i = indexOfRemoved + 1; i < decorSize; i++) {
             mDecors.get(i).decorIndex = i;
         }
 

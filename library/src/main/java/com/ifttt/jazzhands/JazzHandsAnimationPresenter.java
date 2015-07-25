@@ -1,10 +1,6 @@
 package com.ifttt.jazzhands;
 
-import com.ifttt.jazzhands.animations.PathAnimation;
-import com.ifttt.jazzhands.animations.TranslationAnimation;
-
 import android.support.v4.util.SimpleArrayMap;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
