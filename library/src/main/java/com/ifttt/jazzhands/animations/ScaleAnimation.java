@@ -41,10 +41,10 @@ public class ScaleAnimation extends Animation {
     }
 
     @Override
-    public void onAnimate(View v, float fraction, float offset) {
-        fraction = Math.abs(fraction);
+    public void onAnimate(View v, float offset, float offsetInPixel) {
+        offset = Math.abs(offset);
 
-        v.setScaleX(mInScaleX + fraction * (mOutScaleX - mInScaleX));
-        v.setScaleY(mInScaleY + fraction * (mOutScaleY - mInScaleY));
+        v.setScaleX(mInScaleX + offset * (mOutScaleX - mInScaleX));
+        v.setScaleY(mInScaleY + offset * (mOutScaleY - mInScaleY));
     }
 }

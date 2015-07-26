@@ -27,8 +27,8 @@ public class AlphaAnimation extends Animation {
     }
 
     @Override
-    public void onAnimate(View v, float fraction, float offset) {
-        fraction = Math.abs(fraction);
-        v.setAlpha(mInAlpha + fraction * (mOutAlpha - mInAlpha));
+    public void onAnimate(View v, float offset, float offsetInPixel) {
+        offset = Math.abs(offset);
+        v.setAlpha(mInAlpha + offset * (mOutAlpha - mInAlpha));
     }
 }

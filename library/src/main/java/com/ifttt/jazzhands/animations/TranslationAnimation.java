@@ -33,9 +33,9 @@ public class TranslationAnimation extends Animation {
     }
 
     @Override
-    public void onAnimate(View v, float fraction, float offset) {
+    public void onAnimate(View v, float offset, float offsetInPixel) {
         if (!mAbsolute) {
-            offset = 0;
+            offsetInPixel = 0;
         }
 
         if (!mOriginalTranslationSet) {
@@ -45,9 +45,9 @@ public class TranslationAnimation extends Animation {
             mOriginalTranslationSet = true;
         }
 
-        fraction = Math.abs(fraction);
+        offset = Math.abs(offset);
 
-        v.setTranslationX(mOriginalTranslationX + fraction * (mTranslationX - mOriginalTranslationX) + offset);
-        v.setTranslationY(mOriginalTranslationY + fraction * (mTranslationY - mOriginalTranslationY));
+        v.setTranslationX(mOriginalTranslationX + offset * (mTranslationX - mOriginalTranslationX) + offsetInPixel);
+        v.setTranslationY(mOriginalTranslationY + offset * (mTranslationY - mOriginalTranslationY));
     }
 }

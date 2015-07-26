@@ -33,8 +33,8 @@ public abstract class Animation {
     /**
      * Base constructor of the class, accepting common information about the animation to this instance.
      *
-     * @param start    Page index that this animation should start.
-     * @param end      Page index that this animation should stop.
+     * @param start Page index that this animation should start.
+     * @param end   Page index that this animation should stop.
      */
     public Animation(
             int start, int end) {
@@ -51,33 +51,33 @@ public abstract class Animation {
     /**
      * Main method for animating Views within the pages.
      *
-     * @param v        View to be animated.
-     * @param fraction Fraction of the ViewPager scrolling, this is also the progression of the animation.
-     * @param offset   Page width offset.
+     * @param v             View to be animated.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation.
+     * @param offsetInPixel Page width offset.
      */
-    void animate(View v, float fraction, float offset) {
+    void animate(View v, float offset, float offsetInPixel) {
         if (mInterpolator != null) {
-            fraction = mInterpolator.getInterpolation(fraction);
+            offset = mInterpolator.getInterpolation(offset);
         }
 
         if (pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
-            if (fraction > pageStart) {
-                fraction -= pageStart;
+            if (offset > pageStart) {
+                offset -= pageStart;
             }
 
-            fraction = fraction / fractionAdjustment;
+            offset = offset / fractionAdjustment;
         }
 
         if (mAnimationListener != null) {
-            mAnimationListener.onAnimationRunning(fraction);
+            mAnimationListener.onAnimationRunning(offset);
         }
 
-        if (fraction < -1) {
-            animateOffScreenLeft(v, fraction, offset);
-        } else if (fraction <= 1) {
-            onAnimate(v, fraction, offset);
+        if (offset < -1) {
+            onAnimateOffScreenLeft(v, offset, offsetInPixel);
+        } else if (offset <= 1) {
+            onAnimate(v, offset, offsetInPixel);
         } else {
-            animateOffScreenRight(v, fraction, offset);
+            onAnimateOffScreenRight(v, offset, offsetInPixel);
         }
 
     }
@@ -86,18 +86,32 @@ public abstract class Animation {
      * Abstract method to be implemented to change View properties. Implement this method to provide custom
      * animations to the target View.
      *
-     * @param v        View to be animated.
-     * @param fraction Fraction of the ViewPager scrolling, this is also the progression of the animation.
-     * @param offset   Page width offset.
+     * @param v             View being animated.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation.
+     * @param offsetInPixel Page width offset.
      */
-    protected abstract void onAnimate(View v, float fraction, float offset);
+    protected abstract void onAnimate(View v, float offset, float offsetInPixel);
 
+    /**
+     * Called when the animation is running when the View is off screen and is to the left of the current screen.
+     *
+     * @param v             View being animated.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation.
+     * @param offsetInPixel Page width offset.
+     */
     @SuppressWarnings("unused")
-    protected void animateOffScreenLeft(View v, float fraction, float offset) {
+    protected void onAnimateOffScreenLeft(View v, float offset, float offsetInPixel) {
     }
 
+    /**
+     * Called when the animation is running when the View is off screen and is to the right of the current screen.
+     *
+     * @param v             View being animated.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation.
+     * @param offsetInPixel Page width offset.
+     */
     @SuppressWarnings("unused")
-    protected void animateOffScreenRight(View v, float fraction, float offset) {
+    protected void onAnimateOffScreenRight(View v, float offset, float offsetInPixel) {
     }
 
 

@@ -42,25 +42,25 @@ public class ZoomOutAnimation extends Animation {
     }
 
     @Override
-    protected void animateOffScreenLeft(View v, float fraction, float offset) {
+    protected void onAnimateOffScreenLeft(View v, float offset, float offsetInPixel) {
         v.setAlpha(0f);
     }
 
     @Override
-    protected void animateOffScreenRight(View v, float fraction, float offset) {
+    protected void onAnimateOffScreenRight(View v, float offset, float offsetInPixel) {
         v.setAlpha(0f);
     }
 
     @Override
-    protected void onAnimate(View v, float fraction, float offset) {
+    protected void onAnimate(View v, float offset, float offsetInPixel) {
         int pageWidth = v.getWidth();
         int pageHeight = v.getHeight();
 
-        float scaleFactor = Math.max(mMinScale, 1 - Math.abs(fraction));
+        float scaleFactor = Math.max(mMinScale, 1 - Math.abs(offset));
         float vertMargin = pageHeight * (1 - scaleFactor) / 2;
         float horzMargin = pageWidth * (1 - scaleFactor) / 2;
 
-        if (fraction < 0) {
+        if (offset < 0) {
             v.setTranslationX(horzMargin - vertMargin / 2);
         } else {
             v.setTranslationX(-horzMargin + vertMargin / 2);

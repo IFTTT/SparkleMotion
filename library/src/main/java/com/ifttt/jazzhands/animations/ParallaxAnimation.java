@@ -23,9 +23,9 @@ public class ParallaxAnimation extends Animation {
     }
 
     @Override
-    protected void onAnimate(View v, float fraction, float offset) {
+    protected void onAnimate(View v, float offset, float offsetInPixel) {
         int pageWidth = v.getWidth();
 
-        v.setTranslationX(pageWidth * -fraction / mFactor);
+        v.setTranslationX(pageWidth * -offset / mFactor);
     }
 }

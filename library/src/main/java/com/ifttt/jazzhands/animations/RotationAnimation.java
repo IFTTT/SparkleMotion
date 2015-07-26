@@ -35,19 +35,19 @@ public class RotationAnimation extends Animation {
     }
 
     @Override
-    public void onAnimate(View v, float fraction, float offset) {
-        fraction = Math.abs(fraction);
+    public void onAnimate(View v, float offset, float offsetInPixel) {
+        offset = Math.abs(offset);
 
         if (mRotationX > 0) {
-            v.setRotationX(fraction * mRotationX);
+            v.setRotationX(offset * mRotationX);
         }
 
         if (mRotationY > 0) {
-            v.setRotationY(fraction * mRotationY);
+            v.setRotationY(offset * mRotationY);
         }
 
         if (mRotation > 0) {
-            v.setRotation(fraction * mRotation);
+            v.setRotation(offset * mRotation);
         }
 
     }

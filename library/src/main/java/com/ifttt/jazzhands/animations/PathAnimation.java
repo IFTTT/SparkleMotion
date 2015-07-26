@@ -31,15 +31,15 @@ public class PathAnimation extends Animation {
     }
 
     @Override
-    public void onAnimate(View v, float fraction, float offset) {
+    public void onAnimate(View v, float offset, float offsetInPixel) {
         if (!mAbsolute) {
-            offset = 0;
+            offsetInPixel = 0;
         }
-        fraction = Math.abs(fraction);
+        offset = Math.abs(offset);
 
         float[] coordinates = new float[2];
-        mPathMeasure.getPosTan(mPathMeasure.getLength() * fraction, coordinates, null);
-        v.setTranslationX(coordinates[0] + offset);
+        mPathMeasure.getPosTan(mPathMeasure.getLength() * offset, coordinates, null);
+        v.setTranslationX(coordinates[0] + offsetInPixel);
         v.setTranslationY(coordinates[1]);
     }
 }

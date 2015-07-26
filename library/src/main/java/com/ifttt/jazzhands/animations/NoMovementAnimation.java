@@ -20,7 +20,7 @@ public class NoMovementAnimation extends Animation {
     }
 
     @Override
-    protected void onAnimate(View v, float fraction, float offset) {
-        v.setTranslationX(offset);
+    protected void onAnimate(View v, float offset, float offsetInPixel) {
+        v.setTranslationX(offsetInPixel);
     }
 }
