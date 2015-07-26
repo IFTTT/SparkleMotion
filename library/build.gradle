@@ -28,7 +28,6 @@ task checkstyle(type: Checkstyle) {
     source 'src/main/java/com/ifttt/jazzhands'
     include '**/*.java'
     exclude '**/gen/**'
-    exclude '**/IntroCustomViewPager.java'
 
     classpath = files()
 }
