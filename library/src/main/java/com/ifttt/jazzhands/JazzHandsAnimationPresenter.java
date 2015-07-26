@@ -20,10 +20,14 @@ public class JazzHandsAnimationPresenter {
     private int mCurrentPage;
 
     /**
-     * A HashMap that saves all animations with the target View's ID as key.
+     * A SimpleArrayMap that saves all animations with the target View's ID as key.
      */
     private SimpleArrayMap<Integer, ArrayList<Animation>> mAnimations;
 
+    /**
+     * A SimpleArrayMap that saves all animations with the target
+     * {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor} as key.
+     */
     private SimpleArrayMap<JazzHandsViewPagerLayout.Decor, ArrayList<Animation>> mDecorAnimations;
 
     public JazzHandsAnimationPresenter() {
@@ -31,18 +35,30 @@ public class JazzHandsAnimationPresenter {
         mDecorAnimations = new SimpleArrayMap<JazzHandsViewPagerLayout.Decor, ArrayList<Animation>>(3);
     }
 
+    /**
+     * Add animations to the target View. The View's id is used as key.
+     *
+     * @param id         Id of the target View.
+     * @param animations Animations to be associated to this View.
+     */
     public void addAnimation(int id, Animation... animations) {
         if (mAnimations.get(id) == null) {
-            mAnimations.put(id, new ArrayList<Animation>());
+            mAnimations.put(id, new ArrayList<Animation>(animations.length));
         }
 
         ArrayList<Animation> anims = mAnimations.get(id);
         Collections.addAll(anims, animations);
     }
 
+    /**
+     * Add animations to the target {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor}.
+     *
+     * @param decor      Target Decor.
+     * @param animations Animations to be associated to this Decor.
+     */
     public void addAnimation(JazzHandsViewPagerLayout.Decor decor, Animation... animations) {
         if (mDecorAnimations.get(decor) == null) {
-            mDecorAnimations.put(decor, new ArrayList<Animation>());
+            mDecorAnimations.put(decor, new ArrayList<Animation>(animations.length));
         }
 
         ArrayList<Animation> anims = mDecorAnimations.get(decor);
@@ -51,7 +67,14 @@ public class JazzHandsAnimationPresenter {
         }
     }
 
-    void presentAnimations(View parent, float fraction, float xOffset) {
+    /**
+     * Run the animations based on the View animations saved within the presenter and the offset of the scrolling.
+     *
+     * @param parent        Current page View of the ViewPager.
+     * @param offset        Scrolling offset of the ViewPager.
+     * @param offsetInPixel Scrolling offset in pixels based on the page View.
+     */
+    void presentAnimations(View parent, float offset, float offsetInPixel) {
         int animMapSize = mAnimations.size();
 
         // Animate all in-page animations.
@@ -77,12 +100,18 @@ public class JazzHandsAnimationPresenter {
                     continue;
                 }
 
-                animation.animate(viewToAnimate, fraction, xOffset);
+                animation.animate(viewToAnimate, offset, offsetInPixel);
             }
         }
     }
 
-    void presentDecorAnimations(float position, float fraction) {
+    /**
+     * Run the animations based on the Decor animations saved within the presenter and the offset of the scrolling.
+     *
+     * @param position Position of the current page.
+     * @param offset   Offset of the ViewPager scrolling.
+     */
+    void presentDecorAnimations(int position, float offset) {
         // Animate all decor or other View animations.
         int animMapSize = mDecorAnimations.size();
         for (int i = 0; i < animMapSize; i++) {
@@ -100,12 +129,12 @@ public class JazzHandsAnimationPresenter {
                     continue;
                 }
 
-                animation.animate(decor.contentView, fraction, 0);
+                animation.animate(decor.contentView, offset, 0);
             }
         }
     }
 
-    public void setCurrentPage(int currentPage) {
+    void setCurrentPage(int currentPage) {
         this.mCurrentPage = currentPage;
     }
 }

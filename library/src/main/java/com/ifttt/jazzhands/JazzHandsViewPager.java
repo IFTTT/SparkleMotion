@@ -28,10 +28,24 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
         super(context, attrs);
     }
 
-    public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter director) {
-        setJazzHandsAnimationPresenter(director, false);
+    /**
+     * Convenient method of {@link #setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter, boolean)} without
+     * reversing page drawing order.
+     *
+     * @param presenter JazzHandsAnimationPresenter object to set.
+     */
+    public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter presenter) {
+        setJazzHandsAnimationPresenter(presenter, false);
     }
 
+    /**
+     * Install a {@link JazzHandsAnimationPresenter} into this ViewPager to enable animations. Calling this method will
+     * set a default {@link android.support.v4.view.ViewPager.PageTransformer} to the ViewPager, which runs the
+     * animations in the presenter.
+     *
+     * @param presenter           JazzHandsAnimationPresenter object to set.
+     * @param reverseDrawingOrder Whether the ViewPager should reverse the drawing order of the pages.
+     */
     public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter presenter, boolean reverseDrawingOrder) {
         mJazzHandsAnimationPresenter = presenter;
 
@@ -46,19 +60,11 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
         return mJazzHandsAnimationPresenter != null;
     }
 
-    /**
-     * Convenient method to set {@link android.support.v4.view.ViewPager.PageTransformer} with pre-defined
-     * {@link #mReverseDrawingOrder}.
-     *
-     * @param transformer PageTransformer to use in this ViewPager.
-     */
-    public void setPageTransformer(PageTransformer transformer) {
-        this.setPageTransformer(mReverseDrawingOrder, transformer);
-    }
-
     @Override
     public void setPageTransformer(boolean reverseDrawingOrder, final PageTransformer transformer) {
-        mReverseDrawingOrder = reverseDrawingOrder;
+        if (mReverseDrawingOrder != reverseDrawingOrder) {
+            mReverseDrawingOrder = reverseDrawingOrder;
+        }
 
         if (mJazzHandsAnimationPresenter != null) {
             // Set a default PageTransformer to play animations stored in the presenter. The default
@@ -87,6 +93,8 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
     protected void onPageScrolled(int position, float offset, int offsetPixels) {
         if (mJazzHandsAnimationPresenter != null) {
             mJazzHandsAnimationPresenter.setCurrentPage(position);
+
+            // Animate any Decor animations.
             mJazzHandsAnimationPresenter.presentDecorAnimations(position, offset);
         }
 
