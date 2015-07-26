@@ -87,7 +87,8 @@ public abstract class Animation {
      * animations to the target View.
      *
      * @param v             View being animated.
-     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation, the
+     *                      range of the offset is [-1, 1].
      * @param offsetInPixel Page width offset.
      */
     protected abstract void onAnimate(View v, float offset, float offsetInPixel);
