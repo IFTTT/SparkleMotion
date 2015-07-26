@@ -39,6 +39,7 @@ public class TranslationAnimation extends Animation {
         }
 
         if (!mOriginalTranslationSet) {
+            // Store the original translation X and Y when the animation first starts.
             mOriginalTranslationX = v.getTranslationX();
             mOriginalTranslationY = v.getTranslationY();
             mOriginalTranslationSet = true;

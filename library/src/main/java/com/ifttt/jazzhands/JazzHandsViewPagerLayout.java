@@ -186,23 +186,26 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     }
 
     /**
-     * Based on the {@code startPage}, {@code endPage} and {@code layoutBehindViewPager} from
+     * Based on the <code>startPage</code>, <code>endPage</code> and <code>layoutBehindViewPager</code> from
      * {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor}, add or remove Decors to this FrameLayout.
      *
-     * @param currentPage Currently displayed ViewPager page.
+     * @param currentPageOffset Currently displayed ViewPager page and its offset.
      */
-    private void layoutDecors(float currentPage) {
+    private void layoutDecors(float currentPageOffset) {
         int decorsSize = mDecors.size();
         for (int i = 0; i < decorsSize; i++) {
             Decor decor = mDecors.get(i);
-            if ((decor.startPage > currentPage || decor.endPage < currentPage)
+            if (decor.startPage != Animation.ALL_PAGES
+                    && (decor.startPage > currentPageOffset || decor.endPage < currentPageOffset)
                     && decor.isAdded) {
+                // If the current page and offset has exceeded the range of the Decor, remove its content View.
                 decor.isAdded = false;
                 Collections.sort(mDecors);
                 removeDecorView(decor);
-            } else if (decor.startPage <= currentPage
-                    && decor.endPage >= currentPage
+            } else if ((decor.startPage <= currentPageOffset
+                    && decor.endPage >= currentPageOffset || decor.startPage == Animation.ALL_PAGES)
                     && !decor.isAdded) {
+                // If the current page and offset is within the range, add the Decor content View.
                 decor.isAdded = true;
                 decor.layoutIndex = getChildCount();
                 Collections.sort(mDecors);
@@ -308,33 +311,73 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
             private boolean mLayoutBehindViewPage;
 
-            public Builder setContentView(View contentView) {
+            public Builder() {
+                // Set default values for start and end page.
+                mStartPage = Animation.ALL_PAGES;
+                mEndPage = -1;
+            }
+
+            /**
+             * Mandatory View for the content of the Decor.
+             *
+             * @param contentView View for this Decor, must not be null.
+             * @return This object for chaining.
+             */
+            public Builder setContentView(@NonNull View contentView) {
                 mContentView = contentView;
                 return this;
             }
 
+            /**
+             * Optional starting page of the Decor. The default value is {@link Animation#ALL_PAGES}, which makes the
+             * Decor visible in every page.
+             *
+             * @param startPage Page index that this Decor should start to be visible.
+             * @return This object for chaining.
+             */
             public Builder setStartPage(int startPage) {
                 mStartPage = startPage;
                 return this;
             }
 
+            /**
+             * Optional ending page of the Decor. The default value is the same as the starting page.
+             *
+             * @param endPage Page index that this Decor should be removed.
+             * @return This object for chaining.
+             */
             public Builder setEndPage(int endPage) {
                 mEndPage = endPage;
                 return this;
             }
 
+            /**
+             * Optional attribute for setting the Decor to be drawn behind the ViewPager.
+             *
+             * @return This object for chaining.
+             */
             public Builder behindViewPage() {
                 mLayoutBehindViewPage = true;
                 return this;
             }
 
+            /**
+             * Build the Decor based on the attributes set in this Builder.
+             *
+             * @return Decor object.
+             */
             public Decor build() {
-                if (mStartPage > mEndPage) {
-                    throw new IllegalArgumentException("Start page is larger than end page");
-                }
-
                 if (mContentView == null) {
                     throw new NullPointerException("Content View cannot be null");
+                }
+
+                if (mStartPage > mEndPage || (mStartPage < Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES)) {
+                    throw new IllegalArgumentException(
+                            "Invalid startPage or endPage: (" + mStartPage + ", " + mEndPage + ")");
+                }
+
+                if (mStartPage >= Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES) {
+                    mEndPage = mStartPage;
                 }
 
                 return new Decor(mContentView, mStartPage, mEndPage, mLayoutBehindViewPage);
