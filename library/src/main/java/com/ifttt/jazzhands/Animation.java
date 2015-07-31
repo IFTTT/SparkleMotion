@@ -31,6 +31,22 @@ public abstract class Animation {
     private AnimationListener mAnimationListener;
 
     /**
+     * Convenient constructor that has default page start and end set to {@link #ALL_PAGES}.
+     */
+    public Animation() {
+        this(ALL_PAGES);
+    }
+
+    /**
+     * Convenient constructor that sets the page start and end to be the same page.
+     *
+     * @param page  Page index that this animation should run.
+     */
+    public Animation(int page) {
+        this(page, page);
+    }
+
+    /**
      * Base constructor of the class, accepting common information about the animation to this instance.
      *
      * @param start Page index that this animation should start.

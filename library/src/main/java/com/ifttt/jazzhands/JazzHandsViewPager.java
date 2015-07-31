@@ -34,7 +34,7 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
      *
      * @param presenter JazzHandsAnimationPresenter object to set.
      */
-    public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter presenter) {
+    void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter presenter) {
         setJazzHandsAnimationPresenter(presenter, false);
     }
 
@@ -46,17 +46,17 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
      * @param presenter           JazzHandsAnimationPresenter object to set.
      * @param reverseDrawingOrder Whether the ViewPager should reverse the drawing order of the pages.
      */
-    public void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter presenter, boolean reverseDrawingOrder) {
+    void setJazzHandsAnimationPresenter(JazzHandsAnimationPresenter presenter, boolean reverseDrawingOrder) {
         mJazzHandsAnimationPresenter = presenter;
 
         setPageTransformer(reverseDrawingOrder, null);
     }
 
-    public JazzHandsAnimationPresenter getJazzHandsAnimationPresenter() {
+    JazzHandsAnimationPresenter getJazzHandsAnimationPresenter() {
         return mJazzHandsAnimationPresenter;
     }
 
-    public boolean hasPresenter() {
+    boolean hasPresenter() {
         return mJazzHandsAnimationPresenter != null;
     }
 
@@ -93,7 +93,6 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
     protected void onPageScrolled(int position, float offset, int offsetPixels) {
         if (mJazzHandsAnimationPresenter != null) {
             mJazzHandsAnimationPresenter.setCurrentPage(position);
-
             // Animate any Decor animations.
             mJazzHandsAnimationPresenter.presentDecorAnimations(position, offset);
         }

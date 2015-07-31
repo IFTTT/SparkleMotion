@@ -22,6 +22,10 @@ public class TranslationAnimation extends Animation {
     private float mOriginalTranslationX;
     private float mOriginalTranslationY;
 
+    public TranslationAnimation(int page, boolean absolute, float translationX, float translationY) {
+        this(page, page, absolute, translationX, translationY);
+    }
+
     public TranslationAnimation(
             int start, int end, boolean absolute,
             float translationX,

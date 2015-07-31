@@ -13,7 +13,7 @@ public class AlphaAnimation extends Animation {
     private float mInAlpha;
 
     public AlphaAnimation(int page, float outAlpha, float inAlpha) {
-        super(page, page);
+        super(page);
 
         this.mOutAlpha = outAlpha;
         this.mInAlpha = inAlpha;

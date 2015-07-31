@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by zhelu on 3/27/15.
+ * Simple PagerAdapter for examples.
  */
 public class PagerAdapter extends ViewPagerAdapter {
     @Override

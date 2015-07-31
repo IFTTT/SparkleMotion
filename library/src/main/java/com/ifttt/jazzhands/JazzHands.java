@@ -102,7 +102,7 @@ public class JazzHands {
      * animations stored in {@link #animate(Animation...)} to {@link JazzHandsAnimationPresenter}. This is the last
      * method to call in order to build a functional JazzHandsViewPager. Once this is called, a {@link
      * JazzHandsAnimationPresenter} will be associated to the ViewPager, and the animations will be run when scrolling.
-     *
+     * <p/>
      * Note that to use this method, a {@link JazzHandsViewPagerLayout} must be provided.
      *
      * @param decors Target Decors.
@@ -149,6 +149,4 @@ public class JazzHands {
         mAnimations.clear();
 
     }
-
-
 }
