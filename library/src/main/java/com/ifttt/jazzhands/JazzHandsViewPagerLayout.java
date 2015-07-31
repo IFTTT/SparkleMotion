@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -138,6 +139,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
     @Override
     protected int getChildDrawingOrder(int childCount, int i) {
+        Log.d(getClass().getSimpleName(), childCount + " " + i);
         if (childCount == 1) {
             return super.getChildDrawingOrder(childCount, i);
         }
@@ -220,6 +222,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     private void removeDecorView(Decor decor) {
         final int indexOfRemoved = decor.layoutIndex;
         removeView(decor.contentView);
+        decor.layoutIndex = -1;
 
         // Update affected Decors' indices to reflect the change.
         int decorsSize = mDecors.size();
@@ -314,7 +317,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
             public Builder() {
                 // Set default values for start and end page.
                 mStartPage = Animation.ALL_PAGES;
-                mEndPage = -1;
+                mEndPage = Integer.MIN_VALUE;
             }
 
             /**
@@ -371,14 +374,17 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
                     throw new NullPointerException("Content View cannot be null");
                 }
 
-                if (mStartPage > mEndPage || (mStartPage < Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES)) {
+                if (mStartPage >= Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES) {
+                    mEndPage = mStartPage + 1;
+                }
+
+                if (mStartPage != Animation.ALL_PAGES &&
+                        ((mStartPage < Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES)
+                                || mStartPage > mEndPage)) {
                     throw new IllegalArgumentException(
                             "Invalid startPage or endPage: (" + mStartPage + ", " + mEndPage + ")");
                 }
 
-                if (mStartPage >= Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES) {
-                    mEndPage = mStartPage;
-                }
 
                 return new Decor(mContentView, mStartPage, mEndPage, mLayoutBehindViewPage);
             }

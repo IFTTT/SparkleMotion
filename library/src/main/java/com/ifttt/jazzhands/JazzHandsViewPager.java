@@ -2,6 +2,7 @@ package com.ifttt.jazzhands;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -90,10 +91,14 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return super.onTouchEvent(ev);
+    }
+
+    @Override
     protected void onPageScrolled(int position, float offset, int offsetPixels) {
         if (mJazzHandsAnimationPresenter != null) {
             mJazzHandsAnimationPresenter.setCurrentPage(position);
-
             // Animate any Decor animations.
             mJazzHandsAnimationPresenter.presentDecorAnimations(position, offset);
         }

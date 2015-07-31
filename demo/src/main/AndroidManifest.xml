@@ -28,6 +28,8 @@
 
         <activity android:name=".PathAndTranslationViewPagerActivity" />
 
+        <activity android:name=".JazzHandsIntroActivity" />
+
     </application>
 
 </manifest>
