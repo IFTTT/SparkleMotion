@@ -10,15 +10,6 @@ import android.view.View;
  *
  */
 public class NoMovementAnimation extends Animation {
-
-    public NoMovementAnimation(int page, boolean absolute) {
-        this(page, page, absolute);
-    }
-
-    public NoMovementAnimation(int start, int end, boolean absolute) {
-        super(start, end);
-    }
-
     @Override
     protected void onAnimate(View v, float offset, float offsetInPixel) {
         v.setTranslationX(offsetInPixel);
