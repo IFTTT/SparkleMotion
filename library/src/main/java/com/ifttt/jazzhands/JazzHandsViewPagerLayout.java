@@ -204,6 +204,8 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
                     && (decor.startPage > currentPageOffset || decor.endPage < currentPageOffset)
                     && decor.isAdded) {
 
+                // If slide out attribute is true, build a TranslationAnimation for the last page to
+                // change the translation X when the ViewPager is scrolling.
                 if (decor.slideOutAnimation == null && decor.slideOut) {
                     decor.slideOutAnimation = new TranslationAnimation(
                             decor.endPage, decor.endPage, true, decor.contentView.getTranslationX() - getWidth(),
@@ -234,7 +236,6 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     private void removeDecorView(Decor decor) {
         final int indexOfRemoved = decor.layoutIndex;
         removeView(decor.contentView);
-        decor.layoutIndex = -1;
 
         // Update affected Decors' indices to reflect the change.
         int decorsSize = mDecors.size();
@@ -295,7 +296,14 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
         int decorIndex;
 
+        /**
+         * Boolean flag to indicate whether this Decor should scroll with ViewPager when it is done.
+         */
         boolean slideOut;
+
+        /**
+         * Reference to the slide out {@link TranslationAnimation}.
+         */
         Animation slideOutAnimation;
 
         private Decor(

@@ -2,7 +2,6 @@ package com.ifttt.jazzhands;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -88,11 +87,6 @@ public class JazzHandsViewPager extends android.support.v4.view.ViewPager {
         } else {
             super.setPageTransformer(reverseDrawingOrder, transformer);
         }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        return super.onTouchEvent(ev);
     }
 
     @Override
