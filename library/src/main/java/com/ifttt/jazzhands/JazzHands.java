@@ -1,5 +1,7 @@
 package com.ifttt.jazzhands;
 
+import com.ifttt.jazzhands.animations.TranslationAnimation;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,6 +16,8 @@ public class JazzHands {
     private JazzHandsAnimationPresenter mPresenter;
 
     private boolean mReversedOrder;
+
+    private boolean mDefaultDecorAnimation;
 
     /**
      * Animations to be used for a set of target Views. Will be cleared after calling {@link #on(int...)}.
@@ -98,11 +102,22 @@ public class JazzHands {
     }
 
     /**
+     * Use default animations for {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor} to move along with
+     * ViewPager scrolling. If the animation target is not Decor, this attribute will be ignored.
+     *
+     * @return this instance for chaining.
+     */
+    public JazzHands defaultDecorAnimation() {
+        mDefaultDecorAnimation = true;
+        return this;
+    }
+
+    /**
      * Assign target {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor} to JazzHands, which will assign the
      * animations stored in {@link #animate(Animation...)} to {@link JazzHandsAnimationPresenter}. This is the last
      * method to call in order to build a functional JazzHandsViewPager. Once this is called, a {@link
      * JazzHandsAnimationPresenter} will be associated to the ViewPager, and the animations will be run when scrolling.
-     *
+     * <p/>
      * Note that to use this method, a {@link JazzHandsViewPagerLayout} must be provided.
      *
      * @param decors Target Decors.
@@ -149,6 +164,4 @@ public class JazzHands {
         mAnimations.clear();
 
     }
-
-
 }

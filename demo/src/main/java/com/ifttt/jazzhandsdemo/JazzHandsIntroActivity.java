@@ -27,7 +27,6 @@ public class JazzHandsIntroActivity extends AppCompatActivity{
         jazzHandsViewPagerLayout.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
         setContentView(jazzHandsViewPagerLayout);
 
-        jazzHandsViewPagerLayout.getViewPager().setOffscreenPageLimit(6);
         jazzHandsViewPagerLayout.getViewPager().setAdapter(new IntroPagerAdapter(this, true));
 
         JazzHands jazzHands = JazzHands.with(jazzHandsViewPagerLayout);

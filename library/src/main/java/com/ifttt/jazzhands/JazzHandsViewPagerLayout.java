@@ -139,7 +139,6 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
     @Override
     protected int getChildDrawingOrder(int childCount, int i) {
-        Log.d(getClass().getSimpleName(), childCount + " " + i);
         if (childCount == 1) {
             return super.getChildDrawingOrder(childCount, i);
         }
@@ -189,7 +188,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
     /**
      * Based on the <code>startPage</code>, <code>endPage</code> and <code>layoutBehindViewPager</code> from
-     * {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor}, add or remove Decors to this FrameLayout.
+     * {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor}, show or hide Decors to this FrameLayout.
      *
      * @param currentPageOffset Currently displayed ViewPager page and its offset.
      */
@@ -199,21 +198,22 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
             Decor decor = mDecors.get(i);
             if (decor.startPage != Animation.ALL_PAGES
                     && (decor.startPage > currentPageOffset || decor.endPage < currentPageOffset)
-                    && decor.isAdded) {
+                    && decor.contentView.getVisibility() == VISIBLE) {
                 // If the current page and offset has exceeded the range of the Decor, remove its content View.
-                decor.isAdded = false;
-                Collections.sort(mDecors);
-                removeDecorView(decor);
+                decor.contentView.setVisibility(GONE);
             } else if ((decor.startPage <= currentPageOffset
-                    && decor.endPage >= currentPageOffset || decor.startPage == Animation.ALL_PAGES)
-                    && !decor.isAdded) {
+                    && decor.endPage >= currentPageOffset || decor.startPage == Animation.ALL_PAGES)) {
                 // If the current page and offset is within the range, add the Decor content View.
-                decor.isAdded = true;
-                decor.layoutIndex = getChildCount();
-                Collections.sort(mDecors);
-                addView(decor.contentView);
-                if (decor.layoutBehindViewPage) {
-                    mViewPagerIndex++;
+                if (!decor.isAdded) {
+                    decor.isAdded = true;
+                    decor.layoutIndex = getChildCount();
+                    Collections.sort(mDecors);
+                    addView(decor.contentView);
+                    if (decor.layoutBehindViewPage) {
+                        mViewPagerIndex++;
+                    }
+                } else if (decor.contentView.getVisibility() == GONE){
+                    decor.contentView.setVisibility(VISIBLE);
                 }
             }
         }
