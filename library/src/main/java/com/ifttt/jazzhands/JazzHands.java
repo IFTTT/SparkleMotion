@@ -1,7 +1,5 @@
 package com.ifttt.jazzhands;
 
-import com.ifttt.jazzhands.animations.TranslationAnimation;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -16,8 +14,6 @@ public class JazzHands {
     private JazzHandsAnimationPresenter mPresenter;
 
     private boolean mReversedOrder;
-
-    private boolean mDefaultDecorAnimation;
 
     /**
      * Animations to be used for a set of target Views. Will be cleared after calling {@link #on(int...)}.
@@ -98,17 +94,6 @@ public class JazzHands {
      */
     public JazzHands animate(Animation... animations) {
         Collections.addAll(mAnimations, animations);
-        return this;
-    }
-
-    /**
-     * Use default animations for {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor} to move along with
-     * ViewPager scrolling. If the animation target is not Decor, this attribute will be ignored.
-     *
-     * @return this instance for chaining.
-     */
-    public JazzHands defaultDecorAnimation() {
-        mDefaultDecorAnimation = true;
         return this;
     }
 

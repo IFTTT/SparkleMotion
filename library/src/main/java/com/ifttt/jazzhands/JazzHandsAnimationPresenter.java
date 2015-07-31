@@ -13,7 +13,7 @@ import java.util.Collections;
  * {@link android.support.v4.view.ViewPager.PageTransformer} to run
  * any animation that should be run at any given circumstance (e.g. current page).
  */
-public class JazzHandsAnimationPresenter {
+class JazzHandsAnimationPresenter {
     /**
      * Current page from ViewPager, used to decide whether an animation should run.
      */

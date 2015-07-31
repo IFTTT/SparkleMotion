@@ -68,15 +68,6 @@ public class MainActivity extends ActionBarActivity {
                         startActivity(i);
                     }
                 });
-
-        findViewById(R.id.intro_btn).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(MainActivity.this, JazzHandsIntroActivity.class);
-                        startActivity(i);
-                    }
-                });
     }
 
 
