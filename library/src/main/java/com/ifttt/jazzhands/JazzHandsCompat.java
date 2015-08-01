@@ -19,6 +19,10 @@ import android.view.View;
  */
 final class JazzHandsCompat {
 
+    private JazzHandsCompat() {
+        throw new AssertionError("No instance");
+    }
+
     /**
      * Given a ViewPager and a {@link JazzHandsAnimationPresenter}, sets a PageTransformer and a OnPageChangeListener
      * that provides functionality of the presenter. The presenter will be referenced as a tag of the View.
