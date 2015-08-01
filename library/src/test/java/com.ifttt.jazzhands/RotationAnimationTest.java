@@ -23,22 +23,11 @@ public class RotationAnimationTest {
     @Test
     public void testRotationAnimation() throws Exception {
         View rotationView = mock(View.class);
-        RotationAnswer answer = new RotationAnswer();
+        SetterAnswer answer = new SetterAnswer();
         doAnswer(answer).when(rotationView).setRotation(Mockito.anyFloat());
 
         RotationAnimation rotationAnimation = new RotationAnimation(0, 270);
         rotationAnimation.onAnimate(rotationView, 0.3f, 0);
-        assertEquals(answer.rotation, 270 * 0.3f);
-    }
-
-    private static class RotationAnswer implements Answer<Void> {
-
-        float rotation;
-
-        @Override
-        public Void answer(InvocationOnMock invocation) throws Throwable {
-            rotation = (Float) invocation.getArguments()[0];
-            return null;
-        }
+        assertEquals(answer.value, 270 * 0.3f);
     }
 }

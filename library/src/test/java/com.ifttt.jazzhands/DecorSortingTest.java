@@ -1,5 +1,6 @@
 package com.ifttt.jazzhands;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import android.test.suitebuilder.annotation.SmallTest;
@@ -18,15 +19,21 @@ import static org.mockito.Mockito.mock;
 @SmallTest
 public class DecorSortingTest {
 
+    private View mDummyView;
+
+    @Before
+    public void setUp() throws Exception {
+        mDummyView = mock(View.class);
+    }
+
     @Test
     public void sortDecorWithBehind() throws Exception {
-        View dummyView = mock(View.class);
         Decor decor0 = new Decor.Builder()
-                .setContentView(dummyView)
+                .setContentView(mDummyView)
                 .build();
 
         Decor decor1 = new Decor.Builder()
-                .setContentView(dummyView)
+                .setContentView(mDummyView)
                 .behindViewPage()
                 .build();
 
@@ -41,14 +48,14 @@ public class DecorSortingTest {
 
     @Test
     public void sortDecorWithoutBehind() throws Exception {
-        View dummyView = mock(View.class);
+
 
         Decor decor0 = new Decor.Builder()
-                .setContentView(dummyView)
+                .setContentView(mDummyView)
                 .build();
 
         Decor decor1 = new Decor.Builder()
-                .setContentView(dummyView)
+                .setContentView(mDummyView)
                 .build();
 
         List<Decor> decors = new ArrayList<>();
@@ -86,11 +93,10 @@ public class DecorSortingTest {
 
     @Test
     public void testMultipleDecor() throws Exception {
-        View dummy = mock(View.class);
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
             Decor decor = new Decor.Builder()
-                    .setContentView(dummy)
+                    .setContentView(mDummyView)
                     .build();
             decor.layoutIndex = 10 - i;
             decor.decorIndex = i;
@@ -104,11 +110,10 @@ public class DecorSortingTest {
 
     @Test
     public void testMultipleDecorWithBehind() throws Exception {
-        View dummy = mock(View.class);
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
             Decor decor = new Decor.Builder()
-                    .setContentView(dummy)
+                    .setContentView(mDummyView)
                     .build();
 
             if (i == 3) {
@@ -146,11 +151,10 @@ public class DecorSortingTest {
 
     @Test
     public void testMultipleWithBehindAndRemoved() throws Exception {
-        View dummy = mock(View.class);
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
             Decor decor = new Decor.Builder()
-                    .setContentView(dummy)
+                    .setContentView(mDummyView)
                     .build();
 
             decor.isAdded = i != 3;
