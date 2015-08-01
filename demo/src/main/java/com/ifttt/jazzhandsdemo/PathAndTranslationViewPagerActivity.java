@@ -1,5 +1,6 @@
 package com.ifttt.jazzhandsdemo;
 
+import com.ifttt.jazzhands.Decor;
 import com.ifttt.jazzhands.JazzHands;
 import com.ifttt.jazzhands.JazzHandsViewPagerLayout;
 import com.ifttt.jazzhands.animations.PathAnimation;
@@ -45,7 +46,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_VERTICAL;
         page0Droid.setLayoutParams(lp);
-        JazzHandsViewPagerLayout.Decor decor = new JazzHandsViewPagerLayout.Decor.Builder()
+        Decor decor = new Decor.Builder()
                 .setContentView(page0Droid)
                 .setStartPage(0)
                 .setEndPage(2)
@@ -58,7 +59,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         buildPage2Animations(jazzHands, decor);
     }
 
-    private void buildPage0Animations(JazzHands jazzHands, JazzHandsViewPagerLayout.Decor decor) {
+    private void buildPage0Animations(JazzHands jazzHands, Decor decor) {
         Path path = new Path();
         path.quadTo(75, 100, 150, 0);
         path.quadTo(225, -100, 300, 0);
@@ -86,7 +87,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         jazzHands.animate(droid3Translation).on(R.id.page_1_drod_3);
     }
 
-    private void buildPage2Animations(JazzHands jazzHands, JazzHandsViewPagerLayout.Decor decor) {
+    private void buildPage2Animations(JazzHands jazzHands, Decor decor) {
         Path droid0Path = new Path();
         RectF droid0Rect = new RectF(0, -300, 600, 300);
         droid0Path.addOval(droid0Rect, Path.Direction.CW);
