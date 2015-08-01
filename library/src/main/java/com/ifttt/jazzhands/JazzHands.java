@@ -1,15 +1,17 @@
 package com.ifttt.jazzhands;
 
+import android.support.v4.view.ViewPager;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
  * Top level Builder class. Used for constructing a {@link JazzHandsAnimationPresenter} and associate
- * it with {@link JazzHandsViewPager}.
+ * it with {@link ViewPager}.
  */
 public class JazzHands {
 
-    private final JazzHandsViewPager mViewPager;
+    private final ViewPager mViewPager;
     private JazzHandsViewPagerLayout mViewPagerLayout;
     private JazzHandsAnimationPresenter mPresenter;
 
@@ -21,13 +23,13 @@ public class JazzHands {
     private ArrayList<Animation> mAnimations;
 
     /**
-     * Start constructing a {@link JazzHands} builder with a {@link JazzHandsViewPager} instance. Animations assigned
+     * Start constructing a {@link JazzHands} builder with a {@link ViewPager} instance. Animations assigned
      * to this builder will be assigned to the ViewPager.
      *
      * @param viewPager Target ViewPager.
      * @return this instance to chain functions.
      */
-    public static JazzHands with(JazzHandsViewPager viewPager) {
+    public static JazzHands with(ViewPager viewPager) {
         return new JazzHands(viewPager);
     }
 
@@ -43,12 +45,12 @@ public class JazzHands {
     }
 
     /**
-     * Private constructor for initializing the instance with ViewPager {@link JazzHandsViewPager}
+     * Private constructor for initializing the instance with ViewPager {@link ViewPager}
      * and {@link JazzHandsAnimationPresenter} reference.
      *
-     * @param viewPager JazzHandsViewPager object.
+     * @param viewPager ViewPager object.
      */
-    private JazzHands(JazzHandsViewPager viewPager) {
+    private JazzHands(ViewPager viewPager) {
         mViewPager = viewPager;
         init();
     }
@@ -57,7 +59,7 @@ public class JazzHands {
      * Private constructor for initializing the instance with {@link JazzHandsViewPagerLayout}
      * and {@link JazzHandsAnimationPresenter} reference.
      *
-     * @param viewPagerLayout JazzHandsViewPagerLayout object.
+     * @param viewPagerLayout ViewPagerLayout object.
      */
     private JazzHands(JazzHandsViewPagerLayout viewPagerLayout) {
         mViewPagerLayout = viewPagerLayout;
@@ -67,8 +69,8 @@ public class JazzHands {
     }
 
     private void init() {
-        if (mViewPager.hasPresenter()) {
-            mPresenter = mViewPager.getJazzHandsAnimationPresenter();
+        if (JazzHandsCompat.hasPresenter(mViewPager)) {
+            mPresenter = JazzHandsCompat.getJazzHandsAnimationPresenter(mViewPager);
         } else {
             mPresenter = new JazzHandsAnimationPresenter();
         }
@@ -100,20 +102,20 @@ public class JazzHands {
     /**
      * Assign target {@link Decor} to JazzHands, which will assign the
      * animations stored in {@link #animate(Animation...)} to {@link JazzHandsAnimationPresenter}. This is the last
-     * method to call in order to build a functional JazzHandsViewPager. Once this is called, a {@link
+     * method to call in order to build a functional ViewPager. Once this is called, a {@link
      * JazzHandsAnimationPresenter} will be associated to the ViewPager, and the animations will be run when scrolling.
      * <p/>
      * Note that to use this method, a {@link JazzHandsViewPagerLayout} must be provided.
      *
      * @param decors Target Decors.
-     * @throws IllegalStateException when a JazzHandsViewPagerLayout is not provided.
+     * @throws IllegalStateException when a ViewPagerLayout is not provided.
      */
     public void on(Decor... decors) {
         if (mViewPagerLayout == null) {
-            throw new IllegalStateException("A JazzHandsViewPagerLayout must be provided");
+            throw new IllegalStateException("A ViewPagerLayout must be provided");
         }
 
-        mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
+        JazzHandsCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
 
         Animation[] animations = new Animation[mAnimations.size()];
         mAnimations.toArray(animations);
@@ -129,7 +131,7 @@ public class JazzHands {
     /**
      * Assign target Views to JazzHands, which will assign the animations stored in {@link #animate(Animation...)}
      * to {@link JazzHandsAnimationPresenter}. This is the last method to call in order to build a functional
-     * JazzHandsViewPager.
+     * ViewPager.
      * Once this is called, a {@link JazzHandsAnimationPresenter} will be associated to the ViewPager, and the
      * animations
      * will be run when scrolling.
@@ -137,7 +139,7 @@ public class JazzHands {
      * @param ids Target View ids.
      */
     public void on(int... ids) {
-        mViewPager.setJazzHandsAnimationPresenter(mPresenter, mReversedOrder);
+        JazzHandsCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
 
         Animation[] anims = new Animation[mAnimations.size()];
         mAnimations.toArray(anims);
@@ -147,6 +149,5 @@ public class JazzHands {
         }
 
         mAnimations.clear();
-
     }
 }

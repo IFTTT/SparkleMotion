@@ -107,7 +107,7 @@ public abstract class Animation {
      *                      range of the offset is [-1, 1].
      * @param offsetInPixel Page width offset.
      */
-    protected abstract void onAnimate(View v, float offset, float offsetInPixel);
+    public abstract void onAnimate(View v, float offset, float offsetInPixel);
 
     /**
      * Called when the animation is running when the View is off screen and is to the left of the current screen.
@@ -117,7 +117,7 @@ public abstract class Animation {
      * @param offsetInPixel Page width offset.
      */
     @SuppressWarnings("unused")
-    protected void onAnimateOffScreenLeft(View v, float offset, float offsetInPixel) {
+    public void onAnimateOffScreenLeft(View v, float offset, float offsetInPixel) {
     }
 
     /**
@@ -128,7 +128,7 @@ public abstract class Animation {
      * @param offsetInPixel Page width offset.
      */
     @SuppressWarnings("unused")
-    protected void onAnimateOffScreenRight(View v, float offset, float offsetInPixel) {
+    public void onAnimateOffScreenRight(View v, float offset, float offsetInPixel) {
     }
 
 
