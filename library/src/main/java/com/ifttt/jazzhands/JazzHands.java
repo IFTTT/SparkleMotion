@@ -98,7 +98,7 @@ public class JazzHands {
     }
 
     /**
-     * Assign target {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor} to JazzHands, which will assign the
+     * Assign target {@link Decor} to JazzHands, which will assign the
      * animations stored in {@link #animate(Animation...)} to {@link JazzHandsAnimationPresenter}. This is the last
      * method to call in order to build a functional JazzHandsViewPager. Once this is called, a {@link
      * JazzHandsAnimationPresenter} will be associated to the ViewPager, and the animations will be run when scrolling.
@@ -108,7 +108,7 @@ public class JazzHands {
      * @param decors Target Decors.
      * @throws IllegalStateException when a JazzHandsViewPagerLayout is not provided.
      */
-    public void on(JazzHandsViewPagerLayout.Decor... decors) {
+    public void on(Decor... decors) {
         if (mViewPagerLayout == null) {
             throw new IllegalStateException("A JazzHandsViewPagerLayout must be provided");
         }
@@ -118,7 +118,7 @@ public class JazzHands {
         Animation[] animations = new Animation[mAnimations.size()];
         mAnimations.toArray(animations);
 
-        for (JazzHandsViewPagerLayout.Decor decor : decors) {
+        for (Decor decor : decors) {
             mPresenter.addAnimation(decor, animations);
             mViewPagerLayout.addDecor(decor);
         }

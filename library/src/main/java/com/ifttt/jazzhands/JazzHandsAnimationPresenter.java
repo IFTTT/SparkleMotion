@@ -26,13 +26,13 @@ class JazzHandsAnimationPresenter {
 
     /**
      * A SimpleArrayMap that saves all animations with the target
-     * {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor} as key.
+     * {@link Decor} as key.
      */
-    private SimpleArrayMap<JazzHandsViewPagerLayout.Decor, ArrayList<Animation>> mDecorAnimations;
+    private SimpleArrayMap<Decor, ArrayList<Animation>> mDecorAnimations;
 
     public JazzHandsAnimationPresenter() {
         mAnimations = new SimpleArrayMap<Integer, ArrayList<Animation>>(3);
-        mDecorAnimations = new SimpleArrayMap<JazzHandsViewPagerLayout.Decor, ArrayList<Animation>>(3);
+        mDecorAnimations = new SimpleArrayMap<Decor, ArrayList<Animation>>(3);
     }
 
     /**
@@ -51,12 +51,12 @@ class JazzHandsAnimationPresenter {
     }
 
     /**
-     * Add animations to the target {@link com.ifttt.jazzhands.JazzHandsViewPagerLayout.Decor}.
+     * Add animations to the target {@link Decor}.
      *
      * @param decor      Target Decor.
      * @param animations Animations to be associated to this Decor.
      */
-    public void addAnimation(JazzHandsViewPagerLayout.Decor decor, Animation... animations) {
+    public void addAnimation(Decor decor, Animation... animations) {
         if (mDecorAnimations.get(decor) == null) {
             mDecorAnimations.put(decor, new ArrayList<Animation>(animations.length));
         }
@@ -115,7 +115,7 @@ class JazzHandsAnimationPresenter {
         // Animate all decor or other View animations.
         int animMapSize = mDecorAnimations.size();
         for (int i = 0; i < animMapSize; i++) {
-            JazzHandsViewPagerLayout.Decor decor = mDecorAnimations.keyAt(i);
+            Decor decor = mDecorAnimations.keyAt(i);
             ArrayList<Animation> animations = mDecorAnimations.get(decor);
 
             int animListSize = animations.size();
