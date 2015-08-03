@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * A wrapper FrameLayout containing a {@link JazzHandsViewPager}. This class supports adding
+ * A wrapper FrameLayout containing a {@link ViewPager}. This class supports adding
  * {@link Decor} to the ViewPager, which can be animated across pages.
  * <p/>
  * A Decor of the ViewPager is only for animation purpose, which means if there's no animation associated with it,
@@ -20,7 +20,7 @@ import java.util.Collections;
  */
 public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
 
-    private JazzHandsViewPager mJazzHandsViewPager;
+    private ViewPager mJazzHandsViewPager;
 
     /**
      * Index of the ViewPager within this layout.
@@ -46,24 +46,30 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
     private void init() {
         // Add JazzHandsViewPager.
-        mJazzHandsViewPager = new JazzHandsViewPager(getContext());
+        mJazzHandsViewPager = new ViewPager(getContext());
         addView(mJazzHandsViewPager);
         mViewPagerIndex = 0;
 
         mJazzHandsViewPager.addOnPageChangeListener(this);
+
+        JazzHandsCompat.installJazzHandsPresenter(mJazzHandsViewPager, false);
     }
 
     /**
-     * Use an external {@link JazzHandsViewPager} instead of the default one as the ViewPager of the layout. The parent
+     * Use an external {@link ViewPager} instead of the default one as the ViewPager of the layout. The parent
      * of the ViewPager must be null or this layout.
      *
      * @param viewPager ViewPager object to be added to this layout.
      */
-    public void setViewPager(@NonNull JazzHandsViewPager viewPager) {
+    public void setViewPager(@NonNull ViewPager viewPager, boolean reverseDrawingOrder) {
         mJazzHandsViewPager.removeOnPageChangeListener(this);
         removeView(mJazzHandsViewPager);
 
         mViewPagerIndex = 0;
+
+        if (!JazzHandsCompat.hasPresenter(viewPager)) {
+            JazzHandsCompat.installJazzHandsPresenter(viewPager, reverseDrawingOrder);
+        }
 
         if (viewPager.getParent() != null && viewPager.getParent() == this) {
             // ViewPager is already a child View.
@@ -77,11 +83,11 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     }
 
     /**
-     * Return the {@link JazzHandsViewPager} used in this layout.
+     * Return the {@link ViewPager} used in this layout.
      *
      * @return JazzHandsViewPager object.
      */
-    public JazzHandsViewPager getViewPager() {
+    public ViewPager getViewPager() {
         return mJazzHandsViewPager;
     }
 
@@ -209,7 +215,12 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
                     decor.slideOutAnimation = new TranslationAnimation(
                             decor.endPage, decor.endPage, true, decor.contentView.getTranslationX() - getWidth(),
                             decor.contentView.getTranslationY());
-                    mJazzHandsViewPager.getJazzHandsAnimationPresenter().addAnimation(decor, decor.slideOutAnimation);
+
+                    JazzHandsAnimationPresenter presenter =
+                            JazzHandsCompat.getJazzHandsAnimationPresenter(mJazzHandsViewPager);
+                    if (presenter != null) {
+                        presenter.addAnimation(decor, decor.slideOutAnimation);
+                    }
                 } else if (decor.contentView.getVisibility() == VISIBLE
                         && (!decor.slideOut || (decor.endPage + 1 < currentPageOffset))) {
                     decor.contentView.setVisibility(GONE);

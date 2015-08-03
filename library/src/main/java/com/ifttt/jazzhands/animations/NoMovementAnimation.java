@@ -11,7 +11,7 @@ import android.view.View;
  */
 public class NoMovementAnimation extends Animation {
     @Override
-    protected void onAnimate(View v, float offset, float offsetInPixel) {
+    public void onAnimate(View v, float offset, float offsetInPixel) {
         v.setTranslationX(offsetInPixel);
     }
 }

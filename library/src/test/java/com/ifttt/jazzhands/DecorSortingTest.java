@@ -152,7 +152,7 @@ public class DecorSortingTest {
     @Test
     public void testMultipleWithBehindAndRemoved() throws Exception {
         List<Decor> decors = new ArrayList<>(10);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             Decor decor = new Decor.Builder()
                     .setContentView(mDummyView)
                     .build();
@@ -162,17 +162,16 @@ public class DecorSortingTest {
                 decor.layoutBehindViewPage = true;
             }
 
-            decor.layoutIndex = 10 - i;
+            decor.layoutIndex = 100 - i;
             decor.decorIndex = i;
             decors.add(decor);
         }
 
         Collections.sort(decors);
-        assertEquals(3, decors.get(9).decorIndex);
-        assertEquals(0, decors.get(0).decorIndex);
-        assertEquals(2, decors.get(1).decorIndex);
-        assertEquals(4, decors.get(2).decorIndex);
-        assertEquals(6, decors.get(3).decorIndex);
-        assertEquals(8, decors.get(4).decorIndex);
+        assertEquals(3, decors.get(99).decorIndex);
+
+        for (int i = 0, j = 0 ; i < 100 ; i = i + 2, j++) {
+            assertEquals(i, decors.get(j).decorIndex);
+        }
     }
 }

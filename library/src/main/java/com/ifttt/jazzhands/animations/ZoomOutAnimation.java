@@ -42,17 +42,17 @@ public class ZoomOutAnimation extends Animation {
     }
 
     @Override
-    protected void onAnimateOffScreenLeft(View v, float offset, float offsetInPixel) {
+    public void onAnimateOffScreenLeft(View v, float offset, float offsetInPixel) {
         v.setAlpha(0f);
     }
 
     @Override
-    protected void onAnimateOffScreenRight(View v, float offset, float offsetInPixel) {
+    public void onAnimateOffScreenRight(View v, float offset, float offsetInPixel) {
         v.setAlpha(0f);
     }
 
     @Override
-    protected void onAnimate(View v, float offset, float offsetInPixel) {
+    public void onAnimate(View v, float offset, float offsetInPixel) {
         int pageWidth = v.getWidth();
         int pageHeight = v.getHeight();
 
