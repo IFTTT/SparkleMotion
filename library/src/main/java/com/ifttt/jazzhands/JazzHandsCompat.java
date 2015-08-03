@@ -17,7 +17,7 @@ import android.view.View;
  * to use {@link #setPageTransformer(ViewPager, boolean, ViewPager.PageTransformer)} method, so that the presenter is
  * preserved.
  */
-final class JazzHandsCompat {
+public final class JazzHandsCompat {
 
     private JazzHandsCompat() {
         throw new AssertionError("No instance");
