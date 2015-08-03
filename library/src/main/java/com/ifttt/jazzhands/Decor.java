@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 /**
- * An animation decoration of the {@link JazzHandsViewPager}. A Decor will respond to the scrolling of the
+ * An animation decoration of the {@link JazzHandsViewPagerLayout}. A Decor will respond to the scrolling of the
  * ViewPager and run animations based on it. One main usage of a Decor is to play cross page animations. Because
  * a Decor is drawn outside of the ViewPager, it won't be clipped by any page, therefore capable of running
  * animations that require Views to go across pages.
