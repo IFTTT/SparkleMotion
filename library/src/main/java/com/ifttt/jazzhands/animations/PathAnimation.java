@@ -1,22 +1,21 @@
 package com.ifttt.jazzhands.animations;
 
-import com.ifttt.jazzhands.Animation;
-
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.view.View;
+import com.ifttt.jazzhands.Animation;
 
 /**
- * Subclass of {@link Animation} that animates the view based on a {@link Path}. It is essentially a translation
- * animation, but the translation x and y is changed to follow the path.
+ * Subclass of {@link Animation} that animates the view based on a {@link Path}. It is essentially
+ * a translation animation, but the translation x and y is changed to follow the path.
  */
 public class PathAnimation extends Animation {
 
     private final PathMeasure mPathMeasure;
 
     /**
-     * Flag to set whether this animation should be relative to the scrolling page or not. If set to true, the View
-     * being animated will ignore the scrolling of the parent View.
+     * Flag to set whether this animation should be relative to the scrolling page or not. If set
+     * to true, the View being animated will ignore the scrolling of the parent View.
      */
     private final boolean mAbsolute;
 

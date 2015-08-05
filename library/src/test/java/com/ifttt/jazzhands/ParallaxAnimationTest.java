@@ -2,15 +2,10 @@ package com.ifttt.jazzhands;
 
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
-
 import com.ifttt.jazzhands.animations.ParallaxAnimation;
-
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -25,8 +20,7 @@ public class ParallaxAnimationTest {
         when(dummyView.getWidth()).thenReturn(100);
 
         SetterAnswer answer = new SetterAnswer();
-        doAnswer(answer).when(dummyView)
-                .setTranslationX(Mockito.anyFloat());
+        doAnswer(answer).when(dummyView).setTranslationX(Mockito.anyFloat());
         ParallaxAnimation animation = new ParallaxAnimation(0, 4);
         animation.onAnimate(dummyView, 0.3f, 0);
 

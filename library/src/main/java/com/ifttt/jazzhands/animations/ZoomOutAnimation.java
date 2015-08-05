@@ -1,15 +1,15 @@
 package com.ifttt.jazzhands.animations;
 
+import android.view.View;
 import com.ifttt.jazzhands.Animation;
 
-import android.view.View;
-
 /**
- * Subclass of {@link Animation} that runs a more complex animation, which scales the view down and fade out
- * the view to a certain value as the ViewPager scrolls, and return back to original values when the page is
- * scrolled.
+ * Subclass of {@link Animation} that runs a more complex animation, which scales the view down and
+ * fade out the view to a certain value as the ViewPager scrolls, and return back to original values
+ * when the page is scrolled.
  * <p/>
- * Implementation details are from http://developer.android.com/training/animation/screen-slide.html#pagetransformer.
+ * Implementation details are from
+ * http://developer.android.com/training/animation/screen-slide.html#pagetransformer.
  */
 public class ZoomOutAnimation extends Animation {
     private static final float DEFAULT_MIN_SCALE = 0.85f;
@@ -19,10 +19,11 @@ public class ZoomOutAnimation extends Animation {
     private final float mMinAlpha;
 
     /**
-     * Base constructor of the class, accepting common information about the animation to this instance.
+     * Base constructor of the class, accepting common information about the animation to this
+     * instance.
      *
-     * @param start    Page index that this animation should start.
-     * @param end      Page index that this animation should stop.
+     * @param start Page index that this animation should start.
+     * @param end Page index that this animation should stop.
      * @param minScale Minimum scale X and Y of the View when animating.
      * @param minAlpha Minimum alpha of the View when animating.
      */
@@ -71,10 +72,6 @@ public class ZoomOutAnimation extends Animation {
         v.setScaleY(scaleFactor);
 
         // Fade the page relative to its size.
-        v.setAlpha(mMinAlpha +
-                (scaleFactor - mMinScale) /
-                        (1 - mMinScale) * (1 - mMinAlpha));
+        v.setAlpha(mMinAlpha + (scaleFactor - mMinScale) / (1 - mMinScale) * (1 - mMinAlpha));
     }
-
-
 }

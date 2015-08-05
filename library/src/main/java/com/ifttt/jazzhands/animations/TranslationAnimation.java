@@ -1,8 +1,7 @@
 package com.ifttt.jazzhands.animations;
 
-import com.ifttt.jazzhands.Animation;
-
 import android.view.View;
+import com.ifttt.jazzhands.Animation;
 
 /**
  * Subclass of {@link Animation} that changes the View's translation x and y.
@@ -13,8 +12,8 @@ public class TranslationAnimation extends Animation {
     private final float mTranslationY;
 
     /**
-     * Flag to set whether this animation should be relative to the scrolling page or not. If set to true, the View
-     * being animated will ignore the scrolling of the parent View.
+     * Flag to set whether this animation should be relative to the scrolling page or not. If set
+     * to true, the View being animated will ignore the scrolling of the parent View.
      */
     private final boolean mAbsolute;
 
@@ -22,13 +21,12 @@ public class TranslationAnimation extends Animation {
     private float mOriginalTranslationX;
     private float mOriginalTranslationY;
 
-    public TranslationAnimation(int page, boolean absolute, float translationX, float translationY) {
+    public TranslationAnimation(int page, boolean absolute, float translationX,
+            float translationY) {
         this(page, page, absolute, translationX, translationY);
     }
 
-    public TranslationAnimation(
-            int start, int end, boolean absolute,
-            float translationX,
+    public TranslationAnimation(int start, int end, boolean absolute, float translationX,
             float translationY) {
         super(start, end);
         this.mAbsolute = absolute;
@@ -51,7 +49,8 @@ public class TranslationAnimation extends Animation {
 
         offset = Math.abs(offset);
 
-        v.setTranslationX(mOriginalTranslationX + offset * (mTranslationX - mOriginalTranslationX) + offsetInPixel);
+        v.setTranslationX(mOriginalTranslationX + offset * (mTranslationX - mOriginalTranslationX)
+                + offsetInPixel);
         v.setTranslationY(mOriginalTranslationY + offset * (mTranslationY - mOriginalTranslationY));
     }
 }

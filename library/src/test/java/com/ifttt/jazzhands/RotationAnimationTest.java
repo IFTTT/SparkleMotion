@@ -1,16 +1,11 @@
 package com.ifttt.jazzhands;
 
-import com.ifttt.jazzhands.animations.RotationAnimation;
-
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
+import com.ifttt.jazzhands.animations.RotationAnimation;
+import org.junit.Test;
+import org.mockito.Mockito;
 
-import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
