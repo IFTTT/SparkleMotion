@@ -1,8 +1,7 @@
 package com.ifttt.jazzhands.animations;
 
-import com.ifttt.jazzhands.Animation;
-
 import android.view.View;
+import com.ifttt.jazzhands.Animation;
 
 /**
  * Subclass of {@link Animation} that changes View's rotation.
@@ -49,6 +48,5 @@ public class RotationAnimation extends Animation {
         if (mRotation > 0) {
             v.setRotation(offset * mRotation);
         }
-
     }
 }

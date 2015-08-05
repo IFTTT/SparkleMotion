@@ -1,13 +1,5 @@
 package com.ifttt.jazzhandsdemo;
 
-import com.ifttt.jazzhands.Decor;
-import com.ifttt.jazzhands.JazzHands;
-import com.ifttt.jazzhands.JazzHandsViewPagerLayout;
-import com.ifttt.jazzhands.animations.PathAnimation;
-import com.ifttt.jazzhands.animations.RotationAnimation;
-import com.ifttt.jazzhands.animations.ScaleAnimation;
-import com.ifttt.jazzhands.animations.TranslationAnimation;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -21,6 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import com.ifttt.jazzhands.Decor;
+import com.ifttt.jazzhands.JazzHands;
+import com.ifttt.jazzhands.JazzHandsViewPagerLayout;
+import com.ifttt.jazzhands.animations.PathAnimation;
+import com.ifttt.jazzhands.animations.RotationAnimation;
+import com.ifttt.jazzhands.animations.ScaleAnimation;
+import com.ifttt.jazzhands.animations.TranslationAnimation;
 
 /**
  * Comprehensive demo for {@link PathAnimation} and {@link TranslationAnimation}.
@@ -33,7 +32,8 @@ public class PathAndTranslationViewPagerActivity extends Activity {
 
         setContentView(R.layout.view_pager_layout);
 
-        JazzHandsViewPagerLayout viewPager = (JazzHandsViewPagerLayout) findViewById(R.id.view_pager);
+        JazzHandsViewPagerLayout viewPager =
+                (JazzHandsViewPagerLayout) findViewById(R.id.view_pager);
         viewPager.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
         viewPager.getViewPager().setPageMargin(5);
         viewPager.getViewPager().setPageMarginDrawable(new ColorDrawable(Color.BLACK));
@@ -41,16 +41,16 @@ public class PathAndTranslationViewPagerActivity extends Activity {
 
         ImageView page0Droid = new ImageView(this);
         page0Droid.setImageResource(R.mipmap.ic_launcher);
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams lp =
+                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_VERTICAL;
         page0Droid.setLayoutParams(lp);
-        Decor decor = new Decor.Builder()
-                .setContentView(page0Droid)
-                .setStartPage(0)
-                .setEndPage(2)
-                .behindViewPage()
+        Decor decor = new Decor.Builder() //
+                .setContentView(page0Droid) //
+                .setStartPage(0) //
+                .setEndPage(2) //
+                .behindViewPage() //
                 .build();
 
         JazzHands jazzHands = JazzHands.with(viewPager).reverseDrawingOrder();
@@ -67,8 +67,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         path.quadTo(525, -100, 600, 0);
 
         PathAnimation pathAnimation = new PathAnimation(0, 0, true, path);
-        jazzHands.animate(pathAnimation)
-                .on(decor);
+        jazzHands.animate(pathAnimation).on(decor);
     }
 
     private void buildPage1Animations(JazzHands jazzHands) {
@@ -95,8 +94,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         RotationAnimation rotationAnimation = new RotationAnimation(1, 2, 360);
 
         PathAnimation pathAnimation = new PathAnimation(1, 1, true, droid0Path);
-        jazzHands.animate(rotationAnimation, pathAnimation)
-                .on(decor);
+        jazzHands.animate(rotationAnimation, pathAnimation).on(decor);
     }
 
     private static class PagerAdapter extends ViewPagerAdapter {
@@ -111,11 +109,14 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         protected View getView(int position, ViewGroup container) {
             switch (position) {
                 case 0:
-                    return mLayoutInflater.inflate(R.layout.path_translation_page_0, container, false);
+                    return mLayoutInflater.inflate(R.layout.path_translation_page_0, container,
+                            false);
                 case 1:
-                    return mLayoutInflater.inflate(R.layout.path_translation_page_1, container, false);
+                    return mLayoutInflater.inflate(R.layout.path_translation_page_1, container,
+                            false);
                 case 2:
-                    return mLayoutInflater.inflate(R.layout.path_translation_page_2, container, false);
+                    return mLayoutInflater.inflate(R.layout.path_translation_page_2, container,
+                            false);
                 default:
                     return null;
             }

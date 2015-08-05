@@ -1,1 +1,3 @@
+rootProject.name = 'jazzhands'
+
 include ':demo', ':library'

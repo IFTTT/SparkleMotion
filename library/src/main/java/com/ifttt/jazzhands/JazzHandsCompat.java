@@ -5,17 +5,18 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 /**
- * Helper class for installing {@link JazzHandsAnimationPresenter} into a {@link ViewPager}, so that any ViewPager
- * can use JazzHands animations.
+ * Helper class for installing {@link JazzHandsAnimationPresenter} into a {@link ViewPager}, so
+ * that any ViewPager can use JazzHands animations.
  * <p/>
- * The {@link JazzHandsAnimationPresenter} instance will be referenced by {@link View#setTag(int, Object)} within the
- * ViewPager, and a {@link android.support.v4.view.ViewPager.PageTransformer} and a
- * {@link android.support.v4.view.ViewPager.OnPageChangeListener} will be set as well to provide functionality of
- * JazzHands.
+ * The {@link JazzHandsAnimationPresenter} instance will be referenced by {@link View#setTag(int,
+ * Object)} within the ViewPager, and a {@link android.support.v4.view.ViewPager.PageTransformer}
+ * and a {@link android.support.v4.view.ViewPager.OnPageChangeListener} will be set as well
+ * to provide functionality of JazzHands.
  * <p/>
- * Note: Once a JazzHandsAnimationPresenter is installed, if you would like to provide another PageTransformer, you need
- * to use {@link #setPageTransformer(ViewPager, boolean, ViewPager.PageTransformer)} method, so that the presenter is
- * preserved.
+ * Note: Once a JazzHandsAnimationPresenter is installed, if you would like to provide another
+ * PageTransformer, you need to use
+ * {@link #setPageTransformer(ViewPager, boolean, ViewPager.PageTransformer)} method, so
+ * that the presenter is preserved.
  */
 public final class JazzHandsCompat {
 
@@ -24,13 +25,14 @@ public final class JazzHandsCompat {
     }
 
     /**
-     * Given a ViewPager and a {@link JazzHandsAnimationPresenter}, sets a PageTransformer and a OnPageChangeListener
-     * that provides functionality of the presenter. The presenter will be referenced as a tag of the View.
+     * Given a ViewPager and a {@link JazzHandsAnimationPresenter}, sets a PageTransformer and a
+     * OnPageChangeListener that provides functionality of the presenter.
+     * The presenter will be referenced as a tag of the View.
      *
-     * @param viewPager           ViewPager instance.
-     * @param reverseDrawingOrder Whether the ViewPager should reverse it child Views' drawing order.
-     * @param presenter           JazzHandsAnimationPresenter instance to be installed.
-     *
+     * @param viewPager ViewPager instance.
+     * @param reverseDrawingOrder Whether the ViewPager should reverse it child Views' drawing
+     * order.
+     * @param presenter JazzHandsAnimationPresenter instance to be installed.
      * @see {@link ViewPager#setPageTransformer(boolean, ViewPager.PageTransformer)}
      */
     static void installJazzHandsPresenter(ViewPager viewPager, boolean reverseDrawingOrder,
@@ -55,7 +57,8 @@ public final class JazzHandsCompat {
         // Set OnPageChangeListener
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset,
+                    int positionOffsetPixels) {
                 presenter.setCurrentPage(position);
                 // Animate any Decor animations.
                 presenter.presentDecorAnimations(position, positionOffset);
@@ -68,12 +71,12 @@ public final class JazzHandsCompat {
     }
 
     /**
-     * Convenient method for installing {@link JazzHandsAnimationPresenter}. A new JazzHandsAnimationPresenter will be
-     * created and attached to the ViewPager.
+     * Convenient method for installing {@link JazzHandsAnimationPresenter}. A new
+     * JazzHandsAnimationPresenter will be created and attached to the ViewPager.
      *
-     * @param viewPager           ViewPager instance.
-     * @param reverseDrawingOrder Whether the ViewPager should reverse it child Views' drawing order.
-     *
+     * @param viewPager ViewPager instance.
+     * @param reverseDrawingOrder Whether the ViewPager should reverse it child Views' drawing
+     * order.
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean, JazzHandsAnimationPresenter)}
      * @see {@link #installJazzHandsPresenter(ViewPager)}
      */
@@ -83,11 +86,11 @@ public final class JazzHandsCompat {
     }
 
     /**
-     * Convenient method for installing {@link JazzHandsAnimationPresenter} without reversing ViewPager's child Views
-     * drawing order. A new JazzHandsAnimationPresenter will be created and attached to the ViewPager.
+     * Convenient method for installing {@link JazzHandsAnimationPresenter} without reversing
+     * ViewPager's child Views drawing order.
+     * A new JazzHandsAnimationPresenter will be created and attached to the ViewPager.
      *
      * @param viewPager ViewPager instance.
-     *
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean, JazzHandsAnimationPresenter)}
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean)}
      */
@@ -96,13 +99,14 @@ public final class JazzHandsCompat {
     }
 
     /**
-     * Sets a {@link android.support.v4.view.ViewPager.PageTransformer} to the given ViewPager. Using this method to set
-     * PageTransformer is required for the ViewPagers that already have {@link JazzHandsAnimationPresenter} installed.
+     * Sets a {@link android.support.v4.view.ViewPager.PageTransformer} to the given ViewPager.
+     * Using this method to set PageTransformer is required for the ViewPagers that already have
+     * {@link JazzHandsAnimationPresenter} installed.
      *
-     * @param viewPager          ViewPager instance.
-     * @param reversDrawingOrder Whether the ViewPager should reverse it child Views' drawing order.
-     * @param transformer        PageTransformer instance.
-     *
+     * @param viewPager ViewPager instance.
+     * @param reversDrawingOrder Whether the ViewPager should reverse it child Views' drawing
+     * order.
+     * @param transformer PageTransformer instance.
      * @see {@link ViewPager#setPageTransformer(boolean, ViewPager.PageTransformer)}
      * @see {@link android.support.v4.view.ViewPager.PageTransformer}
      */
@@ -147,7 +151,8 @@ public final class JazzHandsCompat {
     }
 
     /**
-     * Convenient method to check whether {@link JazzHandsAnimationPresenter} is attached to the given ViewPager.
+     * Convenient method to check whether {@link JazzHandsAnimationPresenter} is attached to the
+     * given ViewPager.
      *
      * @param viewPager ViewPager instance.
      * @return True if there is a JazzHandsAnimationPresenter attached, false otherwise.

@@ -4,9 +4,10 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 /**
- * Abstract class for running JazzHands animation. This class contains all common information about the
- * animation to be run on ViewPager pages, with an abstract method {@link #onAnimate(View, float, float)} to be
- * implemented so that the View properties can be changed during ViewPager scrolling.
+ * Abstract class for running JazzHands animation. This class contains all common information about
+ * the animation to be run on ViewPager pages, with an abstract method
+ * {@link #onAnimate(View, float, float)} to be implemented so that the View properties can be
+ * changed during ViewPager scrolling.
  */
 public abstract class Animation {
 
@@ -21,8 +22,8 @@ public abstract class Animation {
     protected int pageEnd;
 
     /**
-     * Adjustment to page fraction taking animating pages into account. If an animation is going to run
-     * cross multiple pages, the progress will be evenly distributed to the pages.
+     * Adjustment to page fraction taking animating pages into account. If an animation is going to
+     * run cross multiple pages, the progress will be evenly distributed to the pages.
      */
     private float fractionAdjustment;
 
@@ -40,20 +41,20 @@ public abstract class Animation {
     /**
      * Convenient constructor that sets the page start and end to be the same page.
      *
-     * @param page  Page index that this animation should run.
+     * @param page Page index that this animation should run.
      */
     public Animation(int page) {
         this(page, page);
     }
 
     /**
-     * Base constructor of the class, accepting common information about the animation to this instance.
+     * Base constructor of the class, accepting common information about the animation to this
+     * instance.
      *
      * @param start Page index that this animation should start.
-     * @param end   Page index that this animation should stop.
+     * @param end Page index that this animation should stop.
      */
-    public Animation(
-            int start, int end) {
+    public Animation(int start, int end) {
         this.pageStart = start;
         this.pageEnd = end;
 
@@ -67,8 +68,9 @@ public abstract class Animation {
     /**
      * Main method for animating Views within the pages.
      *
-     * @param v             View to be animated.
-     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation.
+     * @param v View to be animated.
+     * @param offset Fraction of the ViewPager scrolling, this is also the progression of the
+     * animation.
      * @param offsetInPixel Page width offset.
      */
     void animate(View v, float offset, float offsetInPixel) {
@@ -95,25 +97,29 @@ public abstract class Animation {
         } else {
             onAnimateOffScreenRight(v, offset, offsetInPixel);
         }
-
     }
 
     /**
-     * Abstract method to be implemented to change View properties. Implement this method to provide custom
-     * animations to the target View.
+     * Abstract method to be implemented to change View properties. Implement this method to
+     * provide custom animations to the target View.
      *
-     * @param v             View being animated.
-     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation, the
-     *                      range of the offset is [-1, 1].
+     * @param v View being animated.
+     * @param offset Fraction of the ViewPager scrolling, this is also the progression of
+     * the
+     * animation, the
+     * range of the offset is [-1, 1].
      * @param offsetInPixel Page width offset.
      */
     public abstract void onAnimate(View v, float offset, float offsetInPixel);
 
     /**
-     * Called when the animation is running when the View is off screen and is to the left of the current screen.
+     * Called when the animation is running when the View is off screen and is to the left of the
+     * current screen.
      *
-     * @param v             View being animated.
-     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation.
+     * @param v View being animated.
+     * @param offset Fraction of the ViewPager scrolling, this is also the progression of
+     * the
+     * animation.
      * @param offsetInPixel Page width offset.
      */
     @SuppressWarnings("unused")
@@ -121,20 +127,22 @@ public abstract class Animation {
     }
 
     /**
-     * Called when the animation is running when the View is off screen and is to the right of the current screen.
+     * Called when the animation is running when the View is off screen and is to the right of the
+     * current screen.
      *
-     * @param v             View being animated.
-     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the animation.
+     * @param v View being animated.
+     * @param offset Fraction of the ViewPager scrolling, this is also the progression of
+     * the
+     * animation.
      * @param offsetInPixel Page width offset.
      */
     @SuppressWarnings("unused")
     public void onAnimateOffScreenRight(View v, float offset, float offsetInPixel) {
     }
 
-
     /**
-     * Check the current page with {@link JazzHandsAnimationPresenter} and see if it is within {@link #pageStart}
-     * and {@link #pageEnd}.
+     * Check the current page with {@link JazzHandsAnimationPresenter} and see if it is within
+     * {@link #pageStart} and {@link #pageEnd}.
      *
      * @param currentPage Current page in ViewPager where the scroll starts.
      * @return True if the animation should run, false otherwise.
@@ -159,5 +167,4 @@ public abstract class Animation {
          */
         void onAnimationRunning(float fraction);
     }
-
 }

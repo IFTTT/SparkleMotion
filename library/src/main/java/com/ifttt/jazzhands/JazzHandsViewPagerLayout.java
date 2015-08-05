@@ -1,13 +1,11 @@
 package com.ifttt.jazzhands;
 
-import com.ifttt.jazzhands.animations.TranslationAnimation;
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
-
+import com.ifttt.jazzhands.animations.TranslationAnimation;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -15,10 +13,11 @@ import java.util.Collections;
  * A wrapper FrameLayout containing a {@link ViewPager}. This class supports adding
  * {@link Decor} to the ViewPager, which can be animated across pages.
  * <p/>
- * A Decor of the ViewPager is only for animation purpose, which means if there's no animation associated with it,
- * it will stay at the original position when it is added to the parent.
+ * A Decor of the ViewPager is only for animation purpose, which means if there's no animation
+ * associated with it, it will stay at the original position when it is added to the parent.
  */
-public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
+public class JazzHandsViewPagerLayout extends FrameLayout
+        implements ViewPager.OnPageChangeListener {
 
     private ViewPager mJazzHandsViewPager;
 
@@ -56,8 +55,8 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     }
 
     /**
-     * Use an external {@link ViewPager} instead of the default one as the ViewPager of the layout. The parent
-     * of the ViewPager must be null or this layout.
+     * Use an external {@link ViewPager} instead of the default one as the ViewPager of the layout.
+     * The parent of the ViewPager must be null or this layout.
      *
      * @param viewPager ViewPager object to be added to this layout.
      */
@@ -93,7 +92,8 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
 
     /**
      * Add {@link Decor} into this layout. Decor will be added to the
-     * layout based on its start page and end page. Calling this method will also enables children drawing order, which
+     * layout based on its start page and end page. Calling this method will also enables children
+     * drawing order, which
      * follows the order of the parameters, e.g the first Decor will be drawn first.
      *
      * @param decor Decor object to be added to this layout.
@@ -173,8 +173,8 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     }
 
     /**
-     * If the ViewPager is scrolling and there are Decors that are running animations, enable their content Views'
-     * hardware layer. Otherwise, switch back to no layer.
+     * If the ViewPager is scrolling and there are Decors that are running animations, enable their
+     * content Views' hardware layer. Otherwise, switch back to no layer.
      *
      * @param enable Whether or not hardware layer should be used for Decor content views.
      */
@@ -193,8 +193,8 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
     }
 
     /**
-     * Based on the <code>startPage</code>, <code>endPage</code> and <code>layoutBehindViewPager</code> from
-     * {@link Decor}, show or hide Decors to this FrameLayout.
+     * Based on the <code>startPage</code>, <code>endPage</code> and <code>layoutBehindViewPager</code>
+     * from {@link Decor}, show or hide Decors to this FrameLayout.
      *
      * @param currentPageOffset Currently displayed ViewPager page and its offset.
      */
@@ -202,31 +202,32 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
         int decorsSize = mDecors.size();
         for (int i = 0; i < decorsSize; i++) {
             Decor decor = mDecors.get(i);
-            if (decor.endPage + 1 <= currentPageOffset && decor.slideOut && decor.slideOutAnimation != null
-                    && decor.isAdded) {
+            if (decor.endPage + 1 <= currentPageOffset && decor.slideOut
+                    && decor.slideOutAnimation != null && decor.isAdded) {
                 decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.startPage != Animation.ALL_PAGES
-                    && (decor.startPage > currentPageOffset || decor.endPage < currentPageOffset)
+            } else if (decor.startPage != Animation.ALL_PAGES && (
+                    decor.startPage > currentPageOffset || decor.endPage < currentPageOffset)
                     && decor.isAdded) {
 
                 // If slide out attribute is true, build a TranslationAnimation for the last page to
                 // change the translation X when the ViewPager is scrolling.
                 if (decor.slideOutAnimation == null && decor.slideOut) {
-                    decor.slideOutAnimation = new TranslationAnimation(
-                            decor.endPage, decor.endPage, true, decor.contentView.getTranslationX() - getWidth(),
-                            decor.contentView.getTranslationY());
+                    decor.slideOutAnimation =
+                            new TranslationAnimation(decor.endPage, decor.endPage, true,
+                                    decor.contentView.getTranslationX() - getWidth(),
+                                    decor.contentView.getTranslationY());
 
                     JazzHandsAnimationPresenter presenter =
                             JazzHandsCompat.getJazzHandsAnimationPresenter(mJazzHandsViewPager);
                     if (presenter != null) {
                         presenter.addAnimation(decor, decor.slideOutAnimation);
                     }
-                } else if (decor.contentView.getVisibility() == VISIBLE
-                        && (!decor.slideOut || (decor.endPage + 1 < currentPageOffset))) {
+                } else if (decor.contentView.getVisibility() == VISIBLE && (!decor.slideOut || (
+                        decor.endPage + 1 < currentPageOffset))) {
                     decor.contentView.setVisibility(GONE);
                 }
-            } else if ((decor.startPage <= currentPageOffset
-                    && decor.endPage >= currentPageOffset || decor.startPage == Animation.ALL_PAGES)) {
+            } else if ((decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset
+                    || decor.startPage == Animation.ALL_PAGES)) {
                 // If the current page and offset is within the range, add the Decor content View.
                 if (!decor.isAdded) {
                     decor.isAdded = true;
@@ -263,6 +264,4 @@ public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.O
             mViewPagerIndex--;
         }
     }
-
-
 }
