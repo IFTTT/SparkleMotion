@@ -1,17 +1,7 @@
 # JazzHands-Android
 A ViewPager animator that animates Views within pages as well as views across pages.
 
-Animations within JazzHands will run based off of the scrolling of the ViewPager, thus provides a interactive effect on the animations. 
-
-## Supported animations
-* Basic View animations:
-    * Alpha
-    * Rotation
-    * Scale
-    * Translation
-* Path animation
-* Parallax translation effect
-* [Zoom out effect](http://developer.android.com/training/animation/screen-slide.html)
+Animations within JazzHands will run based off of the scrolling of the ViewPager, thus provides a interactive effect on the animations.
 
 ## Usage
 ### ViewPager animations
@@ -66,11 +56,42 @@ A `Decor.Builder` supports following methods,
 
 ```java
 Decor decor = new Decor.Builder()
-                .setContentView(View)   // Content View of the Decor, must not be null
-                .setStartPage(int)      // Visible page start, default Animation.ALL_PAGES
-                .setEndPage(int)        // Visible page end, default Animation.ALL_PAGES
-                .behindViewPage()       // Set to draw the content View behind the ViewPager
-                .slideOut()             // Set to scroll with ViewPager after last visible page
+                .setContentView(View) // Content View of the Decor, must not be null
+                
+                .setStartPage(int)    // Visible page start, default Animation.ALL_PAGES
+                
+                .setEndPage(int)      // Visible page end, default Animation.ALL_PAGES
+                
+                .behindViewPage()     // Set to draw the content View behind the ViewPager
+                
+                .slideOut()           // Set to scroll with ViewPager after last visible page
                 .build();
 			
 ```
+
+## Supported animations
+* Basic View animations:
+    * Alpha: animates the alpha property of the target Views.
+    * Rotation: animates the rotation property of the target Views.
+    * Scale: animates the scale X and/or Y properties of the target Views.
+    * Translation: animates the translation X and/or Y properties of the target Views.
+* Path animation: animates the target Views' translation X and Y so that it follows a [path](http://developer.android.com/reference/android/graphics/Path.html).
+* Parallax translation effect:
+* [Zoom out effect](http://developer.android.com/training/animation/screen-slide.html)
+
+## Custom animations
+
+
+## Contributing
+
+1. Fork it ( https://github.com/[my-github-username]/JazzHands-Android/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
+
+## License
+
+`JazzHands-Android` is available under the MIT license. See the LICENSE file for more info.
+
+Copyright 2015 IFTTT Inc.
