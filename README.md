@@ -74,7 +74,3 @@ Decor decor = new Decor.Builder()
                 .build();
 			
 ```
-
-
-## TODO
-* `JazzHandsViewPager` might not be necessary at this point, we can replace it with normal `ViewPager` and wrap its `setPagerTransformer` with a PagerTransformer that contains animation presenter. Also Decor animation should be able to run with OnPageScrollListener. One issue with it is that it is not convenient to just use ViewPager animations without Decor. Maybe we can have `JazzHands` wrap a ViewPager with PagerTransformer.
