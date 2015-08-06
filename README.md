@@ -15,15 +15,19 @@ Animations within JazzHands will run based off of the scrolling of the ViewPager
 
 ## Usage
 ### ViewPager animations
-ViewPager animations are the animations that animates views within pages, either the entire View or child View.
+JazzHands animates page and page child View through `PageTransformer`.
 
 To add an animation to a View within `JazzHandsViewPager`, 
 
-```
-JazzHands.with(mJazzHandsViewPager)
+```java
+ViewPager viewPager = (ViewPager) findViewById(/* view_pager_id */);
+AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 0f, 1f);
+JazzHands.with(viewPager)
 		 .animate(mAnimation)
-		 .on(yourViewId)
+		 .on(Animation.ANIMATION_ID_PAGE)
 ```
+
+where `Animation.ALL_PAGES` indicates that the `AlphaAnimation` will be run on all pages within the ViewPager, and `Animation.ANIMATION_ID_PAGE` indicates this animation will be applied to the page View itself.
 
 ### Cross page animations 
 Animations that require to be animated across different pages needs to be run on `Decor`, which is an element within `JazzHandsViewPagerLayout`. A `Decor` is a component that holds information about a View that should be controlled by the ViewPager and animates when there is at least one `Animation` associated. 
@@ -39,15 +43,38 @@ When there are more than one `Decor` in the layout, the drawing order of the con
 
 To build a `Decor`, simply use `Decor#Builder`.
 
-To assign an animation to Decor, 
+To assign an animation to Decor, in your Activity, for example, 
 
-```
+```java
+JazzHandsViewPagerLayout viewPager = (JazzHandsViewPagerLayout) findViewById(/* view_pager_id */);
+View contentView = new View(this);
+
+AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 0f, 1f);
+
 Decor decor = new Decor.Builder()
+		 .setContentView(contentView)
 		 .build();
-JazzHands.with(mJazzHandsViewPagerLayout)
-		 .animate(mAnimation)
+		 
+JazzHands.with(viewPager)
+		 .animate(alphaAnimation)
 		 .on(decor);
 ```
+
+a `Decor` will then be added to your `JazzHandsViewPagerLayout`, which will run the `alphaAnimation` during ViewPager scrolling.
+
+A `Decor.Builder` supports following methods,
+
+```java
+Decor decor = new Decor.Builder()
+                .setContentView(View)   // Content View of the Decor, must not be null
+                .setStartPage(int)      // Visible page start, default Animation.ALL_PAGES
+                .setEndPage(int)        // Visible page end, default Animation.ALL_PAGES
+                .behindViewPage()       // Set to draw the content View behind the ViewPager
+                .slideOut()             // Set to scroll with ViewPager after last visible page
+                .build();
+			
+```
+
 
 ## TODO
 * `JazzHandsViewPager` might not be necessary at this point, we can replace it with normal `ViewPager` and wrap its `setPagerTransformer` with a PagerTransformer that contains animation presenter. Also Decor animation should be able to run with OnPageScrollListener. One issue with it is that it is not convenient to just use ViewPager animations without Decor. Maybe we can have `JazzHands` wrap a ViewPager with PagerTransformer.

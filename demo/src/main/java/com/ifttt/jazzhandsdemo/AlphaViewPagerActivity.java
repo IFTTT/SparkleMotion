@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.animation.AccelerateInterpolator;
 import com.ifttt.jazzhands.Animation;
+import com.ifttt.jazzhands.Decor;
 import com.ifttt.jazzhands.JazzHands;
 import com.ifttt.jazzhands.JazzHandsViewPagerLayout;
 import com.ifttt.jazzhands.animations.AlphaAnimation;
