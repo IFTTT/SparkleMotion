@@ -6,6 +6,7 @@ import com.ifttt.jazzhands.animations.RotationAnimation;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 
