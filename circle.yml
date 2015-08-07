@@ -1,9 +1,0 @@
-dependencies:
-  cache_directories:
-    - ~/.android
-    - ~/.gradle
-  override:
-    - ./scripts/install-dependencies.sh
-test:
-  override:
-    - ./gradlew test
