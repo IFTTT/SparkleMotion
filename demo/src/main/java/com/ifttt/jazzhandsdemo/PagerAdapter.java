@@ -12,7 +12,7 @@ public class PagerAdapter extends ViewPagerAdapter {
     protected View getView(int position, ViewGroup container) {
         LayoutInflater inflater = LayoutInflater.from(container.getContext());
 
-        switch(position) {
+        switch (position) {
             case 0:
                 return inflater.inflate(R.layout.sunrise_page, container, false);
             case 1:

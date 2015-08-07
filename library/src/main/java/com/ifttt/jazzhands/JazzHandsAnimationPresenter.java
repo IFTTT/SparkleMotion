@@ -2,7 +2,6 @@ package com.ifttt.jazzhands;
 
 import android.support.v4.util.SimpleArrayMap;
 import android.view.View;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -38,7 +37,7 @@ final class JazzHandsAnimationPresenter {
     /**
      * Add animations to the target View. The View's id is used as key.
      *
-     * @param id         Id of the target View.
+     * @param id Id of the target View.
      * @param animations Animations to be associated to this View.
      */
     public void addAnimation(int id, Animation... animations) {
@@ -53,7 +52,7 @@ final class JazzHandsAnimationPresenter {
     /**
      * Add animations to the target {@link Decor}.
      *
-     * @param decor      Target Decor.
+     * @param decor Target Decor.
      * @param animations Animations to be associated to this Decor.
      */
     public void addAnimation(Decor decor, Animation... animations) {
@@ -68,10 +67,11 @@ final class JazzHandsAnimationPresenter {
     }
 
     /**
-     * Run the animations based on the View animations saved within the presenter and the offset of the scrolling.
+     * Run the animations based on the View animations saved within the presenter and the offset of
+     * the scrolling.
      *
-     * @param parent        Current page View of the ViewPager.
-     * @param offset        Scrolling offset of the ViewPager.
+     * @param parent Current page View of the ViewPager.
+     * @param offset Scrolling offset of the ViewPager.
      * @param offsetInPixel Scrolling offset in pixels based on the page View.
      */
     void presentAnimations(View parent, float offset, float offsetInPixel) {
@@ -94,9 +94,8 @@ final class JazzHandsAnimationPresenter {
                     viewToAnimate = parent.findViewById(key);
                 }
 
-                if (animation == null
-                        || viewToAnimate == null
-                        || !animation.shouldAnimate(mCurrentPage)) {
+                if (animation == null || viewToAnimate == null || !animation.shouldAnimate(
+                        mCurrentPage)) {
                     continue;
                 }
 
@@ -106,10 +105,11 @@ final class JazzHandsAnimationPresenter {
     }
 
     /**
-     * Run the animations based on the Decor animations saved within the presenter and the offset of the scrolling.
+     * Run the animations based on the Decor animations saved within the presenter and the offset
+     * of the scrolling.
      *
      * @param position Position of the current page.
-     * @param offset   Offset of the ViewPager scrolling.
+     * @param offset Offset of the ViewPager scrolling.
      */
     void presentDecorAnimations(int position, float offset) {
         // Animate all decor or other View animations.
@@ -121,10 +121,8 @@ final class JazzHandsAnimationPresenter {
             int animListSize = animations.size();
             for (int j = 0; j < animListSize; j++) {
                 Animation animation = animations.get(j);
-                if (animation == null
-                        || decor.contentView.getParent() == null
-                        || position > decor.endPage
-                        || position < decor.startPage
+                if (animation == null || decor.contentView.getParent() == null
+                        || position > decor.endPage || position < decor.startPage
                         || !animation.shouldAnimate(mCurrentPage)) {
                     continue;
                 }

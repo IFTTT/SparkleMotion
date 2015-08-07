@@ -2,9 +2,7 @@ package com.ifttt.jazzhands;
 
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
-
 import com.ifttt.jazzhands.animations.ScaleAnimation;
-
 import org.junit.Test;
 import org.mockito.Mockito;
 

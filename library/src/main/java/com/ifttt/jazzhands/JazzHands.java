@@ -1,13 +1,12 @@
 package com.ifttt.jazzhands;
 
 import android.support.v4.view.ViewPager;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Top level Builder class. Used for constructing a {@link JazzHandsAnimationPresenter} and associate
- * it with {@link ViewPager}.
+ * Top level Builder class. Used for constructing a {@link JazzHandsAnimationPresenter} and
+ * associate it with {@link ViewPager}.
  */
 public class JazzHands {
 
@@ -18,12 +17,14 @@ public class JazzHands {
     private boolean mReversedOrder;
 
     /**
-     * Animations to be used for a set of target Views. Will be cleared after calling {@link #on(int...)}.
+     * Animations to be used for a set of target Views. Will be cleared after calling
+     * {@link #on(int...)}.
      */
     private ArrayList<Animation> mAnimations;
 
     /**
-     * Start constructing a {@link JazzHands} builder with a {@link ViewPager} instance. Animations assigned
+     * Start constructing a {@link JazzHands} builder with a {@link ViewPager} instance. Animations
+     * assigned
      * to this builder will be assigned to the ViewPager.
      *
      * @param viewPager Target ViewPager.
@@ -34,7 +35,8 @@ public class JazzHands {
     }
 
     /**
-     * Start constructing a {@link JazzHands} builder with a {@link JazzHandsViewPagerLayout} instance. Animations
+     * Start constructing a {@link JazzHands} builder with a {@link JazzHandsViewPagerLayout}
+     * instance. Animations
      * assigned to this builder will be assigned to the ViewPager.
      *
      * @param viewPagerLayout TargetViewPagerLayout.
@@ -101,9 +103,11 @@ public class JazzHands {
 
     /**
      * Assign target {@link Decor} to JazzHands, which will assign the
-     * animations stored in {@link #animate(Animation...)} to {@link JazzHandsAnimationPresenter}. This is the last
+     * animations stored in {@link #animate(Animation...)} to {@link JazzHandsAnimationPresenter}.
+     * This is the last
      * method to call in order to build a functional ViewPager. Once this is called, a {@link
-     * JazzHandsAnimationPresenter} will be associated to the ViewPager, and the animations will be run when scrolling.
+     * JazzHandsAnimationPresenter} will be associated to the ViewPager, and the animations will be
+     * run when scrolling.
      * <p/>
      * Note that to use this method, a {@link JazzHandsViewPagerLayout} must be provided.
      *
@@ -129,11 +133,10 @@ public class JazzHands {
     }
 
     /**
-     * Assign target Views to JazzHands, which will assign the animations stored in {@link #animate(Animation...)}
-     * to {@link JazzHandsAnimationPresenter}. This is the last method to call in order to build a functional
-     * ViewPager.
-     * Once this is called, a {@link JazzHandsAnimationPresenter} will be associated to the ViewPager, and the
-     * animations
+     * Assign target Views to JazzHands, which will assign the animations stored in {@link
+     * #animate(Animation...)} to {@link JazzHandsAnimationPresenter}. This is the last method to
+     * call in order to build a functional ViewPager. Once this is called, a
+     * {@link JazzHandsAnimationPresenter} will be associated to the ViewPager, and the animations
      * will be run when scrolling.
      *
      * @param ids Target View ids.

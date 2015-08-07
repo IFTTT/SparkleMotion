@@ -1,15 +1,14 @@
 package com.ifttt.jazzhands;
 
-import com.ifttt.jazzhands.animations.TranslationAnimation;
-
 import android.support.annotation.NonNull;
 import android.view.View;
+import com.ifttt.jazzhands.animations.TranslationAnimation;
 
 /**
- * An animation decoration of the {@link JazzHandsViewPager}. A Decor will respond to the scrolling of the
- * ViewPager and run animations based on it. One main usage of a Decor is to play cross page animations. Because
- * a Decor is drawn outside of the ViewPager, it won't be clipped by any page, therefore capable of running
- * animations that require Views to go across pages.
+ * An animation decoration of the {@link JazzHandsViewPagerLayout}. A Decor will respond to the
+ * scrolling of the ViewPager and run animations based on it. One main usage of a Decor is to play
+ * cross page animations. Because a Decor is drawn outside of the ViewPager, it won't be clipped by
+ * any page, therefore capable of running animations that require Views to go across pages.
  */
 public class Decor implements Comparable<Decor> {
 
@@ -19,14 +18,14 @@ public class Decor implements Comparable<Decor> {
     public final View contentView;
 
     /**
-     * The starting page of this Decor. If the current page is smaller than the starting page, the Decor will not
-     * be added.
+     * The starting page of this Decor. If the current page is smaller than the starting page, the
+     * Decor will not be added.
      */
     public final int startPage;
 
     /**
-     * The ending page of thie Decor. If the current page is larger than the ending page, the Decor will not be
-     * added.
+     * The ending page of thie Decor. If the current page is larger than the ending page, the Decor
+     * will not be added.
      */
     public final int endPage;
 
@@ -57,8 +56,7 @@ public class Decor implements Comparable<Decor> {
      */
     Animation slideOutAnimation;
 
-    private Decor(
-            @NonNull View contentView, int startPage, int endPage, boolean layoutBehind,
+    private Decor(@NonNull View contentView, int startPage, int endPage, boolean layoutBehind,
             boolean slideOut) {
         this.contentView = contentView;
         this.startPage = startPage;
@@ -110,8 +108,8 @@ public class Decor implements Comparable<Decor> {
         }
 
         /**
-         * Optional starting page of the Decor. The default value is {@link Animation#ALL_PAGES}, which makes the
-         * Decor visible in every page.
+         * Optional starting page of the Decor. The default value is {@link Animation#ALL_PAGES},
+         * which makes the Decor visible in every page.
          *
          * @param startPage Page index that this Decor should start to be visible.
          * @return This object for chaining.
@@ -143,7 +141,8 @@ public class Decor implements Comparable<Decor> {
         }
 
         /**
-         * Optional attribute for setting the Decor to scroll along with the page after it passes the end page.
+         * Optional attribute for setting the Decor to scroll along with the page after it passes
+         * the end page.
          *
          * @return This object for chaining.
          */
@@ -166,8 +165,8 @@ public class Decor implements Comparable<Decor> {
                 mEndPage = mStartPage + 1;
             }
 
-            if (mStartPage != Animation.ALL_PAGES &&
-                    ((mStartPage < Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES)
+            if (mStartPage != Animation.ALL_PAGES && (
+                    (mStartPage < Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES)
                             || mStartPage > mEndPage)) {
                 throw new IllegalArgumentException(
                         "Invalid startPage or endPage: (" + mStartPage + ", " + mEndPage + ")");
@@ -176,5 +175,4 @@ public class Decor implements Comparable<Decor> {
             return new Decor(mContentView, mStartPage, mEndPage, mLayoutBehindViewPage, mSlideOut);
         }
     }
-
 }

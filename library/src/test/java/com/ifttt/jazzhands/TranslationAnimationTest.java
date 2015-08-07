@@ -1,13 +1,11 @@
 package com.ifttt.jazzhands;
 
+import android.test.suitebuilder.annotation.SmallTest;
+import android.view.View;
 import com.ifttt.jazzhands.animations.TranslationAnimation;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import android.test.suitebuilder.annotation.SmallTest;
-import android.view.View;
 
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.doAnswer;

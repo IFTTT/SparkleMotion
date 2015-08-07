@@ -1,8 +1,7 @@
 package com.ifttt.jazzhands.animations;
 
-import com.ifttt.jazzhands.Animation;
-
 import android.view.View;
+import com.ifttt.jazzhands.Animation;
 
 /**
  * Subclass of {@link Animation} that changes View's scale x and y from a value to another.
@@ -15,13 +14,12 @@ public class ScaleAnimation extends Animation {
     private float mInScaleX;
     private float mInScaleY;
 
-
     public ScaleAnimation(int page, float outScale, float inScale) {
         this(page, outScale, outScale, inScale, inScale);
     }
 
-    public ScaleAnimation(int page,
-                          float outScaleX, float outScaleY, float inScaleX, float inScaleY) {
+    public ScaleAnimation(int page, float outScaleX, float outScaleY, float inScaleX,
+            float inScaleY) {
         this(page, page, outScaleX, outScaleY, inScaleX, inScaleY);
     }
 
@@ -29,8 +27,8 @@ public class ScaleAnimation extends Animation {
         this(start, end, outScale, outScale, inScale, inScale);
     }
 
-    public ScaleAnimation(int start, int end,
-                          float outScaleX, float outScaleY, float inScaleX, float inScaleY) {
+    public ScaleAnimation(int start, int end, float outScaleX, float outScaleY, float inScaleX,
+            float inScaleY) {
         super(start, end);
 
         this.mOutScaleX = outScaleX;

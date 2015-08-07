@@ -1,8 +1,7 @@
 package com.ifttt.jazzhands.animations;
 
-import com.ifttt.jazzhands.Animation;
-
 import android.view.View;
+import com.ifttt.jazzhands.Animation;
 
 /**
  * Subclass of {@link Animation} that changes alpha of the View.
