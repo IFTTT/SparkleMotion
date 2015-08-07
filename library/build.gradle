@@ -1,12 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'checkstyle'
 
-buildscript {
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
-    }
-}
-
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
