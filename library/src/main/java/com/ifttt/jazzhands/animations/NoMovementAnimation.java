@@ -18,6 +18,10 @@ public class NoMovementAnimation extends Animation {
         super(page);
     }
 
+    public NoMovementAnimation(int start, int end) {
+        super(start, end);
+    }
+
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
         v.setTranslationX(offsetInPixel);
