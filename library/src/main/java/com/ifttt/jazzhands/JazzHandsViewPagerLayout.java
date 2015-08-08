@@ -164,7 +164,6 @@ public class JazzHandsViewPagerLayout extends FrameLayout
 
     @Override
     public void onPageSelected(int position) {
-
     }
 
     @Override
