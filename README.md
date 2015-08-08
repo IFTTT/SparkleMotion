@@ -71,15 +71,23 @@ Decor decor = new Decor.Builder()
 
 ## Supported animations
 * Basic View animations:
-    * Alpha: animates the alpha property of the target Views.
-    * Rotation: animates the rotation property of the target Views.
-    * Scale: animates the scale X and/or Y properties of the target Views.
-    * Translation: animates the translation X and/or Y properties of the target Views.
-* Path animation: animates the target Views' translation X and Y so that it follows a [path](http://developer.android.com/reference/android/graphics/Path.html).
-* Parallax translation effect:
-* [Zoom out effect](http://developer.android.com/training/animation/screen-slide.html)
+    * **Alpha**: animates the alpha property of the target Views.
+    * **Rotation**: animates the rotation property of the target Views.
+    * **Scale**: animates the scale X and/or Y properties of the target Views.
+    * **Translation**: animates the translation X and/or Y properties of the target Views.
+* **Path animation**: animates the target Views' translation X and Y so that it follows a [path](http://developer.android.com/reference/android/graphics/Path.html).
+* **Parallax translation effect**: animates the target Views' translation X to the opposite direction of the ViewPager scrolling to achieve a paralax effect.
+* **[Zoom out effect](http://developer.android.com/training/animation/screen-slide.html)**: animates the target Views' alpha, scale and translation to achieve a zoom out effect when the page is scrolled. 
 
 ## Custom animations
+JazzHands also supports customized animations through extending `Animation` class. There are 3 methods in `Animation` class that you might be interested:
+
+* `onAnimate(View v, float offset, float offsetInPixel)`: main method to override to provide customized animation. The `offset` value is ranged within [-1, 1]. 
+* `onAnimateOffScreenLeft(View v, float offset, float offsetInPixel)` (optional): this method will be called when `offset` < -1, which means the page is currently to the left of the screen.
+* `onAnimateOffScreenRight(View v, float offset, float offsetInPixel)`(optional): this method will be called when `offset` > 1, which means the page is currently to the right of the screen.
+
+The other two parameters, View `v` is the target View to be animated, `offsetInPixel` is the **entire page View's** scrolling offset in pixel, which might or might not be the same as `View.getWidth() * offset`.
+
 
 
 ## Contributing
