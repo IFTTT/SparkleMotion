@@ -1,7 +1,8 @@
 package com.ifttt.jazzhands.animations;
 
-import android.view.View;
 import com.ifttt.jazzhands.Animation;
+
+import android.view.View;
 
 /**
  * {@link Animation} subclass that simply takes the <code>offset</code> from
@@ -16,6 +17,10 @@ public class NoMovementAnimation extends Animation {
 
     public NoMovementAnimation(int page) {
         super(page);
+    }
+
+    public NoMovementAnimation(int start, int end) {
+        super(start, end);
     }
 
     @Override
