@@ -80,7 +80,7 @@ public final class JazzHandsCompat {
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean, JazzHandsAnimationPresenter)}
      * @see {@link #installJazzHandsPresenter(ViewPager)}
      */
-    public static void installJazzHandsPresenter(ViewPager viewPager, boolean reverseDrawingOrder) {
+    static void installJazzHandsPresenter(ViewPager viewPager, boolean reverseDrawingOrder) {
         final JazzHandsAnimationPresenter presenter = new JazzHandsAnimationPresenter();
         installJazzHandsPresenter(viewPager, reverseDrawingOrder, presenter);
     }
@@ -94,7 +94,7 @@ public final class JazzHandsCompat {
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean, JazzHandsAnimationPresenter)}
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean)}
      */
-    public static void installJazzHandsPresenter(ViewPager viewPager) {
+    static void installJazzHandsPresenter(ViewPager viewPager) {
         installJazzHandsPresenter(viewPager, false);
     }
 
@@ -141,7 +141,7 @@ public final class JazzHandsCompat {
      * @param viewPager ViewPager instance.
      * @return JazzHandsAnimationPresenter instance if set, or null.
      */
-    public static JazzHandsAnimationPresenter getJazzHandsAnimationPresenter(ViewPager viewPager) {
+    static JazzHandsAnimationPresenter getJazzHandsAnimationPresenter(ViewPager viewPager) {
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject == null || !(tagObject instanceof JazzHandsAnimationPresenter)) {
             return null;
@@ -157,7 +157,7 @@ public final class JazzHandsCompat {
      * @param viewPager ViewPager instance.
      * @return True if there is a JazzHandsAnimationPresenter attached, false otherwise.
      */
-    public static boolean hasPresenter(ViewPager viewPager) {
+    static boolean hasPresenter(ViewPager viewPager) {
         return getJazzHandsAnimationPresenter(viewPager) != null;
     }
 }
