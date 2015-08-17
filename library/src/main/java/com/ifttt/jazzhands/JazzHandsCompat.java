@@ -142,6 +142,10 @@ public final class JazzHandsCompat {
      * @return JazzHandsAnimationPresenter instance if set, or null.
      */
     static JazzHandsAnimationPresenter getJazzHandsAnimationPresenter(ViewPager viewPager) {
+        if (viewPager == null) {
+            return null;
+        }
+
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject == null || !(tagObject instanceof JazzHandsAnimationPresenter)) {
             return null;

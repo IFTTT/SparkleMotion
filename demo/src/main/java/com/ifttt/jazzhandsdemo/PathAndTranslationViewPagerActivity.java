@@ -7,6 +7,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +33,14 @@ public class PathAndTranslationViewPagerActivity extends Activity {
 
         setContentView(R.layout.view_pager_layout);
 
-        JazzHandsViewPagerLayout viewPager =
-                (JazzHandsViewPagerLayout) findViewById(R.id.view_pager);
-        viewPager.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
-        viewPager.getViewPager().setPageMargin(5);
-        viewPager.getViewPager().setPageMarginDrawable(new ColorDrawable(Color.BLACK));
-        viewPager.getViewPager().setAdapter(new PagerAdapter(this));
+        JazzHandsViewPagerLayout viewPagerLayout =
+                (JazzHandsViewPagerLayout) findViewById(R.id.view_pager_layout);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+
+        viewPagerLayout.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
+        viewPager.setPageMargin(5);
+        viewPager.setPageMarginDrawable(new ColorDrawable(Color.BLACK));
+        viewPager.setAdapter(new PagerAdapter(this));
 
         ImageView page0Droid = new ImageView(this);
         page0Droid.setImageResource(R.mipmap.ic_launcher);
@@ -53,7 +56,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
                 .behindViewPage() //
                 .build();
 
-        JazzHands jazzHands = JazzHands.with(viewPager).reverseDrawingOrder();
+        JazzHands jazzHands = JazzHands.with(viewPagerLayout).reverseDrawingOrder();
         buildPage0Animations(jazzHands, decor);
         buildPage1Animations(jazzHands);
         buildPage2Animations(jazzHands, decor);

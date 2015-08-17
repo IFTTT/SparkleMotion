@@ -10,7 +10,7 @@ import java.util.Collections;
  */
 public class JazzHands {
 
-    private final ViewPager mViewPager;
+    private ViewPager mViewPager;
     private JazzHandsViewPagerLayout mViewPagerLayout;
     private JazzHandsAnimationPresenter mPresenter;
 
@@ -114,22 +114,33 @@ public class JazzHands {
      * @param decors Target Decors.
      * @throws IllegalStateException when a ViewPagerLayout is not provided.
      */
-    public void on(Decor... decors) {
+    public void on(final Decor... decors) {
         if (mViewPagerLayout == null) {
             throw new IllegalStateException("A ViewPagerLayout must be provided");
         }
-
-        JazzHandsCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
 
         Animation[] animations = new Animation[mAnimations.size()];
         mAnimations.toArray(animations);
 
         for (Decor decor : decors) {
             mPresenter.addAnimation(decor, animations);
-            mViewPagerLayout.addDecor(decor);
         }
 
         mAnimations.clear();
+
+        mViewPagerLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mViewPager == null) {
+                    mViewPager = mViewPagerLayout.getViewPager();
+                }
+                JazzHandsCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
+
+                for (Decor decor : decors) {
+                    mViewPagerLayout.addDecor(decor);
+                }
+            }
+        });
     }
 
     /**
@@ -141,8 +152,16 @@ public class JazzHands {
      *
      * @param ids Target View ids.
      */
-    public void on(int... ids) {
-        JazzHandsCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
+    public void on(final int... ids) {
+        Runnable installRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (mViewPagerLayout != null && mViewPager == null) {
+                    mViewPager = mViewPagerLayout.getViewPager();
+                }
+                JazzHandsCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
+            }
+        };
 
         Animation[] anims = new Animation[mAnimations.size()];
         mAnimations.toArray(anims);
@@ -152,5 +171,12 @@ public class JazzHands {
         }
 
         mAnimations.clear();
+
+        if (mViewPagerLayout != null) {
+            mViewPagerLayout.post(installRunnable);
+        } else if (mViewPager != null){
+            mViewPager.post(installRunnable);
+        }
+
     }
 }

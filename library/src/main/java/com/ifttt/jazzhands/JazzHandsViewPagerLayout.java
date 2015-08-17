@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import com.ifttt.jazzhands.animations.TranslationAnimation;
 import java.util.ArrayList;
@@ -30,28 +31,33 @@ public class JazzHandsViewPagerLayout extends FrameLayout
 
     public JazzHandsViewPagerLayout(Context context) {
         super(context);
-        init();
     }
 
     public JazzHandsViewPagerLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public JazzHandsViewPagerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    private void init() {
-        // Add JazzHandsViewPager.
-        mJazzHandsViewPager = new ViewPager(getContext());
-        addView(mJazzHandsViewPager);
-        mViewPagerIndex = 0;
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        mJazzHandsViewPager.addOnPageChangeListener(this);
-
-        JazzHandsCompat.installJazzHandsPresenter(mJazzHandsViewPager, false);
+        if (mJazzHandsViewPager == null) {
+            // Find the first ViewPager within this layout.
+            int childCount = getChildCount();
+            for (int i = 0 ; i < childCount ; i++) {
+                View child = getChildAt(i);
+                if (child instanceof ViewPager) {
+                    mJazzHandsViewPager = (ViewPager) child;
+                    mViewPagerIndex = i;
+                    mJazzHandsViewPager.addOnPageChangeListener(this);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -86,7 +92,7 @@ public class JazzHandsViewPagerLayout extends FrameLayout
      *
      * @return JazzHandsViewPager object.
      */
-    public ViewPager getViewPager() {
+    ViewPager getViewPager() {
         return mJazzHandsViewPager;
     }
 
@@ -97,8 +103,15 @@ public class JazzHandsViewPagerLayout extends FrameLayout
      * follows the order of the parameters, e.g the first Decor will be drawn first.
      *
      * @param decor Decor object to be added to this layout.
+     *
+     * @throws IllegalStateException when ViewPager is not set in this layout.
      */
     public void addDecor(Decor decor) {
+        if (mJazzHandsViewPager == null) {
+            throw new IllegalStateException(
+                    "ViewPager is not found in JazzHandsViewPagerLayout, please call setViewPager() first");
+        }
+
         if (decor == null) {
             return;
         }
