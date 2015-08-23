@@ -1,5 +1,6 @@
 package com.ifttt.jazzhands;
 
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +43,7 @@ public class JazzHands {
      * @param viewPagerLayout TargetViewPagerLayout.
      * @return this instance to chain functions.
      */
-    public static JazzHands with(JazzHandsViewPagerLayout viewPagerLayout) {
+    public static JazzHands with(@NonNull JazzHandsViewPagerLayout viewPagerLayout) {
         return new JazzHands(viewPagerLayout);
     }
 
@@ -52,7 +53,7 @@ public class JazzHands {
      *
      * @param viewPager ViewPager object.
      */
-    private JazzHands(ViewPager viewPager) {
+    private JazzHands(@NonNull ViewPager viewPager) {
         mViewPager = viewPager;
         init();
     }
@@ -65,7 +66,6 @@ public class JazzHands {
      */
     private JazzHands(JazzHandsViewPagerLayout viewPagerLayout) {
         mViewPagerLayout = viewPagerLayout;
-        mViewPager = mViewPagerLayout.getViewPager();
 
         init();
     }
@@ -116,7 +116,7 @@ public class JazzHands {
      */
     public void on(final Decor... decors) {
         if (mViewPagerLayout == null) {
-            throw new IllegalStateException("A ViewPagerLayout must be provided");
+            throw new IllegalStateException("A ViewPagerLayout must be provided for animating Decor");
         }
 
         Animation[] animations = new Animation[mAnimations.size()];
@@ -134,6 +134,11 @@ public class JazzHands {
                 if (mViewPager == null) {
                     mViewPager = mViewPagerLayout.getViewPager();
                 }
+
+                if (mViewPager == null) {
+                    throw new NullPointerException("ViewPager cannot be null");
+                }
+
                 JazzHandsCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
 
                 for (Decor decor : decors) {
@@ -159,6 +164,11 @@ public class JazzHands {
                 if (mViewPagerLayout != null && mViewPager == null) {
                     mViewPager = mViewPagerLayout.getViewPager();
                 }
+
+                if (mViewPager == null) {
+                    throw new NullPointerException("ViewPager cannot be null");
+                }
+
                 JazzHandsCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
             }
         };
@@ -177,6 +187,5 @@ public class JazzHands {
         } else if (mViewPager != null){
             mViewPager.post(installRunnable);
         }
-
     }
 }

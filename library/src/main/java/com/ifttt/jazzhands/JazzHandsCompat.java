@@ -1,5 +1,6 @@
 package com.ifttt.jazzhands;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -35,7 +36,7 @@ public final class JazzHandsCompat {
      * @param presenter JazzHandsAnimationPresenter instance to be installed.
      * @see {@link ViewPager#setPageTransformer(boolean, ViewPager.PageTransformer)}
      */
-    static void installJazzHandsPresenter(ViewPager viewPager, boolean reverseDrawingOrder,
+    static void installJazzHandsPresenter(@NonNull ViewPager viewPager, boolean reverseDrawingOrder,
             final JazzHandsAnimationPresenter presenter) {
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject != null && tagObject == presenter) {
@@ -80,7 +81,7 @@ public final class JazzHandsCompat {
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean, JazzHandsAnimationPresenter)}
      * @see {@link #installJazzHandsPresenter(ViewPager)}
      */
-    static void installJazzHandsPresenter(ViewPager viewPager, boolean reverseDrawingOrder) {
+    static void installJazzHandsPresenter(@NonNull ViewPager viewPager, boolean reverseDrawingOrder) {
         final JazzHandsAnimationPresenter presenter = new JazzHandsAnimationPresenter();
         installJazzHandsPresenter(viewPager, reverseDrawingOrder, presenter);
     }
@@ -94,7 +95,7 @@ public final class JazzHandsCompat {
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean, JazzHandsAnimationPresenter)}
      * @see {@link #installJazzHandsPresenter(ViewPager, boolean)}
      */
-    static void installJazzHandsPresenter(ViewPager viewPager) {
+    static void installJazzHandsPresenter(@NonNull ViewPager viewPager) {
         installJazzHandsPresenter(viewPager, false);
     }
 
@@ -110,7 +111,7 @@ public final class JazzHandsCompat {
      * @see {@link ViewPager#setPageTransformer(boolean, ViewPager.PageTransformer)}
      * @see {@link android.support.v4.view.ViewPager.PageTransformer}
      */
-    public static void setPageTransformer(ViewPager viewPager, boolean reversDrawingOrder,
+    public static void setPageTransformer(@NonNull ViewPager viewPager, boolean reversDrawingOrder,
             @Nullable final ViewPager.PageTransformer transformer) {
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject == null || !(tagObject instanceof JazzHandsAnimationPresenter)) {
