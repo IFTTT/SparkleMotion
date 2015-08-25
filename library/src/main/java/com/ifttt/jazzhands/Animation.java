@@ -25,7 +25,7 @@ public abstract class Animation {
      * Adjustment to page fraction taking animating pages into account. If an animation is going to
      * run cross multiple pages, the progress will be evenly distributed to the pages.
      */
-    private float fractionAdjustment;
+    private float mFractionAdjustment;
 
     private Interpolator mInterpolator;
 
@@ -63,7 +63,7 @@ public abstract class Animation {
         this.pageStart = start;
         this.pageEnd = end;
 
-        fractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
+        mFractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
     }
 
     public final void setInterpolator(Interpolator interpolator) {
@@ -88,7 +88,7 @@ public abstract class Animation {
                 offset -= pageStart;
             }
 
-            offset = offset / fractionAdjustment;
+            offset = offset / mFractionAdjustment;
         }
 
         if (mAnimationListener != null) {
