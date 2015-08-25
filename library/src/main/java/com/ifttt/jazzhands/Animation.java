@@ -91,10 +91,6 @@ public abstract class Animation {
             offset = offset / mFractionAdjustment;
         }
 
-        if (mAnimationListener != null) {
-            mAnimationListener.onAnimationRunning(offset);
-        }
-
         mCurrentOffset = offset;
 
         if (offset < -1) {
@@ -103,6 +99,10 @@ public abstract class Animation {
             onAnimate(v, offset, offsetInPixel);
         } else {
             onAnimateOffScreenRight(v, offset, offsetInPixel);
+        }
+
+        if (mAnimationListener != null) {
+            mAnimationListener.onAnimationRunning(v, offset);
         }
     }
 
@@ -177,8 +177,9 @@ public abstract class Animation {
         /**
          * Called when the animation is running.
          *
+         * @param view View being animated.
          * @param fraction Current fraction of the animation.
          */
-        void onAnimationRunning(float fraction);
+        void onAnimationRunning(View view, float fraction);
     }
 }
