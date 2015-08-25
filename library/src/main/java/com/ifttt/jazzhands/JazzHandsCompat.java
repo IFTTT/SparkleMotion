@@ -35,7 +35,7 @@ public final class JazzHandsCompat {
      * @param presenter JazzHandsAnimationPresenter instance to be installed.
      * @see {@link ViewPager#setPageTransformer(boolean, ViewPager.PageTransformer)}
      */
-    static void installJazzHandsPresenter(ViewPager viewPager, boolean reverseDrawingOrder,
+    static void installJazzHandsPresenter(final ViewPager viewPager, boolean reverseDrawingOrder,
             final JazzHandsAnimationPresenter presenter) {
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject != null && tagObject == presenter) {
@@ -57,8 +57,7 @@ public final class JazzHandsCompat {
         // Set OnPageChangeListener
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset,
-                    int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 presenter.setCurrentPage(position);
                 // Animate any Decor animations.
                 presenter.presentDecorAnimations(position, positionOffset);

@@ -1,6 +1,7 @@
 package com.ifttt.jazzhands;
 
 import android.support.v4.util.SimpleArrayMap;
+import android.util.Log;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,8 +95,7 @@ final class JazzHandsAnimationPresenter {
                     viewToAnimate = parent.findViewById(key);
                 }
 
-                if (animation == null || viewToAnimate == null || !animation.shouldAnimate(
-                        mCurrentPage)) {
+                if (animation == null || viewToAnimate == null || !animation.shouldAnimate(mCurrentPage)) {
                     continue;
                 }
 
@@ -122,8 +122,7 @@ final class JazzHandsAnimationPresenter {
             for (int j = 0; j < animListSize; j++) {
                 Animation animation = animations.get(j);
                 if (animation == null || decor.contentView.getParent() == null
-                        || position > decor.endPage || position < decor.startPage
-                        || !animation.shouldAnimate(mCurrentPage)) {
+                        || decor.contentView.getVisibility() != View.VISIBLE || !animation.shouldAnimate(position)) {
                     continue;
                 }
 
