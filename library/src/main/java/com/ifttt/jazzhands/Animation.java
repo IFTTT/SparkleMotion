@@ -32,6 +32,11 @@ public abstract class Animation {
     private AnimationListener mAnimationListener;
 
     /**
+     * Currently animated offset. Used to determine whether the animation is finished.
+     */
+    private float mCurrentOffset;
+
+    /**
      * Convenient constructor that has default page start and end set to {@link #ALL_PAGES}.
      */
     public Animation() {
@@ -90,6 +95,8 @@ public abstract class Animation {
             mAnimationListener.onAnimationRunning(offset);
         }
 
+        mCurrentOffset = offset;
+
         if (offset < -1) {
             onAnimateOffScreenLeft(v, offset, offsetInPixel);
         } else if (offset <= 1) {
@@ -97,6 +104,13 @@ public abstract class Animation {
         } else {
             onAnimateOffScreenRight(v, offset, offsetInPixel);
         }
+    }
+
+    /**
+     * Return the current offset of this animation.
+     */
+    float getCurrentOffset() {
+        return mCurrentOffset;
     }
 
     /**
