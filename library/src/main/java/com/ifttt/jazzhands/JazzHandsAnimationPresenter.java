@@ -1,17 +1,16 @@
 package com.ifttt.jazzhands;
 
 import android.support.v4.util.SimpleArrayMap;
-import android.util.Log;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * JazzHands animation driver, used to store all {@link Animation} assigned to it. {@link
- * com.ifttt.jazzhands.JazzHandsViewPager}
- * then uses {@link #presentAnimations(View, float, float)} with a
- * {@link android.support.v4.view.ViewPager.PageTransformer} to run
- * any animation that should be run at any given circumstance (e.g. current page).
+ * JazzHands animation driver, used to store all {@link Animation} assigned to it and run animations given the current
+ * circumstance (e.g current page, View visibility). For ViewPager animations,
+ * {@link #presentAnimations(View, float, float)} will be called for every frame the child View is scrolled. For
+ * Decor animations, {@link #presentDecorAnimations(int, float)} will be called for every frame the ViewPager is
+ * scrolled.
  */
 final class JazzHandsAnimationPresenter {
     /**
@@ -121,8 +120,18 @@ final class JazzHandsAnimationPresenter {
             int animListSize = animations.size();
             for (int j = 0; j < animListSize; j++) {
                 Animation animation = animations.get(j);
-                if (animation == null || decor.contentView.getParent() == null
+                if (animation == null) {
+                    continue;
+                }
+
+                if (decor.contentView.getParent() == null
                         || decor.contentView.getVisibility() != View.VISIBLE || !animation.shouldAnimate(position)) {
+                    // Add a rescue frame to the animation if the page is scrolled really fast.
+                    if (animation.getCurrentOffset() < 1 && animation.pageEnd < position) {
+                        animation.animate(decor.contentView, 1, 0);
+                    } else if (animation.getCurrentOffset() > 0 && animation.pageStart > position) {
+                        animation.animate(decor.contentView, 0, 0);
+                    }
                     continue;
                 }
 

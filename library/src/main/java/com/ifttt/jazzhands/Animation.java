@@ -25,11 +25,16 @@ public abstract class Animation {
      * Adjustment to page fraction taking animating pages into account. If an animation is going to
      * run cross multiple pages, the progress will be evenly distributed to the pages.
      */
-    private float fractionAdjustment;
+    private float mFractionAdjustment;
 
     private Interpolator mInterpolator;
 
     private AnimationListener mAnimationListener;
+
+    /**
+     * Currently animated offset. Used to determine whether the animation is finished.
+     */
+    private float mCurrentOffset;
 
     /**
      * Convenient constructor that has default page start and end set to {@link #ALL_PAGES}.
@@ -58,7 +63,7 @@ public abstract class Animation {
         this.pageStart = start;
         this.pageEnd = end;
 
-        fractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
+        mFractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
     }
 
     public final void setInterpolator(Interpolator interpolator) {
@@ -83,12 +88,10 @@ public abstract class Animation {
                 offset -= pageStart;
             }
 
-            offset = offset / fractionAdjustment;
+            offset = offset / mFractionAdjustment;
         }
 
-        if (mAnimationListener != null) {
-            mAnimationListener.onAnimationRunning(offset);
-        }
+        mCurrentOffset = offset;
 
         if (offset < -1) {
             onAnimateOffScreenLeft(v, offset, offsetInPixel);
@@ -97,6 +100,17 @@ public abstract class Animation {
         } else {
             onAnimateOffScreenRight(v, offset, offsetInPixel);
         }
+
+        if (mAnimationListener != null) {
+            mAnimationListener.onAnimationRunning(v, offset);
+        }
+    }
+
+    /**
+     * Return the current offset of this animation.
+     */
+    float getCurrentOffset() {
+        return mCurrentOffset;
     }
 
     /**
@@ -163,8 +177,9 @@ public abstract class Animation {
         /**
          * Called when the animation is running.
          *
+         * @param view View being animated.
          * @param fraction Current fraction of the animation.
          */
-        void onAnimationRunning(float fraction);
+        void onAnimationRunning(View view, float fraction);
     }
 }

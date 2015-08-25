@@ -16,8 +16,7 @@ import java.util.Collections;
  * A Decor of the ViewPager is only for animation purpose, which means if there's no animation
  * associated with it, it will stay at the original position when it is added to the parent.
  */
-public class JazzHandsViewPagerLayout extends FrameLayout
-        implements ViewPager.OnPageChangeListener {
+public class JazzHandsViewPagerLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
 
     private ViewPager mJazzHandsViewPager;
 
@@ -52,6 +51,26 @@ public class JazzHandsViewPagerLayout extends FrameLayout
         mJazzHandsViewPager.addOnPageChangeListener(this);
 
         JazzHandsCompat.installJazzHandsPresenter(mJazzHandsViewPager, false);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        for (Decor decor : mDecors) {
+            // If slide out attribute is true, build a TranslationAnimation for the last page to
+            // change the translation X when the ViewPager is scrolling.
+            if (decor.slideOutAnimation == null && decor.slideOut) {
+                decor.slideOutAnimation = new TranslationAnimation(decor.endPage, decor.endPage, true,
+                        getWidth() - decor.contentView.getTranslationX(), decor.contentView.getTranslationY());
+
+                JazzHandsAnimationPresenter presenter =
+                        JazzHandsCompat.getJazzHandsAnimationPresenter(mJazzHandsViewPager);
+                if (presenter != null) {
+                    presenter.addAnimation(decor, decor.slideOutAnimation);
+                }
+            }
+        }
     }
 
     /**
@@ -201,28 +220,13 @@ public class JazzHandsViewPagerLayout extends FrameLayout
         int decorsSize = mDecors.size();
         for (int i = 0; i < decorsSize; i++) {
             Decor decor = mDecors.get(i);
-            if (decor.endPage + 1 <= currentPageOffset && decor.slideOut
-                    && decor.slideOutAnimation != null && decor.isAdded) {
-                decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.startPage != Animation.ALL_PAGES && (
-                    decor.startPage > currentPageOffset || decor.endPage < currentPageOffset)
+            if (decor.endPage + 1 <= currentPageOffset && decor.slideOut && decor.slideOutAnimation != null
                     && decor.isAdded) {
-
-                // If slide out attribute is true, build a TranslationAnimation for the last page to
-                // change the translation X when the ViewPager is scrolling.
-                if (decor.slideOutAnimation == null && decor.slideOut) {
-                    decor.slideOutAnimation =
-                            new TranslationAnimation(decor.endPage, decor.endPage, true,
-                                    decor.contentView.getTranslationX() - getWidth(),
-                                    decor.contentView.getTranslationY());
-
-                    JazzHandsAnimationPresenter presenter =
-                            JazzHandsCompat.getJazzHandsAnimationPresenter(mJazzHandsViewPager);
-                    if (presenter != null) {
-                        presenter.addAnimation(decor, decor.slideOutAnimation);
-                    }
-                } else if (decor.contentView.getVisibility() == VISIBLE && (!decor.slideOut || (
-                        decor.endPage + 1 < currentPageOffset))) {
+                decor.contentView.setVisibility(VISIBLE);
+            } else if (decor.startPage != Animation.ALL_PAGES && (decor.startPage > currentPageOffset
+                    || decor.endPage < currentPageOffset) && decor.isAdded) {
+                if (decor.contentView.getVisibility() == VISIBLE && (!decor.slideOut || (decor.endPage + 1
+                        < currentPageOffset))) {
                     decor.contentView.setVisibility(GONE);
                 }
             } else if ((decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset
