@@ -1,12 +1,16 @@
 # JazzHands-Android
 A ViewPager animator that animates Views within pages as well as views across pages.
 
-Animations within JazzHands will run based off of the scrolling of the ViewPager, thus provides a interactive effect on the animations.
+
+## Overview
+JazzHands is an animation library dedicated to animate ViewPager elements. It uses ViewPager's [PageTransformer](http://developer.android.com/reference/android/support/v4/view/ViewPager.PageTransformer.html) to control the progress of the animations, so that the animated Views respond to the scrolling, and thus provides an interactive effect.
+
+JazzHands also supports cross page animations, meaning that you can animate Views across different pages in ViewPager. This is done through `Decor` and `JazzHandsViewPagerLayout`. By using them, you can specify Views that you want to animate through multiple pages, and the animations on them will also be controlled by the PageTransformer.
+
 
 ## Usage
-### ViewPager animations
-JazzHands animates page and page child View through `PageTransformer`.
 
+### ViewPager animations
 To add an animation to a View within `JazzHandsViewPager`, 
 
 ```java
@@ -88,6 +92,8 @@ JazzHands also supports customized animations through extending `Animation` clas
 
 The other two parameters, View `v` is the target View to be animated, `offsetInPixel` is the **entire page View's** scrolling offset in pixel, which might or might not be the same as `View.getWidth() * offset`.
 
+## JazzHands and PageTransformer
+If you need to have a custom PageTrasnformer for your ViewPager while using JazzHands, you need to call `JazzHandsCompat.setPageTransformer(ViewPager, boolean, PageTransformer)` to set your PageTransformer.
 
 
 ## Contributing
