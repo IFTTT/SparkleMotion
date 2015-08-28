@@ -32,6 +32,7 @@ Important attributes of a `Decor`:
 * `startPage`: indicates starting from which page the `Decor` should be presented; 
 * `endPage`: indicates on which page the `Decor` should be removed from the `SparkleViewPagerLayout`;
 * `layoutBehindViewPage`: whether or not the `Decor` should be drawn behind the ViewPager within `SparkleViewPagerLayout`.
+* `slideOut`: indicates this Decor will be scrolled along with the ViewPager at the end of its range, instead of setting visibility to `GONE`.
 
 When there are more than one `Decor` in the layout, the drawing order of the content Views are based on the order that they are added through `SparkleMotion` or `SparkleViewPagerLayout#addDecor(Decor decor)`.
 
@@ -84,7 +85,7 @@ Decor decor = new Decor.Builder()
 * **[Zoom out effect](http://developer.android.com/training/animation/screen-slide.html)**: animates the target Views' alpha, scale and translation to achieve a zoom out effect when the page is scrolled. 
 
 ## Custom animations
-SparkleMotion also supports customized animations through extending `Animation` class. There are 3 methods in `Animation` class that you might be interested:
+Sparkle Motion also supports customized animations through extending `Animation` class. There are 3 methods in `Animation` class that you might be interested:
 
 * `onAnimate(View v, float offset, float offsetInPixel)`: main method to override to provide customized animation. The `offset` value is ranged within [-1, 1]. 
 * `onAnimateOffScreenLeft(View v, float offset, float offsetInPixel)` (optional): this method will be called when `offset` < -1, which means the page is currently to the left of the screen.
@@ -93,7 +94,7 @@ SparkleMotion also supports customized animations through extending `Animation` 
 The other two parameters, View `v` is the target View to be animated, `offsetInPixel` is the **entire page View's** scrolling offset in pixel, which might or might not be the same as `View.getWidth() * offset`.
 
 ## Sparkle Motion and PageTransformer
-If you need to have a custom PageTrasnformer for your ViewPager while using SparkleMotion, you need to call `SparkleMotionCompat.setPageTransformer(ViewPager, boolean, PageTransformer)` to set your PageTransformer.
+If you need to have a custom PageTrasnformer for your ViewPager while using Sparkle Motion, you need to call `SparkleMotionCompat.setPageTransformer(ViewPager, boolean, PageTransformer)` to set your PageTransformer.
 
 
 ## Contributing

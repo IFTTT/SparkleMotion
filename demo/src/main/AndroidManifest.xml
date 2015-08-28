@@ -7,7 +7,7 @@
         android:allowBackup="true"
         android:label="@string/label_application"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/JazzTheme">
+        android:theme="@style/SparkleMotionTheme">
 
         <activity
             android:name=".MainActivity"

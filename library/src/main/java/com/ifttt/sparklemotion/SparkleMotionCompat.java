@@ -3,18 +3,17 @@ package com.ifttt.sparklemotion;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import com.ifttt.jazzhands.R;
 
 /**
  * Helper class for installing {@link SparkleAnimationPresenter} into a {@link ViewPager}, so
- * that any ViewPager can use JazzHands animations.
+ * that any ViewPager can use SparkleMotion animations.
  * <p/>
  * The {@link SparkleAnimationPresenter} instance will be referenced by {@link View#setTag(int,
  * Object)} within the ViewPager, and a {@link android.support.v4.view.ViewPager.PageTransformer}
  * and a {@link android.support.v4.view.ViewPager.OnPageChangeListener} will be set as well
- * to provide functionality of JazzHands.
+ * to provide functionality of SparkleMotion.
  * <p/>
- * Note: Once a JazzHandsAnimationPresenter is installed, if you would like to provide another
+ * Note: Once a SparkleAnimationPresenter is installed, if you would like to provide another
  * PageTransformer, you need to use
  * {@link #setPageTransformer(ViewPager, boolean, ViewPager.PageTransformer)} method, so
  * that the presenter is preserved.
@@ -33,10 +32,10 @@ public final class SparkleMotionCompat {
      * @param viewPager ViewPager instance.
      * @param reverseDrawingOrder Whether the ViewPager should reverse it child Views' drawing
      * order.
-     * @param presenter JazzHandsAnimationPresenter instance to be installed.
+     * @param presenter SparkleAnimationPresenter instance to be installed.
      * @see {@link ViewPager#setPageTransformer(boolean, ViewPager.PageTransformer)}
      */
-    static void installJazzHandsPresenter(final ViewPager viewPager, boolean reverseDrawingOrder,
+    static void installAnimationPresenter(final ViewPager viewPager, boolean reverseDrawingOrder,
             final SparkleAnimationPresenter presenter) {
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject != null && tagObject == presenter) {
@@ -45,7 +44,7 @@ public final class SparkleMotionCompat {
         }
 
         // Set PageTransformer
-        ViewPager.PageTransformer jazzHandsTransformer = new ViewPager.PageTransformer() {
+        ViewPager.PageTransformer transformer = new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
                 int pageWidth = page.getWidth();
@@ -65,37 +64,37 @@ public final class SparkleMotionCompat {
             }
         });
 
-        viewPager.setPageTransformer(reverseDrawingOrder, jazzHandsTransformer);
+        viewPager.setPageTransformer(reverseDrawingOrder, transformer);
 
         viewPager.setTag(R.id.presenter_id, presenter);
     }
 
     /**
      * Convenient method for installing {@link SparkleAnimationPresenter}. A new
-     * JazzHandsAnimationPresenter will be created and attached to the ViewPager.
+     * SparkleAnimationPresenter will be created and attached to the ViewPager.
      *
      * @param viewPager ViewPager instance.
      * @param reverseDrawingOrder Whether the ViewPager should reverse it child Views' drawing
      * order.
-     * @see {@link #installJazzHandsPresenter(ViewPager, boolean, SparkleAnimationPresenter)}
-     * @see {@link #installJazzHandsPresenter(ViewPager)}
+     * @see {@link #installAnimationPresenter(ViewPager, boolean, SparkleAnimationPresenter)}
+     * @see {@link #installAnimationPresenter(ViewPager)}
      */
-    static void installJazzHandsPresenter(ViewPager viewPager, boolean reverseDrawingOrder) {
+    static void installAnimationPresenter(ViewPager viewPager, boolean reverseDrawingOrder) {
         final SparkleAnimationPresenter presenter = new SparkleAnimationPresenter();
-        installJazzHandsPresenter(viewPager, reverseDrawingOrder, presenter);
+        installAnimationPresenter(viewPager, reverseDrawingOrder, presenter);
     }
 
     /**
      * Convenient method for installing {@link SparkleAnimationPresenter} without reversing
      * ViewPager's child Views drawing order.
-     * A new JazzHandsAnimationPresenter will be created and attached to the ViewPager.
+     * A new SparkleAnimationPresenter will be created and attached to the ViewPager.
      *
      * @param viewPager ViewPager instance.
-     * @see {@link #installJazzHandsPresenter(ViewPager, boolean, SparkleAnimationPresenter)}
-     * @see {@link #installJazzHandsPresenter(ViewPager, boolean)}
+     * @see {@link #installAnimationPresenter(ViewPager, boolean, SparkleAnimationPresenter)}
+     * @see {@link #installAnimationPresenter(ViewPager, boolean)}
      */
-    static void installJazzHandsPresenter(ViewPager viewPager) {
-        installJazzHandsPresenter(viewPager, false);
+    static void installAnimationPresenter(ViewPager viewPager) {
+        installAnimationPresenter(viewPager, false);
     }
 
     /**
@@ -119,7 +118,7 @@ public final class SparkleMotionCompat {
         }
 
         final SparkleAnimationPresenter presenter = (SparkleAnimationPresenter) tagObject;
-        ViewPager.PageTransformer jazzHandsTransformerWrapper = new ViewPager.PageTransformer() {
+        ViewPager.PageTransformer transformerWrapper = new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
                 int pageWidth = page.getWidth();
@@ -132,16 +131,16 @@ public final class SparkleMotionCompat {
             }
         };
 
-        viewPager.setPageTransformer(reversDrawingOrder, jazzHandsTransformerWrapper);
+        viewPager.setPageTransformer(reversDrawingOrder, transformerWrapper);
     }
 
     /**
      * Gets the {@link SparkleAnimationPresenter} instance attached to the given ViewPager.
      *
      * @param viewPager ViewPager instance.
-     * @return JazzHandsAnimationPresenter instance if set, or null.
+     * @return SparkleAnimationPresenter instance if set, or null.
      */
-    static SparkleAnimationPresenter getJazzHandsAnimationPresenter(ViewPager viewPager) {
+    static SparkleAnimationPresenter getAnimationPresenter(ViewPager viewPager) {
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject == null || !(tagObject instanceof SparkleAnimationPresenter)) {
             return null;
@@ -155,9 +154,9 @@ public final class SparkleMotionCompat {
      * given ViewPager.
      *
      * @param viewPager ViewPager instance.
-     * @return True if there is a JazzHandsAnimationPresenter attached, false otherwise.
+     * @return True if there is a SparkleAnimationPresenter attached, false otherwise.
      */
     static boolean hasPresenter(ViewPager viewPager) {
-        return getJazzHandsAnimationPresenter(viewPager) != null;
+        return getAnimationPresenter(viewPager) != null;
     }
 }

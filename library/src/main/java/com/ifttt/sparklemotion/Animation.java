@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 /**
- * Abstract class for running JazzHands animation. This class contains all common information about
+ * Abstract class for running SparkleMotion animation. This class contains all common information about
  * the animation to be run on ViewPager pages, with an abstract method
  * {@link #onAnimate(View, float, float)} to be implemented so that the View properties can be
  * changed during ViewPager scrolling.

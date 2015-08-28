@@ -2,7 +2,7 @@
 
 <resources>
 
-    <string name="label_application">JazzHands</string>
+    <string name="label_application">Sparkle Motion</string>
     <string name="label_activity">@string/label_application</string>
     <string name="action_settings">Settings</string>
     <string name="alpha_animation">Alpha Animation</string>

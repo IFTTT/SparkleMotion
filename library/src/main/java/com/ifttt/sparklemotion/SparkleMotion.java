@@ -72,7 +72,7 @@ public class SparkleMotion {
 
     private void init() {
         if (SparkleMotionCompat.hasPresenter(mViewPager)) {
-            mPresenter = SparkleMotionCompat.getJazzHandsAnimationPresenter(mViewPager);
+            mPresenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);
         } else {
             mPresenter = new SparkleAnimationPresenter();
         }
@@ -91,7 +91,7 @@ public class SparkleMotion {
     }
 
     /**
-     * Assign animations to JazzHands, which will then associate the animations to target Views.
+     * Assign animations to SparkleMotion, which will then associate the animations to target Views.
      *
      * @param animations Animations to run.
      * @return this instance to chain functions.
@@ -102,7 +102,7 @@ public class SparkleMotion {
     }
 
     /**
-     * Assign target {@link Decor} to JazzHands, which will assign the
+     * Assign target {@link Decor} to SparkleMotion, which will assign the
      * animations stored in {@link #animate(Animation...)} to {@link SparkleAnimationPresenter}.
      * This is the last
      * method to call in order to build a functional ViewPager. Once this is called, a {@link
@@ -119,7 +119,7 @@ public class SparkleMotion {
             throw new IllegalStateException("A ViewPagerLayout must be provided");
         }
 
-        SparkleMotionCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
+        SparkleMotionCompat.installAnimationPresenter(mViewPager, mReversedOrder, mPresenter);
 
         Animation[] animations = new Animation[mAnimations.size()];
         mAnimations.toArray(animations);
@@ -133,7 +133,7 @@ public class SparkleMotion {
     }
 
     /**
-     * Assign target Views to JazzHands, which will assign the animations stored in {@link
+     * Assign target Views to SparkleMotion, which will assign the animations stored in {@link
      * #animate(Animation...)} to {@link SparkleAnimationPresenter}. This is the last method to
      * call in order to build a functional ViewPager. Once this is called, a
      * {@link SparkleAnimationPresenter} will be associated to the ViewPager, and the animations
@@ -142,7 +142,7 @@ public class SparkleMotion {
      * @param ids Target View ids.
      */
     public void on(int... ids) {
-        SparkleMotionCompat.installJazzHandsPresenter(mViewPager, mReversedOrder, mPresenter);
+        SparkleMotionCompat.installAnimationPresenter(mViewPager, mReversedOrder, mPresenter);
 
         Animation[] anims = new Animation[mAnimations.size()];
         mAnimations.toArray(anims);

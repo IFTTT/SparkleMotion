@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * JazzHands animation driver, used to store all {@link Animation} assigned to it and run animations given the current
+ * Animation driver, used to store all {@link Animation} assigned to it and run animations given the current
  * circumstance (e.g current page, View visibility). For ViewPager animations,
  * {@link #presentAnimations(View, float, float)} will be called for every frame the child View is scrolled. For
  * Decor animations, {@link #presentDecorAnimations(int, float)} will be called for every frame the ViewPager is

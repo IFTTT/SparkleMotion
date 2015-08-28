@@ -18,7 +18,7 @@ import java.util.Collections;
  */
 public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
 
-    private ViewPager mJazzHandsViewPager;
+    private ViewPager mViewPager;
 
     /**
      * Index of the ViewPager within this layout.
@@ -43,14 +43,13 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     }
 
     private void init() {
-        // Add JazzHandsViewPager.
-        mJazzHandsViewPager = new ViewPager(getContext());
-        addView(mJazzHandsViewPager);
+        mViewPager = new ViewPager(getContext());
+        addView(mViewPager);
         mViewPagerIndex = 0;
 
-        mJazzHandsViewPager.addOnPageChangeListener(this);
+        mViewPager.addOnPageChangeListener(this);
 
-        SparkleMotionCompat.installJazzHandsPresenter(mJazzHandsViewPager, false);
+        SparkleMotionCompat.installAnimationPresenter(mViewPager, false);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
                         getWidth() - decor.contentView.getTranslationX(), decor.contentView.getTranslationY());
 
                 SparkleAnimationPresenter presenter =
-                        SparkleMotionCompat.getJazzHandsAnimationPresenter(mJazzHandsViewPager);
+                        SparkleMotionCompat.getAnimationPresenter(mViewPager);
                 if (presenter != null) {
                     presenter.addAnimation(decor, decor.slideOutAnimation);
                 }
@@ -80,24 +79,24 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * @param viewPager ViewPager object to be added to this layout.
      */
     public void setViewPager(@NonNull ViewPager viewPager, boolean reverseDrawingOrder) {
-        mJazzHandsViewPager.removeOnPageChangeListener(this);
-        removeView(mJazzHandsViewPager);
+        mViewPager.removeOnPageChangeListener(this);
+        removeView(mViewPager);
 
         mViewPagerIndex = 0;
 
         if (!SparkleMotionCompat.hasPresenter(viewPager)) {
-            SparkleMotionCompat.installJazzHandsPresenter(viewPager, reverseDrawingOrder);
+            SparkleMotionCompat.installAnimationPresenter(viewPager, reverseDrawingOrder);
         }
 
         if (viewPager.getParent() != null && viewPager.getParent() == this) {
             // ViewPager is already a child View.
-            mJazzHandsViewPager.addOnPageChangeListener(this);
+            mViewPager.addOnPageChangeListener(this);
             return;
         }
 
         addView(viewPager, 0);
-        mJazzHandsViewPager = viewPager;
-        mJazzHandsViewPager.addOnPageChangeListener(this);
+        mViewPager = viewPager;
+        mViewPager.addOnPageChangeListener(this);
     }
 
     /**
@@ -106,7 +105,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * @return ViewPager object.
      */
     public ViewPager getViewPager() {
-        return mJazzHandsViewPager;
+        return mViewPager;
     }
 
     /**
@@ -130,7 +129,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         decor.decorIndex = mDecors.size();
         mDecors.add(decor);
 
-        layoutDecors(mJazzHandsViewPager.getCurrentItem());
+        layoutDecors(mViewPager.getCurrentItem());
 
         setChildrenDrawingOrderEnabled(true);
     }
@@ -143,7 +142,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     public void removeDecor(Decor decor) {
         int indexOfRemoved = mDecors.indexOf(decor);
         if (indexOfRemoved < 0) {
-            throw new IllegalArgumentException("Decor is not added to JazzHandsViewPagerLayout");
+            throw new IllegalArgumentException("Decor is not added to SparkleViewPagerLayout");
         }
 
         if (decor.isAdded) {

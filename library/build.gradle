@@ -40,7 +40,7 @@ dependencies {
 
 task checkstyle(type: Checkstyle) {
     configFile file("${project.rootDir}/checkstyle.xml")
-    source 'src/main/java/com/ifttt/jazzhands'
+    source 'src/main/java/com/ifttt/sparklemotion'
     include '**/*.java'
     exclude '**/gen/**'
     classpath = files()
