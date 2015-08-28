@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ifttt.jazzhands.JazzHandsViewPagerLayout
+    <com.ifttt.sparklemotion.SparkleViewPagerLayout
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
