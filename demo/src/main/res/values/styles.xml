@@ -2,6 +2,6 @@
 
 <resources>
 
-    <style name="JazzTheme" parent="android:Theme.DeviceDefault"></style>
+    <style name="SparkleMotionTheme" parent="android:Theme.DeviceDefault"></style>
 
 </resources>

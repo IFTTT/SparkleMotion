@@ -1,3 +1,3 @@
-rootProject.name = 'jazzhands'
+rootProject.name = 'sparklemotion'
 
 include ':demo', ':library'

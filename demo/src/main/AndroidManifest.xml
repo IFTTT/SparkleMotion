@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ifttt.jazzhandsdemo">
+    package="com.ifttt.sparklemotiondemo">
 
     <application
         android:allowBackup="true"
         android:label="@string/label_application"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/JazzTheme">
+        android:theme="@style/SparkleMotionTheme">
 
         <activity
             android:name=".MainActivity"

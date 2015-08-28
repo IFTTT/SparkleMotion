@@ -19,7 +19,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.ifttt.jazzhandsdemo"
+        applicationId "com.ifttt.sparklemotiondemo"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
