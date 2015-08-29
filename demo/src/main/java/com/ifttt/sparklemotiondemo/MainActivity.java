@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
         findViewById(R.id.path_and_translation_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, PathAndTranslationViewPagerActivity.class);
+                Intent i = new Intent(MainActivity.this, SparkleDemoActivity.class);
                 startActivity(i);
             }
         });

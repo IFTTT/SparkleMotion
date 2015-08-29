@@ -30,6 +30,8 @@
 
         <activity android:name=".PathAndTranslationViewPagerActivity"/>
 
+        <activity android:name=".SparkleDemoActivity" />
+
     </application>
 
 </manifest>
