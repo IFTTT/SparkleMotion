@@ -2,13 +2,17 @@ package com.ifttt.sparklemotiondemo;
 
 import android.app.Activity;
 import android.graphics.Path;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import com.ifttt.sparklemotion.Decor;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.SparkleViewPagerLayout;
@@ -19,24 +23,26 @@ import com.ifttt.sparklemotion.animations.TranslationAnimation;
 
 public final class SparkleDemoActivity extends Activity {
 
-    private SparkleViewPagerLayout mSparkleViewPagerLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.view_pager_layout);
 
-        mSparkleViewPagerLayout = (SparkleViewPagerLayout) findViewById(R.id.view_pager);
+        SparkleViewPagerLayout sparkleViewPagerLayout = (SparkleViewPagerLayout) findViewById(R.id.view_pager);
 
-        SparkleMotion sparkleMotion = SparkleMotion.with(mSparkleViewPagerLayout);
+        SparkleMotion sparkleMotion = SparkleMotion.with(sparkleViewPagerLayout);
 
-        buildDecor0(mSparkleViewPagerLayout, sparkleMotion);
-        buildDecor1(mSparkleViewPagerLayout, sparkleMotion);
-        buildDecor2(mSparkleViewPagerLayout, sparkleMotion);
-        buildDecor3(mSparkleViewPagerLayout, sparkleMotion);
+        buildDecor0(sparkleViewPagerLayout, sparkleMotion);
+        buildDecor1(sparkleViewPagerLayout, sparkleMotion);
+        buildDecor2(sparkleViewPagerLayout, sparkleMotion);
+        buildDecor3(sparkleViewPagerLayout, sparkleMotion);
 
-        mSparkleViewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
+        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(2, false, 1000, 0);
+        iftttCloudTranslation.setInterpolator(new AccelerateInterpolator());
+        sparkleMotion.animate(iftttCloudTranslation).on(R.id.ifttt_cloud);
+
+        sparkleViewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
     }
 
     private void buildDecor0(SparkleViewPagerLayout parent, SparkleMotion sparkleMotion) {
@@ -83,21 +89,29 @@ public final class SparkleDemoActivity extends Activity {
 
         sparkleMotion.animate(pathAnimation, rotationAnimation).on(decor);
 
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        final int cloudMargin = getResources().getDimensionPixelOffset(R.dimen.icon_cloud_margin);
+        final Drawable cloud = ContextCompat.getDrawable(this, R.drawable.cloud);
+
+        FrameLayout.LayoutParams lpCloud1 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+        lpCloud1.leftMargin = cloudMargin;
+        lpCloud1.topMargin = cloudMargin;
 
         ImageView cloud1 = new ImageView(parent.getContext());
-        cloud1.setLayoutParams(lp);
-        cloud1.setTranslationX(50);
-        cloud1.setTranslationY(-300);
-        cloud1.setImageResource(R.drawable.cloud);
+        cloud1.setLayoutParams(lpCloud1);
+        cloud1.setTranslationY(-cloud.getIntrinsicHeight() - lpCloud1.topMargin);
+        cloud1.setImageDrawable(cloud);
+
+        FrameLayout.LayoutParams lpCloud2 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        lpCloud2.gravity = Gravity.RIGHT;
+        lpCloud2.topMargin = (int) (cloud.getIntrinsicHeight() * 1.6f);
         ImageView cloud2 = new ImageView(parent.getContext());
-        cloud2.setLayoutParams(lp);
-        cloud2.setTranslationX(600);
-        cloud2.setTranslationY(-300);
-        cloud2.setScaleX(1.3f);
-        cloud2.setScaleY(1.3f);
-        cloud2.setImageResource(R.drawable.cloud);
+        cloud2.setLayoutParams(lpCloud2);
+        cloud2.setTranslationY(-cloud.getIntrinsicHeight() * 1.6f - lpCloud2.topMargin);
+        cloud2.setScaleX(1.6f);
+        cloud2.setScaleY(1.6f);
+        cloud2.setImageDrawable(cloud);
 
         Decor cloudDecor1 = new Decor.Builder()
                 .setContentView(cloud1)
@@ -109,10 +123,11 @@ public final class SparkleDemoActivity extends Activity {
                 .setContentView(cloud2)
                 .setStartPage(1)
                 .setEndPage(2)
+                .slideOut()
                 .build();
 
-        TranslationAnimation translationAnimation1 = new TranslationAnimation(1, true, 50, 0);
-        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, true, 600, 0);
+        TranslationAnimation translationAnimation1 = new TranslationAnimation(1, true, 0, 0);
+        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, true, 0, 0);
 
         sparkleMotion.animate(translationAnimation1).on(cloudDecor1);
         sparkleMotion.animate(translationAnimation2).on(cloudDecor2);
@@ -123,17 +138,22 @@ public final class SparkleDemoActivity extends Activity {
         ImageView sunImageView = new ImageView(parent.getContext());
         sunImageView.setImageResource(R.drawable.sun);
 
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+        int sunSize = getResources().getDimensionPixelSize(R.dimen.icon_sun_size);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                sunSize,
+                sunSize);
         sunImageView.setLayoutParams(lp);
+        sunImageView.setTranslationY(-sunSize);
+        sunImageView.setTranslationX(sunSize);
 
         Decor decor = new Decor.Builder()
                 .setContentView(sunImageView)
                 .setStartPage(2)
                 .setEndPage(3)
+                .slideOut()
                 .build();
 
-        TranslationAnimation translationAnimation = new TranslationAnimation(2, true, -200, -200);
+        TranslationAnimation translationAnimation = new TranslationAnimation(2, true, -sunSize / 3f, -sunSize / 3f);
         sparkleMotion.animate(translationAnimation).on(decor);
     }
 
@@ -142,8 +162,10 @@ public final class SparkleDemoActivity extends Activity {
         @Override
         protected View getView(int position, ViewGroup container) {
             switch (position) {
-                case 5:
+                case 2:
                     return buildSecondPage(container);
+                case 3:
+                    return buildThirdPage(container);
                 default:
                     return buildFirstPage(container);
             }
@@ -151,7 +173,7 @@ public final class SparkleDemoActivity extends Activity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         private View buildFirstPage(ViewGroup container) {
@@ -159,9 +181,11 @@ public final class SparkleDemoActivity extends Activity {
         }
 
         private View buildSecondPage(ViewGroup container) {
-            View view = LayoutInflater.from(container.getContext()).inflate(R.layout.sparkle_page_1, container, false);
+            return LayoutInflater.from(container.getContext()).inflate(R.layout.sparkle_page_2, container, false);
+        }
 
-            return view;
+        private View buildThirdPage(ViewGroup container) {
+            return LayoutInflater.from(container.getContext()).inflate(R.layout.sparkle_page_3, container, false);
         }
     }
 }

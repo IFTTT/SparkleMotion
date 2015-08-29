@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+
 import com.ifttt.sparklemotion.animations.TranslationAnimation;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -50,26 +52,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         mViewPager.addOnPageChangeListener(this);
 
         SparkleMotionCompat.installAnimationPresenter(mViewPager, false);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        for (Decor decor : mDecors) {
-            // If slide out attribute is true, build a TranslationAnimation for the last page to
-            // change the translation X when the ViewPager is scrolling.
-            if (decor.slideOutAnimation == null && decor.slideOut) {
-                decor.slideOutAnimation = new TranslationAnimation(decor.endPage, decor.endPage, true,
-                        getWidth() - decor.contentView.getTranslationX(), decor.contentView.getTranslationY());
-
-                SparkleAnimationPresenter presenter =
-                        SparkleMotionCompat.getAnimationPresenter(mViewPager);
-                if (presenter != null) {
-                    presenter.addAnimation(decor, decor.slideOutAnimation);
-                }
-            }
-        }
     }
 
     /**
@@ -128,6 +110,18 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
 
         decor.decorIndex = mDecors.size();
         mDecors.add(decor);
+
+        // If slide out attribute is true, build a TranslationAnimation for the last page to
+        // change the translation X when the ViewPager is scrolling.
+        if (decor.slideOutAnimation == null && decor.slideOut) {
+            decor.slideOutAnimation = new SlideOutAnimation(decor.endPage);
+
+            SparkleAnimationPresenter presenter =
+                    SparkleMotionCompat.getAnimationPresenter(mViewPager);
+            if (presenter != null) {
+                presenter.addAnimation(decor, decor.slideOutAnimation);
+            }
+        }
 
         layoutDecors(mViewPager.getCurrentItem());
 
