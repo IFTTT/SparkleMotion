@@ -23,7 +23,7 @@ public class RotationViewPagerActivity extends Activity {
                 (SparkleViewPagerLayout) findViewById(R.id.view_pager);
         viewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
 
-        RotationAnimation rotationAnimation = new RotationAnimation(Animation.ALL_PAGES, 360);
+        RotationAnimation rotationAnimation = new RotationAnimation(360);
         rotationAnimation.setInterpolator(new AccelerateInterpolator());
 
         SparkleMotion.with(viewPagerLayout) //

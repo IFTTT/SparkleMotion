@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import com.ifttt.sparklemotion.Decor;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.SparkleViewPagerLayout;
@@ -66,7 +67,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         path.quadTo(375, 100, 450, 0);
         path.quadTo(525, -100, 600, 0);
 
-        PathAnimation pathAnimation = new PathAnimation(0, 0, true, path);
+        PathAnimation pathAnimation = new PathAnimation(path, true);
         sparkleMotion.animate(pathAnimation).on(decor);
     }
 
@@ -75,10 +76,10 @@ public class PathAndTranslationViewPagerActivity extends Activity {
         sparkleMotion.animate(scaleAnimation)
                 .on(R.id.page_1_drod_0, R.id.page_1_drod_1, R.id.page_1_drod_2, R.id.page_1_drod_3);
 
-        TranslationAnimation droid0Translation = new TranslationAnimation(0, 1, false, 100, -400);
-        TranslationAnimation droid1Translation = new TranslationAnimation(0, 1, false, 50, -200);
-        TranslationAnimation droid2Translation = new TranslationAnimation(0, 1, false, 50, 200);
-        TranslationAnimation droid3Translation = new TranslationAnimation(0, 1, false, 100, 400);
+        TranslationAnimation droid0Translation = new TranslationAnimation(0, 0, 100, -400, false);
+        TranslationAnimation droid1Translation = new TranslationAnimation(0, 0, 50, -200, false);
+        TranslationAnimation droid2Translation = new TranslationAnimation(0, 0, 50, 200, false);
+        TranslationAnimation droid3Translation = new TranslationAnimation(0, 0, 100, 400, false);
 
         sparkleMotion.animate(droid0Translation).on(R.id.page_1_drod_0);
         sparkleMotion.animate(droid1Translation).on(R.id.page_1_drod_1);
@@ -93,7 +94,7 @@ public class PathAndTranslationViewPagerActivity extends Activity {
 
         RotationAnimation rotationAnimation = new RotationAnimation(1, 2, 360);
 
-        PathAnimation pathAnimation = new PathAnimation(1, 1, true, droid0Path);
+        PathAnimation pathAnimation = new PathAnimation(droid0Path, true);
         sparkleMotion.animate(rotationAnimation, pathAnimation).on(decor);
     }
 

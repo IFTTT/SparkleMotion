@@ -14,6 +14,10 @@ public class ScaleAnimation extends Animation {
     private float mInScaleX;
     private float mInScaleY;
 
+    public ScaleAnimation(float outScaleX, float outScaleY, float inScaleX, float inScaleY) {
+        this(ALL_PAGES, outScaleX, outScaleY, inScaleX, inScaleY);
+    }
+
     public ScaleAnimation(int page, float outScale, float inScale) {
         this(page, outScale, outScale, inScale, inScale);
     }
@@ -21,10 +25,6 @@ public class ScaleAnimation extends Animation {
     public ScaleAnimation(int page, float outScaleX, float outScaleY, float inScaleX,
             float inScaleY) {
         this(page, page, outScaleX, outScaleY, inScaleX, inScaleY);
-    }
-
-    public ScaleAnimation(int start, int end, float outScale, float inScale) {
-        this(start, end, outScale, outScale, inScale, inScale);
     }
 
     public ScaleAnimation(int start, int end, float outScaleX, float outScaleY, float inScaleX,

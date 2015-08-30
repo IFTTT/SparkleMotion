@@ -13,6 +13,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.ifttt.sparklemotion.Animation;
 import com.ifttt.sparklemotion.Decor;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.SparkleViewPagerLayout;
@@ -38,9 +39,8 @@ public final class SparkleDemoActivity extends Activity {
         buildDecor2(sparkleViewPagerLayout, sparkleMotion);
         buildDecor3(sparkleViewPagerLayout, sparkleMotion);
 
-        int iftttCloudTranslationX = getResources().getDimensionPixelOffset(R.dimen.ifttt_cloud_translation_x);
-        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(2, false
-                , 0, 0, iftttCloudTranslationX, 0);
+        int iftttCloudTranslationY = getResources().getDimensionPixelOffset(R.dimen.ifttt_cloud_translation_x);
+        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(0, 0, iftttCloudTranslationY, 0, false);
         iftttCloudTranslation.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(iftttCloudTranslation).on(R.id.ifttt_cloud);
 
@@ -59,19 +59,19 @@ public final class SparkleDemoActivity extends Activity {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1, parent, false);
         Decor decor = new Decor.Builder().setContentView(view).setStartPage(0).setEndPage(2).build();
 
-        TranslationAnimation translationAnimation = new TranslationAnimation(0, false, view.getTranslationX(), 0, 0, 0);
+        TranslationAnimation translationAnimation = new TranslationAnimation(0, view.getTranslationX(), 0, 0, 0, false);
         sparkleMotion.animate(translationAnimation).on(decor);
 
         View notes = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1_notes, parent, false);
         Decor notesDecor = new Decor.Builder().setContentView(notes).setStartPage(0).setEndPage(2).build();
 
-        TranslationAnimation translationAnimation1 = new TranslationAnimation(0, false, notes.getTranslationX(),
-                notes.getTranslationY(), 0, 0);
+        TranslationAnimation translationAnimation1 = new TranslationAnimation(0, notes.getTranslationX(),
+                notes.getTranslationY(), 0, 0, false);
         translationAnimation1.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(translationAnimation1).on(notesDecor);
 
         // TODO: change 3000 to something less magic.
-        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, false, 0, 0, 0, 3000);
+        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, 0, 0, 0, 3000, false);
         sparkleMotion.animate(translationAnimation2).on(decor, notesDecor);
     }
 
@@ -87,7 +87,7 @@ public final class SparkleDemoActivity extends Activity {
         Path path = new Path();
         path.quadTo(-100, -1500, -2000, -2000);
 
-        PathAnimation pathAnimation = new PathAnimation(1, true, path);
+        PathAnimation pathAnimation = new PathAnimation(1, path, true);
 
         RotationAnimation rotationAnimation = new RotationAnimation(1, 45);
 
@@ -131,11 +131,11 @@ public final class SparkleDemoActivity extends Activity {
                 .slideOut()
                 .build();
 
-        TranslationAnimation translationAnimation1 = new TranslationAnimation(1, true, 0, smallCloud.getTranslationY(),
+        TranslationAnimation translationAnimation1 = new TranslationAnimation(1, 0, smallCloud.getTranslationY(),
                 0,
-                0);
-        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, true, 0, bigCloud.getTranslationY(), 0,
-                0);
+                0, true);
+        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, 0, bigCloud.getTranslationY(), 0,
+                0, true);
 
         sparkleMotion.animate(translationAnimation1).on(cloudDecor1);
         sparkleMotion.animate(translationAnimation2).on(cloudDecor2);
@@ -161,8 +161,8 @@ public final class SparkleDemoActivity extends Activity {
                 .slideOut()
                 .build();
 
-        TranslationAnimation translationAnimation = new TranslationAnimation(2, true, sunSize, -sunSize, -sunSize / 3f,
-                -sunSize / 3f);
+        TranslationAnimation translationAnimation = new TranslationAnimation(2, sunSize, -sunSize, -sunSize / 3f,
+                -sunSize / 3f, true);
         sparkleMotion.animate(translationAnimation).on(decor);
     }
 

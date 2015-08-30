@@ -20,27 +20,25 @@ public class TranslationAnimation extends Animation {
      */
     private final boolean mAbsolute;
 
-    public TranslationAnimation(int page, boolean absolute, float translationX, float translationY) {
-        this(page, page, absolute, 0, 0, translationX, translationY);
+    public TranslationAnimation(float inTranslationX, float inTranslationY, float outTranslationX,
+            float outTranslationY,
+            boolean absolute) {
+        this(ALL_PAGES, inTranslationX, inTranslationY, outTranslationX, outTranslationY, absolute);
     }
 
-    public TranslationAnimation(int start, int end, boolean absolute, float translationX, float translationY) {
-        this(start, end, absolute, 0, 0, translationX, translationY);
+    public TranslationAnimation(int page, float inTranslationX,
+            float inTranslationY, float outTranslationX, float outTranslationY, boolean absolute) {
+        this(page, page, inTranslationX, inTranslationY, outTranslationX, outTranslationY, absolute);
     }
 
-    public TranslationAnimation(int page, boolean absolute, float inTranslationX,
-            float inTranslationY, float outTranslationX, float outTranslationY) {
-        this(page, page, absolute, inTranslationX, inTranslationY, outTranslationX, outTranslationY);
-    }
-
-    public TranslationAnimation(int start, int end, boolean absolute, float inTranslationX,
-            float inTranslationY, float outTranslationX, float outTranslationY) {
+    public TranslationAnimation(int start, int end, float inTranslationX,
+            float inTranslationY, float outTranslationX, float outTranslationY, boolean absolute) {
         super(start, end);
-        mAbsolute = absolute;
         mInTranslationX = inTranslationX;
         mInTranslationY = inTranslationY;
         mOutTranslationX = outTranslationX;
         mOutTranslationY = outTranslationY;
+        mAbsolute = absolute;
     }
 
     @Override

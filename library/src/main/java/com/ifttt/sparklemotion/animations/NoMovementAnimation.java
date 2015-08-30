@@ -12,11 +12,11 @@ import android.view.View;
 public class NoMovementAnimation extends Animation {
 
     public NoMovementAnimation() {
-        super();
+        this(ALL_PAGES);
     }
 
     public NoMovementAnimation(int page) {
-        super(page);
+        super(page, page);
     }
 
     public NoMovementAnimation(int start, int end) {

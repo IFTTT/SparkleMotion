@@ -23,7 +23,7 @@ public class AlphaViewPagerActivity extends Activity {
                 (SparkleViewPagerLayout) findViewById(R.id.view_pager);
         viewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
 
-        AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 0f, 1f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
         alphaAnimation.setInterpolator(new AccelerateInterpolator());
 
         SparkleMotion.with(viewPagerLayout) //

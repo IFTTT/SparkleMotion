@@ -3,6 +3,7 @@ package com.ifttt.sparklemotion.animations;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.view.View;
+
 import com.ifttt.sparklemotion.Animation;
 
 /**
@@ -19,14 +20,18 @@ public class PathAnimation extends Animation {
      */
     private final boolean mAbsolute;
 
-    public PathAnimation(int page, boolean absolute, Path path) {
-        this(page, page, absolute, path);
+    public PathAnimation(Path path, boolean absolute) {
+        this(ALL_PAGES, path, absolute);
     }
 
-    public PathAnimation(int start, int end, boolean absolute, Path path) {
+    public PathAnimation(int page, Path path, boolean absolute) {
+        this(page, page, path, absolute);
+    }
+
+    public PathAnimation(int start, int end, Path path, boolean absolute) {
         super(start, end);
-        mAbsolute = absolute;
         mPathMeasure = new PathMeasure(path, false);
+        mAbsolute = absolute;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class ZoomOutViewPagerActivity extends Activity {
                 (SparkleViewPagerLayout) findViewById(R.id.view_pager);
         viewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
 
-        ZoomOutAnimation zoomOutAnimation = new ZoomOutAnimation(Animation.ALL_PAGES);
+        ZoomOutAnimation zoomOutAnimation = new ZoomOutAnimation();
         SparkleMotion.with(viewPagerLayout.getViewPager())
                 .animate(zoomOutAnimation)
                 .on(Animation.ANIMATION_ID_PAGE);

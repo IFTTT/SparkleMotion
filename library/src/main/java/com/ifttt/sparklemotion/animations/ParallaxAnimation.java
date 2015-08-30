@@ -11,6 +11,10 @@ public class ParallaxAnimation extends Animation {
 
     private float mFactor;
 
+    public ParallaxAnimation(float factor) {
+        this(ALL_PAGES, factor);
+    }
+
     public ParallaxAnimation(int page, float factor) {
         this(page, page, factor);
     }

@@ -22,7 +22,7 @@ public class ParallaxViewPagerActivity extends Activity {
                 (SparkleViewPagerLayout) findViewById(R.id.view_pager);
         viewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
 
-        ParallaxAnimation parallaxAnimation = new ParallaxAnimation(Animation.ALL_PAGES, 2f);
+        ParallaxAnimation parallaxAnimation = new ParallaxAnimation(2f);
 
         SparkleMotion.with(viewPagerLayout) //
                 .animate(parallaxAnimation) //

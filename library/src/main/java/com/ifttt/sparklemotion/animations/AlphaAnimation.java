@@ -11,11 +11,12 @@ public class AlphaAnimation extends Animation {
     private float mOutAlpha;
     private float mInAlpha;
 
-    public AlphaAnimation(int page, float outAlpha, float inAlpha) {
-        super(page);
+    public AlphaAnimation(float outAlpha, float inAlpha) {
+        this(ALL_PAGES, outAlpha, inAlpha);
+    }
 
-        this.mOutAlpha = outAlpha;
-        this.mInAlpha = inAlpha;
+    public AlphaAnimation(int page, float outAlpha, float inAlpha) {
+        this(page, page, outAlpha, inAlpha);
     }
 
     public AlphaAnimation(int start, int end, float outAlpha, float inAlpha) {

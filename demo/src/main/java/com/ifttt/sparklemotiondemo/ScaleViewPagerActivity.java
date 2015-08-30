@@ -22,7 +22,7 @@ public class ScaleViewPagerActivity extends Activity {
                 (SparkleViewPagerLayout) findViewById(R.id.view_pager);
         viewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
 
-        ScaleAnimation scaleAnimation = new ScaleAnimation(Animation.ALL_PAGES, 0.3f, 1f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.3f, 0.3f, 1f, 1f);
 
         SparkleMotion.with(viewPagerLayout) //
                 .animate(scaleAnimation) //
