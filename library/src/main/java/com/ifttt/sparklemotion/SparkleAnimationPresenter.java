@@ -1,6 +1,7 @@
 package com.ifttt.sparklemotion;
 
 import android.support.v4.util.SimpleArrayMap;
+import android.util.Log;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,8 +31,8 @@ final class SparkleAnimationPresenter {
     private SimpleArrayMap<Decor, ArrayList<Animation>> mDecorAnimations;
 
     public SparkleAnimationPresenter() {
-        mAnimations = new SimpleArrayMap<Integer, ArrayList<Animation>>(3);
-        mDecorAnimations = new SimpleArrayMap<Decor, ArrayList<Animation>>(3);
+        mAnimations = new SimpleArrayMap<>(3);
+        mDecorAnimations = new SimpleArrayMap<>(3);
     }
 
     /**
@@ -94,7 +95,7 @@ final class SparkleAnimationPresenter {
                     viewToAnimate = parent.findViewById(key);
                 }
 
-                if (animation == null || viewToAnimate == null || !animation.shouldAnimate(mCurrentPage)) {
+                if (animation == null || viewToAnimate == null) {
                     continue;
                 }
 
@@ -124,18 +125,24 @@ final class SparkleAnimationPresenter {
                     continue;
                 }
 
+                int direction = position < mCurrentPage ? -1 : 1;
+
                 if (decor.contentView.getParent() == null
                         || decor.contentView.getVisibility() != View.VISIBLE || !animation.shouldAnimate(position)) {
+                    if (offset == 0) {
+                        continue;
+                    }
+
                     // Add a rescue frame to the animation if the page is scrolled really fast.
                     if (animation.getCurrentOffset() < 1 && animation.pageEnd < position) {
-                        animation.animate(decor.contentView, 1, 0);
+                        animation.animate(decor.contentView, direction, 0);
                     } else if (animation.getCurrentOffset() > 0 && animation.pageStart > position) {
                         animation.animate(decor.contentView, 0, 0);
                     }
                     continue;
                 }
 
-                animation.animate(decor.contentView, offset, 0);
+                animation.animate(decor.contentView, offset * direction, 0);
             }
         }
     }

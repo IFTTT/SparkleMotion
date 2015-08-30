@@ -216,10 +216,10 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             if (decor.endPage + 1 <= currentPageOffset && decor.slideOut && decor.slideOutAnimation != null
                     && decor.isAdded) {
                 decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.startPage != Animation.ALL_PAGES && (decor.startPage > currentPageOffset
-                    || decor.endPage < currentPageOffset) && decor.isAdded) {
-                if (decor.contentView.getVisibility() == VISIBLE && (!decor.slideOut || (decor.endPage + 1
-                        < currentPageOffset))) {
+            } else if (decor.startPage != Animation.ALL_PAGES && decor.isAdded
+                    && decor.contentView.getVisibility() == VISIBLE) {
+                int endPage = decor.slideOut ? decor.endPage + 1 : decor.endPage;
+                if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
                     decor.contentView.setVisibility(GONE);
                 }
             } else if ((decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="icon_sun_size">240dp</dimen>
     <dimen name="icon_cloud_margin">24dp</dimen>
+    <dimen name="ifttt_cloud_translation_x">300dp</dimen>
 </resources>

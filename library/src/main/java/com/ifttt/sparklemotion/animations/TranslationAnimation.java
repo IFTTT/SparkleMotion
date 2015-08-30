@@ -1,15 +1,18 @@
 package com.ifttt.sparklemotion.animations;
 
+import android.util.Log;
 import android.view.View;
+
 import com.ifttt.sparklemotion.Animation;
 
 /**
  * Subclass of {@link Animation} that changes the View's translation x and y.
  */
 public class TranslationAnimation extends Animation {
-
-    private final float mTranslationX;
-    private final float mTranslationY;
+    private final float mInTranslationX;
+    private final float mInTranslationY;
+    private final float mOutTranslationX;
+    private final float mOutTranslationY;
 
     /**
      * Flag to set whether this animation should be relative to the scrolling page or not. If set
@@ -17,21 +20,27 @@ public class TranslationAnimation extends Animation {
      */
     private final boolean mAbsolute;
 
-    private boolean mOriginalTranslationSet;
-    private float mOriginalTranslationX;
-    private float mOriginalTranslationY;
-
-    public TranslationAnimation(int page, boolean absolute, float translationX,
-            float translationY) {
-        this(page, page, absolute, translationX, translationY);
+    public TranslationAnimation(int page, boolean absolute, float translationX, float translationY) {
+        this(page, page, absolute, 0, 0, translationX, translationY);
     }
 
-    public TranslationAnimation(int start, int end, boolean absolute, float translationX,
-            float translationY) {
+    public TranslationAnimation(int start, int end, boolean absolute, float translationX, float translationY) {
+        this(start, end, absolute, 0, 0, translationX, translationY);
+    }
+
+    public TranslationAnimation(int page, boolean absolute, float inTranslationX,
+            float inTranslationY, float outTranslationX, float outTranslationY) {
+        this(page, page, absolute, inTranslationX, inTranslationY, outTranslationX, outTranslationY);
+    }
+
+    public TranslationAnimation(int start, int end, boolean absolute, float inTranslationX,
+            float inTranslationY, float outTranslationX, float outTranslationY) {
         super(start, end);
-        this.mAbsolute = absolute;
-        this.mTranslationX = translationX;
-        this.mTranslationY = translationY;
+        mAbsolute = absolute;
+        mInTranslationX = inTranslationX;
+        mInTranslationY = inTranslationY;
+        mOutTranslationX = outTranslationX;
+        mOutTranslationY = outTranslationY;
     }
 
     @Override
@@ -40,17 +49,8 @@ public class TranslationAnimation extends Animation {
             offsetInPixel = 0;
         }
 
-        if (!mOriginalTranslationSet) {
-            // Store the original translation X and Y when the animation first starts.
-            mOriginalTranslationX = v.getTranslationX();
-            mOriginalTranslationY = v.getTranslationY();
-            mOriginalTranslationSet = true;
-        }
-
         offset = Math.abs(offset);
-
-        v.setTranslationX(mOriginalTranslationX + offset * (mTranslationX - mOriginalTranslationX)
-                + offsetInPixel);
-        v.setTranslationY(mOriginalTranslationY + offset * (mTranslationY - mOriginalTranslationY));
+        v.setTranslationX(mInTranslationX + offset * (mOutTranslationX - mInTranslationX) + offsetInPixel);
+        v.setTranslationY(mInTranslationY + offset * (mOutTranslationY - mInTranslationY));
     }
 }

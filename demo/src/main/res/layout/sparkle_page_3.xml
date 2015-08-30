@@ -19,6 +19,6 @@
         android:layout_below="@id/open_sourc_text"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        android:translationX="100dp"/>
+        android:translationX="@dimen/ifttt_cloud_translation_x"/>
 
 </RelativeLayout>

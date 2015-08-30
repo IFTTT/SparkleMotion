@@ -38,7 +38,9 @@ public final class SparkleDemoActivity extends Activity {
         buildDecor2(sparkleViewPagerLayout, sparkleMotion);
         buildDecor3(sparkleViewPagerLayout, sparkleMotion);
 
-        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(2, false, 1000, 0);
+        int iftttCloudTranslationX = getResources().getDimensionPixelOffset(R.dimen.ifttt_cloud_translation_x);
+        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(2, false
+                , 0, 0, iftttCloudTranslationX, 0);
         iftttCloudTranslation.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(iftttCloudTranslation).on(R.id.ifttt_cloud);
 
@@ -57,17 +59,19 @@ public final class SparkleDemoActivity extends Activity {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1, parent, false);
         Decor decor = new Decor.Builder().setContentView(view).setStartPage(0).setEndPage(2).build();
 
-        TranslationAnimation translationAnimation = new TranslationAnimation(0, false, 0, 0);
+        TranslationAnimation translationAnimation = new TranslationAnimation(0, false, view.getTranslationX(), 0, 0, 0);
         sparkleMotion.animate(translationAnimation).on(decor);
 
         View notes = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1_notes, parent, false);
         Decor notesDecor = new Decor.Builder().setContentView(notes).setStartPage(0).setEndPage(2).build();
 
-        TranslationAnimation translationAnimation1 = new TranslationAnimation(0, false, 0, 0);
+        TranslationAnimation translationAnimation1 = new TranslationAnimation(0, false, notes.getTranslationX(),
+                notes.getTranslationY(), 0, 0);
         translationAnimation1.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(translationAnimation1).on(notesDecor);
 
-        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, false, 0, 3000);
+        // TODO: change 3000 to something less magic.
+        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, false, 0, 0, 0, 3000);
         sparkleMotion.animate(translationAnimation2).on(decor, notesDecor);
     }
 
@@ -92,42 +96,46 @@ public final class SparkleDemoActivity extends Activity {
         final int cloudMargin = getResources().getDimensionPixelOffset(R.dimen.icon_cloud_margin);
         final Drawable cloud = ContextCompat.getDrawable(this, R.drawable.cloud);
 
-        FrameLayout.LayoutParams lpCloud1 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        FrameLayout.LayoutParams lpSmallCloud = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        lpCloud1.leftMargin = cloudMargin;
-        lpCloud1.topMargin = cloudMargin;
+        lpSmallCloud.leftMargin = cloudMargin;
+        lpSmallCloud.topMargin = cloudMargin;
 
-        ImageView cloud1 = new ImageView(parent.getContext());
-        cloud1.setLayoutParams(lpCloud1);
-        cloud1.setTranslationY(-cloud.getIntrinsicHeight() - lpCloud1.topMargin);
-        cloud1.setImageDrawable(cloud);
+        ImageView smallCloud = new ImageView(parent.getContext());
+        smallCloud.setLayoutParams(lpSmallCloud);
+        smallCloud.setTranslationY(-cloud.getIntrinsicHeight() - lpSmallCloud.topMargin);
+        smallCloud.setImageDrawable(cloud);
 
-        FrameLayout.LayoutParams lpCloud2 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        FrameLayout.LayoutParams lpBigCloud = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        lpCloud2.gravity = Gravity.RIGHT;
-        lpCloud2.topMargin = (int) (cloud.getIntrinsicHeight() * 1.6f);
-        ImageView cloud2 = new ImageView(parent.getContext());
-        cloud2.setLayoutParams(lpCloud2);
-        cloud2.setTranslationY(-cloud.getIntrinsicHeight() * 1.6f - lpCloud2.topMargin);
-        cloud2.setScaleX(1.6f);
-        cloud2.setScaleY(1.6f);
-        cloud2.setImageDrawable(cloud);
+        lpBigCloud.gravity = Gravity.RIGHT;
+        lpBigCloud.topMargin = (int) (cloud.getIntrinsicHeight() * 1.6f);
+
+        ImageView bigCloud = new ImageView(parent.getContext());
+        bigCloud.setLayoutParams(lpBigCloud);
+        bigCloud.setTranslationY(-cloud.getIntrinsicHeight() * 1.6f - lpBigCloud.topMargin);
+        bigCloud.setScaleX(1.6f);
+        bigCloud.setScaleY(1.6f);
+        bigCloud.setImageDrawable(cloud);
 
         Decor cloudDecor1 = new Decor.Builder()
-                .setContentView(cloud1)
+                .setContentView(smallCloud)
                 .setStartPage(1)
                 .setEndPage(2)
                 .slideOut()
                 .build();
         Decor cloudDecor2 = new Decor.Builder()
-                .setContentView(cloud2)
+                .setContentView(bigCloud)
                 .setStartPage(1)
                 .setEndPage(2)
                 .slideOut()
                 .build();
 
-        TranslationAnimation translationAnimation1 = new TranslationAnimation(1, true, 0, 0);
-        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, true, 0, 0);
+        TranslationAnimation translationAnimation1 = new TranslationAnimation(1, true, 0, smallCloud.getTranslationY(),
+                0,
+                0);
+        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, true, 0, bigCloud.getTranslationY(), 0,
+                0);
 
         sparkleMotion.animate(translationAnimation1).on(cloudDecor1);
         sparkleMotion.animate(translationAnimation2).on(cloudDecor2);
@@ -153,7 +161,8 @@ public final class SparkleDemoActivity extends Activity {
                 .slideOut()
                 .build();
 
-        TranslationAnimation translationAnimation = new TranslationAnimation(2, true, -sunSize / 3f, -sunSize / 3f);
+        TranslationAnimation translationAnimation = new TranslationAnimation(2, true, sunSize, -sunSize, -sunSize / 3f,
+                -sunSize / 3f);
         sparkleMotion.animate(translationAnimation).on(decor);
     }
 
