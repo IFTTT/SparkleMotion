@@ -110,8 +110,9 @@ final class SparkleAnimationPresenter {
      *
      * @param position Position of the current page.
      * @param offset Offset of the ViewPager scrolling.
+     * @param offsetInPixel Value in pixels indicating the offset from position.
      */
-    void presentDecorAnimations(int position, float offset) {
+    void presentDecorAnimations(int position, float offset, int offsetInPixel) {
         // Animate all decor or other View animations.
         int animMapSize = mDecorAnimations.size();
         for (int i = 0; i < animMapSize; i++) {
@@ -135,14 +136,14 @@ final class SparkleAnimationPresenter {
 
                     // Add a rescue frame to the animation if the page is scrolled really fast.
                     if (animation.getCurrentOffset() < 1 && animation.pageEnd < position) {
-                        animation.animate(decor.contentView, direction, 0);
+                        animation.animate(decor.contentView, direction, offsetInPixel);
                     } else if (animation.getCurrentOffset() > 0 && animation.pageStart > position) {
-                        animation.animate(decor.contentView, 0, 0);
+                        animation.animate(decor.contentView, 0, offsetInPixel);
                     }
                     continue;
                 }
 
-                animation.animate(decor.contentView, offset * direction, 0);
+                animation.animate(decor.contentView, offset * direction, offsetInPixel);
             }
         }
     }

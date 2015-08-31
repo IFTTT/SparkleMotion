@@ -63,7 +63,7 @@ public final class SparkleMotionCompat {
                     presenter.setCurrentPage(position);
                 }
 
-                presenter.presentDecorAnimations(position, positionOffset);
+                presenter.presentDecorAnimations(position, positionOffset, positionOffsetPixels);
             }
         });
 

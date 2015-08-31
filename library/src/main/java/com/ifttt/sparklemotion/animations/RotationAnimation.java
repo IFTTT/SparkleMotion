@@ -8,28 +8,28 @@ import com.ifttt.sparklemotion.Animation;
  */
 public class RotationAnimation extends Animation {
 
-    private float mRotation;
+    private final float mInRotation;
+    private final float mOutRotation;
 
-    public RotationAnimation(float rotation) {
-        this(ALL_PAGES, rotation);
+    public RotationAnimation(float inRotation, float outRotation) {
+        this(ALL_PAGES, inRotation, outRotation);
     }
 
-    public RotationAnimation(int page, float rotation) {
-        this(page, page, rotation);
+    public RotationAnimation(int page, float inRotation, float outRotation) {
+        this(page, page, inRotation, outRotation);
     }
 
-    public RotationAnimation(int start, int end, float rotation) {
+    public RotationAnimation(int start, int end, float inRotation, float outRotation) {
         super(start, end);
 
-        this.mRotation = rotation;
+        mInRotation = inRotation;
+        mOutRotation = outRotation;
     }
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
         offset = Math.abs(offset);
 
-        if (mRotation > 0) {
-            v.setRotation(offset * mRotation);
-        }
+        v.setRotation(mInRotation + offset * (mOutRotation - mInRotation));
     }
 }

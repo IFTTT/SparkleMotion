@@ -40,7 +40,7 @@ public final class SparkleDemoActivity extends Activity {
         buildDecor3(sparkleViewPagerLayout, sparkleMotion);
 
         int iftttCloudTranslationY = getResources().getDimensionPixelOffset(R.dimen.ifttt_cloud_translation_x);
-        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(0, 0, iftttCloudTranslationY, 0, false);
+        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(0, 0, iftttCloudTranslationY, 0, true);
         iftttCloudTranslation.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(iftttCloudTranslation).on(R.id.ifttt_cloud);
 
@@ -59,19 +59,19 @@ public final class SparkleDemoActivity extends Activity {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1, parent, false);
         Decor decor = new Decor.Builder().setContentView(view).setStartPage(0).setEndPage(2).build();
 
-        TranslationAnimation translationAnimation = new TranslationAnimation(0, view.getTranslationX(), 0, 0, 0, false);
+        TranslationAnimation translationAnimation = new TranslationAnimation(0, view.getTranslationX(), 0, 0, 0, true);
         sparkleMotion.animate(translationAnimation).on(decor);
 
         View notes = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1_notes, parent, false);
         Decor notesDecor = new Decor.Builder().setContentView(notes).setStartPage(0).setEndPage(2).build();
 
         TranslationAnimation translationAnimation1 = new TranslationAnimation(0, notes.getTranslationX(),
-                notes.getTranslationY(), 0, 0, false);
+                notes.getTranslationY(), 0, 0, true);
         translationAnimation1.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(translationAnimation1).on(notesDecor);
 
         // TODO: change 3000 to something less magic.
-        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, 0, 0, 0, 3000, false);
+        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, 0, 0, 0, 3000, true);
         sparkleMotion.animate(translationAnimation2).on(decor, notesDecor);
     }
 

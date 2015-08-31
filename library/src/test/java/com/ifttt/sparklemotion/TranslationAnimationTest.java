@@ -2,7 +2,9 @@ package com.ifttt.sparklemotion;
 
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
+
 import com.ifttt.sparklemotion.animations.TranslationAnimation;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -33,7 +35,7 @@ public class TranslationAnimationTest {
 
     @Test
     public void testTranslationAnimationWithoutAbsolute() throws Exception {
-        TranslationAnimation animation = new TranslationAnimation(0, false, 200, 200);
+        TranslationAnimation animation = new TranslationAnimation(0, 0, 200, 200, false);
         animation.onAnimate(mDummyView, 0.3f, 150);
 
         assertTrue(mXAnswer.value - 60f < 0.001f);
@@ -46,7 +48,7 @@ public class TranslationAnimationTest {
 
     @Test
     public void testTranslationAnimationWithAbsolute() throws Exception {
-        TranslationAnimation animation = new TranslationAnimation(0, true, 200, 200);
+        TranslationAnimation animation = new TranslationAnimation(0, 0, 200, 200, true);
         animation.onAnimate(mDummyView, 0.3f, -150);
 
         assertTrue(mXAnswer.value + 90f < 0.001f);
