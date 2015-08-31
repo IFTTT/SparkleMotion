@@ -1,4 +1,4 @@
-package com.ifttt.sparklemotion.animations;
+package com.ifttt.sparklemotiondemo;
 
 import android.view.View;
 import com.ifttt.sparklemotion.Animation;

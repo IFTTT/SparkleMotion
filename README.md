@@ -82,7 +82,6 @@ Decor decor = new Decor.Builder()
     * **Translation**: animates the translation X and/or Y properties of the target Views.
 * **Path animation**: animates the target Views' translation X and Y so that it follows a [path](http://developer.android.com/reference/android/graphics/Path.html).
 * **Parallax translation effect**: animates the target Views' translation X to the opposite direction of the ViewPager scrolling to achieve a paralax effect.
-* **[Zoom out effect](http://developer.android.com/training/animation/screen-slide.html)**: animates the target Views' alpha, scale and translation to achieve a zoom out effect when the page is scrolled. 
 
 ## Custom animations
 Sparkle Motion also supports customized animations through extending `Animation` class. There are 3 methods in `Animation` class that you might be interested:

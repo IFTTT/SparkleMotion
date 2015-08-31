@@ -21,17 +21,6 @@ public class TranslationAnimation extends Animation {
      * Constructor for building a TranslationAnimation that animates in all pages with given translation X and Y.
      * This should be used for ViewPager View animations, as they will also be involved in ViewPager scrolling,
      * therefore making them invisible once they are scrolled to left or right.
-     *
-     * @param inTranslationX  TranslationX when the page of the View is the primary page, i.e. the page is the
-     *                        current page and the ViewPager is not scrolling.
-     * @param inTranslationY  TranslationY when the page of the View is the primary page, i.e. the page is the
-     *                        current page and the ViewPager is not scrolling.
-     * @param outTranslationX TranslationX when the page of the View is not visible, i.e. the page is scrolled to
-     *                        the left or right of the primary page.
-     * @param outTranslationY TranslationY when the page of the View is not visible, i.e. the page is scrolled to
-     *                        the left or right of the primary page.
-     * @param absolute        Flag to set whether this animation should be relative to the scrolling page or not. If set
-     *                        to true, the View being animated will ignore the scrolling of the parent View.
      */
     public TranslationAnimation(float inTranslationX, float inTranslationY, float outTranslationX,
             float outTranslationY,
@@ -58,6 +47,16 @@ public class TranslationAnimation extends Animation {
      *
      * @param start Page index that this animation should start.
      * @param end   Page index that this animation should end.
+     * @param inTranslationX  TranslationX when the page of the View is the primary page, i.e. the page is the
+     *                        current page and the ViewPager is not scrolling.
+     * @param inTranslationY  TranslationY when the page of the View is the primary page, i.e. the page is the
+     *                        current page and the ViewPager is not scrolling.
+     * @param outTranslationX TranslationX when the page of the View is not visible, i.e. the page is scrolled to
+     *                        the left or right of the primary page.
+     * @param outTranslationY TranslationY when the page of the View is not visible, i.e. the page is scrolled to
+     *                        the left or right of the primary page.
+     * @param absolute        Flag to set whether this animation should be relative to the scrolling page or not. If set
+     *                        to true, the View being animated will ignore the scrolling of the parent View.
      */
     public TranslationAnimation(int start, int end, float inTranslationX,
             float inTranslationY, float outTranslationX, float outTranslationY, boolean absolute) {

@@ -14,20 +14,39 @@ public class PathAnimation extends Animation {
 
     private final PathMeasure mPathMeasure;
 
-    /**
-     * Flag to set whether this animation should be relative to the scrolling page or not. If set
-     * to true, the View being animated will ignore the scrolling of the parent View.
-     */
     private final boolean mAbsolute;
 
+    /**
+     * Constructor for building a PathAnimation for all pages. This should be used for ViewPager View animations,
+     * as they will also be involved in ViewPager scrolling, therefore making them invisible once they are scrolled
+     * to left or right.
+     */
     public PathAnimation(Path path, boolean absolute) {
         this(ALL_PAGES, path, absolute);
     }
 
+    /**
+     * Constructor for building a PathAnimation for a specific page. This is recommended to use
+     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
+     * run different animations.
+     *
+     * @param page Page index that this animation should run on.
+     */
     public PathAnimation(int page, Path path, boolean absolute) {
         this(page, page, path, absolute);
     }
 
+    /**
+     * Constructor for building a PathAnimation for a range of pages. This is recommended to use
+     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
+     * run different animations.
+     *
+     * @param start    Page index that this animation should start.
+     * @param end      Page index that this animation should end.
+     * @param path     Path object that the animated View will follow.
+     * @param absolute Flag to set whether this animation should be relative to the scrolling page or not. If set
+     *                 to true, the View being animated will ignore the scrolling of the parent View.
+     */
     public PathAnimation(int start, int end, Path path, boolean absolute) {
         super(start, end);
         mPathMeasure = new PathMeasure(path, false);

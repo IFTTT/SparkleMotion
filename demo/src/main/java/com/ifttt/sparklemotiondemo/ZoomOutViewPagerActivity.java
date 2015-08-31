@@ -5,7 +5,6 @@ import android.os.Bundle;
 import com.ifttt.sparklemotion.Animation;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.SparkleViewPagerLayout;
-import com.ifttt.sparklemotion.animations.ZoomOutAnimation;
 
 /**
  * Demo Activity for {@link ZoomOutAnimation}.
