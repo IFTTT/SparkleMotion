@@ -9,15 +9,10 @@ import java.util.Collections;
  * Animation driver, used to store all {@link Animation} assigned to it and run animations given the current
  * circumstance (e.g current page, View visibility). For ViewPager animations,
  * {@link #presentAnimations(View, float, float)} will be called for every frame the child View is scrolled. For
- * Decor animations, {@link #presentDecorAnimations(int, float, int)} will be called for every frame the ViewPager is
+ * Decor animations, {@link #presentDecorAnimations(int, float)} will be called for every frame the ViewPager is
  * scrolled.
  */
 final class SparkleAnimationPresenter {
-    /**
-     * Current page from ViewPager, used to decide whether an animation should run.
-     */
-    private int mCurrentPage;
-
     /**
      * A SimpleArrayMap that saves all animations with the target View's ID as key.
      */
@@ -109,9 +104,8 @@ final class SparkleAnimationPresenter {
      *
      * @param position Position of the current page.
      * @param offset Offset of the ViewPager scrolling.
-     * @param offsetInPixel Value in pixels indicating the offset from position.
      */
-    void presentDecorAnimations(int position, float offset, int offsetInPixel) {
+    void presentDecorAnimations(int position, float offset) {
         // Animate all decor or other View animations.
         int animMapSize = mDecorAnimations.size();
         for (int i = 0; i < animMapSize; i++) {
@@ -133,19 +127,15 @@ final class SparkleAnimationPresenter {
 
                     // Add a rescue frame to the animation if the page is scrolled really fast.
                     if (animation.getCurrentOffset() < 1 && animation.pageEnd < position) {
-                        animation.animate(decor.contentView, 1, offsetInPixel);
+                        animation.animate(decor.contentView, 1, 0);
                     } else if (animation.getCurrentOffset() > 0 && animation.pageStart > position) {
-                        animation.animate(decor.contentView, 0, offsetInPixel);
+                        animation.animate(decor.contentView, 0, 0);
                     }
                     continue;
                 }
 
-                animation.animate(decor.contentView, offset, offsetInPixel);
+                animation.animate(decor.contentView, offset, 0);
             }
         }
-    }
-
-    void setCurrentPage(int currentPage) {
-        this.mCurrentPage = currentPage;
     }
 }

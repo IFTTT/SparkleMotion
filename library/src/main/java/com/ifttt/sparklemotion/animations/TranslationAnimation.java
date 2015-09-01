@@ -2,6 +2,7 @@ package com.ifttt.sparklemotion.animations;
 
 import android.view.View;
 import com.ifttt.sparklemotion.Animation;
+import com.ifttt.sparklemotion.Decor;
 
 /**
  * Subclass of {@link Animation} that changes the View's translation x and y.
@@ -43,6 +44,10 @@ public class TranslationAnimation extends Animation {
      * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
      * run different animations.
      *
+     * Note that for animating {@link Decor}, {@code absolute} will be ignored and always be true, meaning that the
+     * Decor content View will only animate the translation X value given by the animation, instead of the combination
+     * of the translation X value of the animation and ViewPager scrolling.
+     *
      * @param start Page index that this animation should start.
      * @param end   Page index that this animation should end.
      * @param inTranslationX  TranslationX when the page of the View is the primary page, i.e. the page is the
@@ -73,7 +78,7 @@ public class TranslationAnimation extends Animation {
         }
 
         offset = Math.abs(offset);
-        v.setTranslationX(mInTranslationX + offset * (mOutTranslationX - mInTranslationX) + offsetInPixel);
+        v.setTranslationX(mInTranslationX + offset * (mOutTranslationX - mInTranslationX) - offsetInPixel);
         v.setTranslationY(mInTranslationY + offset * (mOutTranslationY - mInTranslationY));
     }
 }

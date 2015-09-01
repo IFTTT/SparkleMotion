@@ -5,6 +5,7 @@ import android.graphics.PathMeasure;
 import android.view.View;
 
 import com.ifttt.sparklemotion.Animation;
+import com.ifttt.sparklemotion.Decor;
 
 /**
  * Subclass of {@link Animation} that animates the view based on a {@link Path}. It is essentially
@@ -40,6 +41,10 @@ public class PathAnimation extends Animation {
      * Constructor for building a PathAnimation for a range of pages. This is recommended to use
      * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
      * run different animations.
+     *
+     * Note that for animating {@link Decor}, {@code absolute} will be ignored and always be true, meaning that the
+     * Decor content View will only animate the translation X value given by the animation, instead of the combination
+     * of the translation X value of the animation and ViewPager scrolling.
      *
      * @param start    Page index that this animation should start.
      * @param end      Page index that this animation should end.

@@ -59,11 +59,7 @@ public final class SparkleMotionCompat {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 // Animate any Decor animations.
-                if (positionOffset == 0) {
-                    presenter.setCurrentPage(position);
-                }
-
-                presenter.presentDecorAnimations(position, positionOffset, positionOffsetPixels);
+                presenter.presentDecorAnimations(position, positionOffset);
             }
         });
 
