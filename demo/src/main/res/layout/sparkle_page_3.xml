@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/free_and_open_source"
+        android:textSize="18sp"
         android:layout_centerInParent="true"/>
 
     <ImageView

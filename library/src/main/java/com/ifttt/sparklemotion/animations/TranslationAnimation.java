@@ -1,8 +1,6 @@
 package com.ifttt.sparklemotion.animations;
 
-import android.util.Log;
 import android.view.View;
-
 import com.ifttt.sparklemotion.Animation;
 
 /**
@@ -70,7 +68,7 @@ public class TranslationAnimation extends Animation {
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
-        if (!mAbsolute) {
+        if (mAbsolute) {
             offsetInPixel = 0;
         }
 

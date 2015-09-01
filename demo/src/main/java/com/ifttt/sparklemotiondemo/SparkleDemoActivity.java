@@ -1,7 +1,6 @@
 package com.ifttt.sparklemotiondemo;
 
 import android.app.Activity;
-import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -12,13 +11,10 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.ifttt.sparklemotion.Animation;
 import com.ifttt.sparklemotion.Decor;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.SparkleViewPagerLayout;
-import com.ifttt.sparklemotion.animations.PathAnimation;
-import com.ifttt.sparklemotion.animations.RotationAnimation;
 import com.ifttt.sparklemotion.animations.ScaleAnimation;
 import com.ifttt.sparklemotion.animations.TranslationAnimation;
 
@@ -39,8 +35,8 @@ public final class SparkleDemoActivity extends Activity {
         buildDecor2(sparkleViewPagerLayout, sparkleMotion);
         buildDecor3(sparkleViewPagerLayout, sparkleMotion);
 
-        int iftttCloudTranslationY = getResources().getDimensionPixelOffset(R.dimen.ifttt_cloud_translation_x);
-        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(0, 0, iftttCloudTranslationY, 0, true);
+        int iftttCloudTranslationX = getResources().getDimensionPixelOffset(R.dimen.ifttt_cloud_translation_x);
+        TranslationAnimation iftttCloudTranslation = new TranslationAnimation(0, 0, iftttCloudTranslationX, 0, true);
         iftttCloudTranslation.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(iftttCloudTranslation).on(R.id.ifttt_cloud);
 
@@ -51,7 +47,7 @@ public final class SparkleDemoActivity extends Activity {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_0, parent, false);
         Decor decor = new Decor.Builder().setContentView(view).setStartPage(0).setEndPage(4).behindViewPage().build();
 
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0, 7f, 1f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1f, 1f, 7f, 7f);
         sparkleMotion.animate(scaleAnimation).on(decor);
     }
 
@@ -76,22 +72,23 @@ public final class SparkleDemoActivity extends Activity {
     }
 
     private void buildDecor2(SparkleViewPagerLayout parent, SparkleMotion sparkleMotion) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_2_plane, parent, false);
+        final PaperPlaneView view =
+                (PaperPlaneView) LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_2_plane, parent, false);
 
         Decor decor = new Decor.Builder()
                 .setContentView(view)
                 .setStartPage(1)
                 .setEndPage(2)
+                .behindViewPage().slideOut()
                 .build();
 
-        Path path = new Path();
-        path.quadTo(-100, -1500, -2000, -2000);
-
-        PathAnimation pathAnimation = new PathAnimation(1, path, true);
-
-        RotationAnimation rotationAnimation = new RotationAnimation(1, 45);
-
-        sparkleMotion.animate(pathAnimation, rotationAnimation).on(decor);
+        sparkleMotion.animate(new Animation(1, 1) {
+            @Override
+            public void onAnimate(View v, float offset, float offsetInPixel) {
+                offset = Math.abs(offset);
+                view.animate(offset);
+            }
+        }).on(decor);
 
         final int cloudMargin = getResources().getDimensionPixelOffset(R.dimen.icon_cloud_margin);
         final Drawable cloud = ContextCompat.getDrawable(this, R.drawable.cloud);

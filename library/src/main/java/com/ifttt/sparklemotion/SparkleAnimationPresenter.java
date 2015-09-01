@@ -1,7 +1,6 @@
 package com.ifttt.sparklemotion;
 
 import android.support.v4.util.SimpleArrayMap;
-import android.util.Log;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +9,7 @@ import java.util.Collections;
  * Animation driver, used to store all {@link Animation} assigned to it and run animations given the current
  * circumstance (e.g current page, View visibility). For ViewPager animations,
  * {@link #presentAnimations(View, float, float)} will be called for every frame the child View is scrolled. For
- * Decor animations, {@link #presentDecorAnimations(int, float)} will be called for every frame the ViewPager is
+ * Decor animations, {@link #presentDecorAnimations(int, float, int)} will be called for every frame the ViewPager is
  * scrolled.
  */
 final class SparkleAnimationPresenter {
@@ -126,8 +125,6 @@ final class SparkleAnimationPresenter {
                     continue;
                 }
 
-                int direction = position < mCurrentPage ? -1 : 1;
-
                 if (decor.contentView.getParent() == null
                         || decor.contentView.getVisibility() != View.VISIBLE || !animation.shouldAnimate(position)) {
                     if (offset == 0) {
@@ -136,14 +133,14 @@ final class SparkleAnimationPresenter {
 
                     // Add a rescue frame to the animation if the page is scrolled really fast.
                     if (animation.getCurrentOffset() < 1 && animation.pageEnd < position) {
-                        animation.animate(decor.contentView, direction, offsetInPixel);
+                        animation.animate(decor.contentView, 1, offsetInPixel);
                     } else if (animation.getCurrentOffset() > 0 && animation.pageStart > position) {
                         animation.animate(decor.contentView, 0, offsetInPixel);
                     }
                     continue;
                 }
 
-                animation.animate(decor.contentView, offset * direction, offsetInPixel);
+                animation.animate(decor.contentView, offset, offsetInPixel);
             }
         }
     }

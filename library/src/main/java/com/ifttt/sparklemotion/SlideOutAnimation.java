@@ -1,8 +1,6 @@
 package com.ifttt.sparklemotion;
 
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * {@link Animation} subclass used for running slide out animation when {@link Decor#slideOut} is true.
@@ -37,7 +35,5 @@ final class SlideOutAnimation extends Animation {
 
         offset = Math.abs(offset);
         v.setTranslationX(mOriginalTranslationX + offset * mDistance);
-
-        Log.d(getClass().getSimpleName(), offset + " ");
     }
 }

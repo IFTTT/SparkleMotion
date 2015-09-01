@@ -33,5 +33,6 @@ android {
 }
 
 dependencies {
+    compile files('libs/svg-android.jar')
     compile project(':library')
 }
