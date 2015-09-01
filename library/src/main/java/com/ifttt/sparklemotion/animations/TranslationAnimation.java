@@ -68,7 +68,7 @@ public class TranslationAnimation extends Animation {
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
-        if (mAbsolute) {
+        if (!mAbsolute) {
             offsetInPixel = 0;
         }
 
