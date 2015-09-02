@@ -41,16 +41,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         super(context, attrs, defStyleAttr);
     }
 
-    private void init() {
-        mViewPager = new ViewPager(getContext());
-        addView(mViewPager);
-        mViewPagerIndex = 0;
-
-        mViewPager.addOnPageChangeListener(this);
-
-        SparkleMotionCompat.installAnimationPresenter(mViewPager, false);
-    }
-
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (child instanceof ViewPager) {
@@ -95,7 +85,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             SparkleMotionCompat.installAnimationPresenter(viewPager);
         }
 
-        mViewPagerIndex = index;
+        mViewPagerIndex = index < 0 ? getChildCount() : index;
 
         mViewPager = viewPager;
         mViewPager.addOnPageChangeListener(this);
@@ -185,7 +175,9 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        layoutDecors(position + positionOffset);
+        if (positionOffset >= 0) {
+            layoutDecors(position + positionOffset);
+        }
     }
 
     @Override
