@@ -23,7 +23,7 @@ public class ScaleAnimationTest {
 
         SetterAnswer answer = new SetterAnswer();
         doAnswer(answer).when(dummyView).setScaleX(Mockito.anyFloat());
-        scaleAnimation.onAnimate(dummyView, 0.3f, 0);
+        scaleAnimation.onAnimate(dummyView, 0.7f, 0);
 
         assertTrue(answer.value - 0.3f < 0.001f);
     }
