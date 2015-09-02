@@ -1,5 +1,6 @@
 package com.ifttt.sparklemotion;
 
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +11,7 @@ import java.util.Collections;
  */
 public class SparkleMotion {
 
-    private ViewPager mViewPager;
+    private final ViewPager mViewPager;
     private SparkleViewPagerLayout mViewPagerLayout;
     private SparkleAnimationPresenter mPresenter;
 
@@ -30,7 +31,7 @@ public class SparkleMotion {
      * @param viewPager Target ViewPager.
      * @return this instance to chain functions.
      */
-    public static SparkleMotion with(ViewPager viewPager) {
+    public static SparkleMotion with(@NonNull ViewPager viewPager) {
         return new SparkleMotion(viewPager);
     }
 
@@ -42,7 +43,7 @@ public class SparkleMotion {
      * @param viewPagerLayout TargetViewPagerLayout.
      * @return this instance to chain functions.
      */
-    public static SparkleMotion with(SparkleViewPagerLayout viewPagerLayout) {
+    public static SparkleMotion with(@NonNull SparkleViewPagerLayout viewPagerLayout) {
         return new SparkleMotion(viewPagerLayout);
     }
 
@@ -52,7 +53,7 @@ public class SparkleMotion {
      *
      * @param viewPager ViewPager object.
      */
-    private SparkleMotion(ViewPager viewPager) {
+    private SparkleMotion(@NonNull ViewPager viewPager) {
         mViewPager = viewPager;
         init();
     }
@@ -63,8 +64,9 @@ public class SparkleMotion {
      *
      * @param viewPagerLayout ViewPagerLayout object.
      */
-    private SparkleMotion(SparkleViewPagerLayout viewPagerLayout) {
+    private SparkleMotion(@NonNull SparkleViewPagerLayout viewPagerLayout) {
         mViewPagerLayout = viewPagerLayout;
+        mViewPager = mViewPagerLayout.getViewPager();
 
         init();
     }
