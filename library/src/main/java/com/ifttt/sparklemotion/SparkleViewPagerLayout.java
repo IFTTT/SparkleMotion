@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import com.ifttt.sparklemotion.animations.TranslationAnimation;
 import java.util.ArrayList;
@@ -51,26 +52,17 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     }
 
     @Override
+    public void addView(View child, int index, ViewGroup.LayoutParams params) {
+        if (child instanceof ViewPager) {
+            setViewPager((ViewPager) child, index);
+        }
+
+        super.addView(child, index, params);
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        if (mViewPager == null) {
-            // Find the first ViewPager within this layout.
-            int childCount = getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                View child = getChildAt(i);
-                if (child instanceof ViewPager) {
-                    if (mViewPager != null) {
-                        throw new IllegalStateException(
-                                "A JazzHandsViewPagerLayout should only have one ViewPager child View");
-                    }
-
-                    mViewPager = (ViewPager) child;
-                    mViewPagerIndex = i;
-                    mViewPager.addOnPageChangeListener(this);
-                }
-            }
-        }
 
         for (Decor decor : mDecors) {
             // If slide out attribute is true, build a TranslationAnimation for the last page to
@@ -88,35 +80,23 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     }
 
     /**
-     * Use an external {@link ViewPager} instead of the default one as the ViewPager of the layout.
-     * The parent of the ViewPager must be null or this layout.
+     * Setup a ViewPager within this layout, so that we can use it to run animations.
      *
-     * @param viewPager ViewPager object to be added to this layout.
+     * @param viewPager ViewPager object being added to this layout.
+     * @param index     Index of the ViewPager being added to this layout.
      */
-    public void setViewPager(@NonNull ViewPager viewPager, boolean reverseDrawingOrder) {
+    private void setViewPager(@NonNull ViewPager viewPager, int index) {
         if (mViewPager != null) {
             throw new IllegalStateException(
                     "SparkleViewPagerLayout already has a ViewPager set.");
         }
 
         if (!SparkleMotionCompat.hasPresenter(viewPager)) {
-            SparkleMotionCompat.installAnimationPresenter(viewPager, reverseDrawingOrder);
+            SparkleMotionCompat.installAnimationPresenter(viewPager);
         }
 
-        if (viewPager.getParent() != null) {
-            if (viewPager.getParent() == this) {
-                // ViewPager is already a child View.
-                mViewPager.addOnPageChangeListener(this);
-                return;
-            } else {
-                throw new IllegalStateException(
-                        "ViewPager already has a parent, and it is not this SparkleViewPagerLayout");
-            }
-        }
+        mViewPagerIndex = index;
 
-        mViewPagerIndex = getChildCount();
-
-        addView(viewPager);
         mViewPager = viewPager;
         mViewPager.addOnPageChangeListener(this);
     }
@@ -126,7 +106,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      *
      * @return ViewPager object.
      */
-    ViewPager getViewPager() {
+    public ViewPager getViewPager() {
         return mViewPager;
     }
 

@@ -1,6 +1,5 @@
 package com.ifttt.sparklemotion;
 
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -128,24 +127,16 @@ public class SparkleMotion {
 
         mAnimations.clear();
 
-        mViewPagerLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mViewPager == null) {
-                    mViewPager = mViewPagerLayout.getViewPager();
-                }
+        ViewPager viewPager = mViewPagerLayout.getViewPager();
+        if (viewPager == null) {
+            throw new NullPointerException("ViewPager cannot be null");
+        }
 
-                if (mViewPager == null) {
-                    throw new NullPointerException("ViewPager cannot be null");
-                }
+        SparkleMotionCompat.installAnimationPresenter(viewPager, mReversedOrder, mPresenter);
 
-                SparkleMotionCompat.installAnimationPresenter(mViewPager, mReversedOrder, mPresenter);
-
-                for (Decor decor : decors) {
-                    mViewPagerLayout.addDecor(decor);
-                }
-            }
-        });
+        for (Decor decor : decors) {
+            mViewPagerLayout.addDecor(decor);
+        }
     }
 
     /**
@@ -158,20 +149,6 @@ public class SparkleMotion {
      * @param ids Target View ids.
      */
     public void on(final int... ids) {
-        Runnable installRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (mViewPagerLayout != null && mViewPager == null) {
-                    mViewPager = mViewPagerLayout.getViewPager();
-                }
-
-                if (mViewPager == null) {
-                    throw new NullPointerException("ViewPager cannot be null");
-                }
-
-                SparkleMotionCompat.installAnimationPresenter(mViewPager, mReversedOrder, mPresenter);
-            }
-        };
         Animation[] anims = new Animation[mAnimations.size()];
         mAnimations.toArray(anims);
 
@@ -181,10 +158,17 @@ public class SparkleMotion {
 
         mAnimations.clear();
 
-        if (mViewPagerLayout != null) {
-            mViewPagerLayout.post(installRunnable);
-        } else if (mViewPager != null){
-            mViewPager.post(installRunnable);
+        ViewPager viewPager;
+        if (mViewPagerLayout != null && mViewPager == null) {
+            viewPager = mViewPagerLayout.getViewPager();
+        } else {
+            viewPager = mViewPager;
         }
+
+        if (viewPager == null) {
+            throw new NullPointerException("ViewPager cannot be null");
+        }
+
+        SparkleMotionCompat.installAnimationPresenter(viewPager, mReversedOrder, mPresenter);
     }
 }
