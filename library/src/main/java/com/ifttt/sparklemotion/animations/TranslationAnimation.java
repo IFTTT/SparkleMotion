@@ -78,7 +78,7 @@ public class TranslationAnimation extends Animation {
         }
 
         offset = Math.abs(offset);
-        v.setTranslationX(mInTranslationX + offset * (mOutTranslationX - mInTranslationX) - offsetInPixel);
+        v.setTranslationX(mInTranslationX + offset * (mOutTranslationX - mInTranslationX) + offsetInPixel);
         v.setTranslationY(mInTranslationY + offset * (mOutTranslationY - mInTranslationY));
     }
 }
