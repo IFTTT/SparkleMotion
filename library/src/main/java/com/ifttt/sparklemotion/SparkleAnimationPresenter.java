@@ -83,7 +83,7 @@ final class SparkleAnimationPresenter {
 
                 final View viewToAnimate;
 
-                if (key == parent.getId() || key == Animation.ANIMATION_ID_PAGE) {
+                if (key == parent.getId() || key == Animation.FULL_PAGE) {
                     viewToAnimate = parent;
                 } else {
                     viewToAnimate = parent.findViewById(key);

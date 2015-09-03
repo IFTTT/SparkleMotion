@@ -1,10 +1,10 @@
 package com.ifttt.sparklemotiondemo;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AccelerateInterpolator;
 import com.ifttt.sparklemotion.SparkleMotion;
-import com.ifttt.sparklemotion.SparkleViewPagerLayout;
 import com.ifttt.sparklemotion.animations.AlphaAnimation;
 
 /**
@@ -16,16 +16,15 @@ public final class AlphaViewPagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.view_pager_layout);
+        setContentView(R.layout.single_view_pager_layout);
 
-        SparkleViewPagerLayout viewPagerLayout =
-                (SparkleViewPagerLayout) findViewById(R.id.view_pager);
-        viewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager.setAdapter(new PagerAdapter());
 
         AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
         alphaAnimation.setInterpolator(new AccelerateInterpolator());
 
-        SparkleMotion.with(viewPagerLayout) //
+        SparkleMotion.with(viewPager) //
                 .animate(alphaAnimation) //
                 .on(R.id.pic_img_view);
     }
