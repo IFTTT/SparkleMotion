@@ -115,7 +115,10 @@ public abstract class Animation {
 
     /**
      * Abstract method to be implemented to change View properties. Implement this method to
-     * provide custom animations to the target View.
+     * provide custom animations to the target View. This method will be called when the page is
+     * still visible within the ViewPager. Range [-1, 0] means the page is currently scrolling
+     * to the left of the window, and [0, 1] means the page is currently scrolling to the right of
+     * the window.
      *
      * @param v View being animated.
      * @param offset Fraction of the ViewPager scrolling, this is also the progression of

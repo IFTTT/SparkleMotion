@@ -1,5 +1,6 @@
 package com.ifttt.sparklemotion;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -35,7 +36,7 @@ public final class SparkleMotionCompat {
      * @param presenter SparkleAnimationPresenter instance to be installed.
      * @see {@link ViewPager#setPageTransformer(boolean, ViewPager.PageTransformer)}
      */
-    static void installAnimationPresenter(final ViewPager viewPager, boolean reverseDrawingOrder,
+    static void installAnimationPresenter(@NonNull final ViewPager viewPager, boolean reverseDrawingOrder,
             final SparkleAnimationPresenter presenter) {
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject != null && tagObject == presenter) {
@@ -79,7 +80,7 @@ public final class SparkleMotionCompat {
      * @see {@link #installAnimationPresenter(ViewPager, boolean, SparkleAnimationPresenter)}
      * @see {@link #installAnimationPresenter(ViewPager)}
      */
-    static void installAnimationPresenter(ViewPager viewPager, boolean reverseDrawingOrder) {
+    static void installAnimationPresenter(@NonNull ViewPager viewPager, boolean reverseDrawingOrder) {
         final SparkleAnimationPresenter presenter = new SparkleAnimationPresenter();
         installAnimationPresenter(viewPager, reverseDrawingOrder, presenter);
     }
@@ -93,7 +94,7 @@ public final class SparkleMotionCompat {
      * @see {@link #installAnimationPresenter(ViewPager, boolean, SparkleAnimationPresenter)}
      * @see {@link #installAnimationPresenter(ViewPager, boolean)}
      */
-    static void installAnimationPresenter(ViewPager viewPager) {
+    static void installAnimationPresenter(@NonNull ViewPager viewPager) {
         installAnimationPresenter(viewPager, false);
     }
 
@@ -109,7 +110,7 @@ public final class SparkleMotionCompat {
      * @see {@link ViewPager#setPageTransformer(boolean, ViewPager.PageTransformer)}
      * @see {@link android.support.v4.view.ViewPager.PageTransformer}
      */
-    public static void setPageTransformer(ViewPager viewPager, boolean reversDrawingOrder,
+    public static void setPageTransformer(@NonNull ViewPager viewPager, boolean reversDrawingOrder,
             @Nullable final ViewPager.PageTransformer transformer) {
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject == null || !(tagObject instanceof SparkleAnimationPresenter)) {
@@ -141,6 +142,10 @@ public final class SparkleMotionCompat {
      * @return SparkleAnimationPresenter instance if set, or null.
      */
     static SparkleAnimationPresenter getAnimationPresenter(ViewPager viewPager) {
+        if (viewPager == null) {
+            return null;
+        }
+
         Object tagObject = viewPager.getTag(R.id.presenter_id);
         if (tagObject == null || !(tagObject instanceof SparkleAnimationPresenter)) {
             return null;

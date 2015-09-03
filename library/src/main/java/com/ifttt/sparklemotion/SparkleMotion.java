@@ -1,5 +1,6 @@
 package com.ifttt.sparklemotion;
 
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +31,7 @@ public class SparkleMotion {
      * @param viewPager Target ViewPager.
      * @return this instance to chain functions.
      */
-    public static SparkleMotion with(ViewPager viewPager) {
+    public static SparkleMotion with(@NonNull ViewPager viewPager) {
         return new SparkleMotion(viewPager);
     }
 
@@ -42,7 +43,7 @@ public class SparkleMotion {
      * @param viewPagerLayout TargetViewPagerLayout.
      * @return this instance to chain functions.
      */
-    public static SparkleMotion with(SparkleViewPagerLayout viewPagerLayout) {
+    public static SparkleMotion with(@NonNull SparkleViewPagerLayout viewPagerLayout) {
         return new SparkleMotion(viewPagerLayout);
     }
 
@@ -52,7 +53,7 @@ public class SparkleMotion {
      *
      * @param viewPager ViewPager object.
      */
-    private SparkleMotion(ViewPager viewPager) {
+    private SparkleMotion(@NonNull ViewPager viewPager) {
         mViewPager = viewPager;
         init();
     }
@@ -63,7 +64,7 @@ public class SparkleMotion {
      *
      * @param viewPagerLayout ViewPagerLayout object.
      */
-    private SparkleMotion(SparkleViewPagerLayout viewPagerLayout) {
+    private SparkleMotion(@NonNull SparkleViewPagerLayout viewPagerLayout) {
         mViewPagerLayout = viewPagerLayout;
         mViewPager = mViewPagerLayout.getViewPager();
 
@@ -114,22 +115,30 @@ public class SparkleMotion {
      * @param decors Target Decors.
      * @throws IllegalStateException when a ViewPagerLayout is not provided.
      */
-    public void on(Decor... decors) {
+    public void on(final Decor... decors) {
         if (mViewPagerLayout == null) {
-            throw new IllegalStateException("A ViewPagerLayout must be provided");
+            throw new IllegalStateException("A ViewPagerLayout must be provided for animating Decor");
         }
-
-        SparkleMotionCompat.installAnimationPresenter(mViewPager, mReversedOrder, mPresenter);
 
         Animation[] animations = new Animation[mAnimations.size()];
         mAnimations.toArray(animations);
 
         for (Decor decor : decors) {
             mPresenter.addAnimation(decor, animations);
-            mViewPagerLayout.addDecor(decor);
         }
 
         mAnimations.clear();
+
+        ViewPager viewPager = mViewPagerLayout.getViewPager();
+        if (viewPager == null) {
+            throw new NullPointerException("ViewPager cannot be null");
+        }
+
+        SparkleMotionCompat.installAnimationPresenter(viewPager, mReversedOrder, mPresenter);
+
+        for (Decor decor : decors) {
+            mViewPagerLayout.addDecor(decor);
+        }
     }
 
     /**
@@ -141,9 +150,7 @@ public class SparkleMotion {
      *
      * @param ids Target View ids.
      */
-    public void on(int... ids) {
-        SparkleMotionCompat.installAnimationPresenter(mViewPager, mReversedOrder, mPresenter);
-
+    public void on(final int... ids) {
         Animation[] anims = new Animation[mAnimations.size()];
         mAnimations.toArray(anims);
 
@@ -152,5 +159,18 @@ public class SparkleMotion {
         }
 
         mAnimations.clear();
+
+        ViewPager viewPager;
+        if (mViewPagerLayout != null && mViewPager == null) {
+            viewPager = mViewPagerLayout.getViewPager();
+        } else {
+            viewPager = mViewPager;
+        }
+
+        if (viewPager == null) {
+            throw new NullPointerException("ViewPager cannot be null");
+        }
+
+        SparkleMotionCompat.installAnimationPresenter(viewPager, mReversedOrder, mPresenter);
     }
 }
