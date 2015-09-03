@@ -9,15 +9,6 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/SparkleMotionTheme">
 
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/label_activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
         <activity android:name=".AlphaViewPagerActivity"/>
 
         <activity android:name=".ScaleViewPagerActivity"/>
@@ -28,9 +19,13 @@
 
         <activity android:name=".ZoomOutViewPagerActivity"/>
 
-        <activity android:name=".PathAndTranslationViewPagerActivity"/>
-
-        <activity android:name=".SparkleDemoActivity" />
+        <activity android:name=".SparkleDemoActivity"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
     </application>
 
