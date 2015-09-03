@@ -1,11 +1,11 @@
 package com.ifttt.sparklemotiondemo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +26,7 @@ import com.ifttt.sparklemotion.animations.TranslationAnimation;
  * Main Activity for Sparkle Motion demo, including a nice animated ViewPager animation and entrance to
  * other demo Activities.
  */
-public final class SparkleDemoActivity extends AppCompatActivity {
+public final class SparkleDemoActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

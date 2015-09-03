@@ -25,7 +25,7 @@
             android:label="@string/zoom_out_animation"/>
 
         <activity android:name=".SparkleDemoActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

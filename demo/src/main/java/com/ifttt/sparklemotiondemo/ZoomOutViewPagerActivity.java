@@ -1,15 +1,15 @@
 package com.ifttt.sparklemotiondemo;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.ViewPager;
 import com.ifttt.sparklemotion.Animation;
 import com.ifttt.sparklemotion.SparkleMotion;
-import android.support.v4.view.ViewPager;
 
 /**
  * Demo Activity for {@link ZoomOutAnimation}.
  */
-public final class ZoomOutViewPagerActivity extends AppCompatActivity {
+public final class ZoomOutViewPagerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

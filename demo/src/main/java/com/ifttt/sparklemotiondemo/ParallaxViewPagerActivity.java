@@ -1,15 +1,15 @@
 package com.ifttt.sparklemotiondemo;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.animations.ParallaxAnimation;
 
 /**
  * Demo activity for {@link ParallaxAnimation}.
  */
-public final class ParallaxViewPagerActivity extends AppCompatActivity {
+public final class ParallaxViewPagerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
