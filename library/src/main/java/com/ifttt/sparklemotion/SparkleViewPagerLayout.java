@@ -171,7 +171,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (positionOffset >= 0) {
             mPositionOffset = position + positionOffset;
-            layoutDecors(position + positionOffset);
         }
     }
 

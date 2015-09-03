@@ -45,8 +45,9 @@ public final class SparkleDemoActivity extends AppCompatActivity {
         buildDecor3(sparkleViewPagerLayout, sparkleMotion);
 
         // Build Sparkle Motion text animations.
+        float motionTranslationY = getResources().getDimension(R.dimen.motion_translation_y);
         sparkleMotion.animate(new RotationAnimation(0, -90)).on(R.id.sparkle_img, R.id.motion_img);
-        sparkleMotion.animate(new TranslationAnimation(0, 0, 0, 600, false)).on(R.id.motion_img);
+        sparkleMotion.animate(new TranslationAnimation(0, 0, 0, motionTranslationY, false)).on(R.id.motion_img);
 
         // Build IFTTT cloud animation.
         sparkleMotion.animate(new ParallaxAnimation(-2.0f)).on(R.id.ifttt_cloud);
