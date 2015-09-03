@@ -1,7 +1,7 @@
 package com.ifttt.sparklemotiondemo;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.SparkleViewPagerLayout;
 import com.ifttt.sparklemotion.animations.ScaleAnimation;
@@ -9,7 +9,7 @@ import com.ifttt.sparklemotion.animations.ScaleAnimation;
 /**
  * Demo Activity for {@link ScaleAnimation}.
  */
-public class ScaleViewPagerActivity extends Activity {
+public final class ScaleViewPagerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

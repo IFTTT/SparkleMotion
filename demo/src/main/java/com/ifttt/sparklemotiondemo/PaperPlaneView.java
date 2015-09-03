@@ -97,7 +97,10 @@ public final class PaperPlaneView extends View {
         mPath.computeBounds(rectF, false);
         RectF largeRectF = new RectF(0, 0, w * SCALE_FACTOR, h * SCALE_FACTOR);
         matrix.setRectToRect(rectF, largeRectF, Matrix.ScaleToFit.CENTER);
-        matrix.postTranslate(-w / 2.5f, -100);
+
+        float pathTranslationY = getResources().getDimension(R.dimen.path_translation_y);
+        float pathTranslationX = getResources().getDimension(R.dimen.path_translation_x);
+        matrix.postTranslate(pathTranslationX, pathTranslationY);
         mPath.transform(matrix);
 
         mPathMeasure = new PathMeasure(mPath, false);

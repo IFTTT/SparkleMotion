@@ -1,11 +1,11 @@
 package com.ifttt.sparklemotiondemo;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +26,7 @@ import com.ifttt.sparklemotion.animations.TranslationAnimation;
  * Main Activity for Sparkle Motion demo, including a nice animated ViewPager animation and entrance to
  * other demo Activities.
  */
-public final class SparkleDemoActivity extends Activity {
+public final class SparkleDemoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +52,11 @@ public final class SparkleDemoActivity extends Activity {
         sparkleMotion.animate(new ParallaxAnimation(-2.0f)).on(R.id.ifttt_cloud);
 
         // Build List animations.
-        sparkleMotion.animate(new ParallaxAnimation(-4.0f)).on(R.id.alpha_btn);
-        sparkleMotion.animate(new ParallaxAnimation(-3.5f)).on(R.id.scale_btn);
-        sparkleMotion.animate(new ParallaxAnimation(-3.0f)).on(R.id.rotation_btn);
-        sparkleMotion.animate(new ParallaxAnimation(-2.5f)).on(R.id.parallax_btn);
-        sparkleMotion.animate(new ParallaxAnimation(-2.0f)).on(R.id.zoom_out_btn);
+        sparkleMotion.animate(new ParallaxAnimation(-3.0f)).on(R.id.alpha_btn);
+        sparkleMotion.animate(new ParallaxAnimation(-2.0f)).on(R.id.scale_btn);
+        sparkleMotion.animate(new ParallaxAnimation(-0.5f)).on(R.id.rotation_btn);
+        sparkleMotion.animate(new ParallaxAnimation(-0.25f)).on(R.id.parallax_btn);
+        sparkleMotion.animate(new ParallaxAnimation(-0.1f)).on(R.id.zoom_out_btn);
 
         sparkleViewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
     }

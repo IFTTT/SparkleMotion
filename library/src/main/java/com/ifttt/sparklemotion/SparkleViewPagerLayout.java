@@ -5,9 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
-
-import com.ifttt.sparklemotion.animations.TranslationAnimation;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -26,6 +23,8 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * Index of the ViewPager within this layout.
      */
     private int mViewPagerIndex;
+
+    private float mPositionOffset;
 
     private final ArrayList<Decor> mDecors = new ArrayList<Decor>();
 
@@ -171,7 +170,9 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        layoutDecors(position + positionOffset);
+        if (positionOffset >= 0) {
+            mPositionOffset = position + positionOffset;
+        }
     }
 
     @Override
@@ -181,6 +182,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     @Override
     public void onPageScrollStateChanged(int state) {
         enableLayer(state != ViewPager.SCROLL_STATE_IDLE);
+        layoutDecors(mPositionOffset);
     }
 
     /**

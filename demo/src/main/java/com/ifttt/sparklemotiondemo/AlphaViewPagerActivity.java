@@ -1,9 +1,8 @@
 package com.ifttt.sparklemotiondemo;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AccelerateInterpolator;
-import com.ifttt.sparklemotion.Animation;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.SparkleViewPagerLayout;
 import com.ifttt.sparklemotion.animations.AlphaAnimation;
@@ -11,7 +10,7 @@ import com.ifttt.sparklemotion.animations.AlphaAnimation;
 /**
  * Demo Activity for {@link AlphaAnimation}.
  */
-public class AlphaViewPagerActivity extends Activity {
+public final class AlphaViewPagerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

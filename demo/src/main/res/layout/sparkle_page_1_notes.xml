@@ -4,6 +4,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:src="@drawable/music_notes"
-    android:layout_marginTop="64dp"
+    android:layout_marginTop="@dimen/music_notes_margin_top"
     android:layout_gravity="right"
     android:translationX="640dp"/>

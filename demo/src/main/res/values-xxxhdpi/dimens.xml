@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="music_notes_margin_top">64dp</dimen>
+    <dimen name="path_translation_y">-20dp</dimen>
+    <dimen name="path_translation_x">-148dp</dimen>
+</resources>
