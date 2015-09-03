@@ -11,5 +11,8 @@
     <string name="path_and_translation_animation">Path and Translation Animation</string>
     <string name="parallax_animation">Parallax Animation</string>
     <string name="zoom_out_animation">Zoom Out Animation</string>
+    <string name="easy_view_pager_animations">Easy ViewPager animations</string>
+    <string name="free_and_open_source">Free and open source</string>
+    <string name="more_examples">More Sparkle Motion Examples:</string>
 
 </resources>

@@ -14,11 +14,6 @@ import java.util.Collections;
  */
 final class SparkleAnimationPresenter {
     /**
-     * Current page from ViewPager, used to decide whether an animation should run.
-     */
-    private int mCurrentPage;
-
-    /**
      * A SimpleArrayMap that saves all animations with the target View's ID as key.
      */
     private SimpleArrayMap<Integer, ArrayList<Animation>> mAnimations;
@@ -30,8 +25,8 @@ final class SparkleAnimationPresenter {
     private SimpleArrayMap<Decor, ArrayList<Animation>> mDecorAnimations;
 
     public SparkleAnimationPresenter() {
-        mAnimations = new SimpleArrayMap<Integer, ArrayList<Animation>>(3);
-        mDecorAnimations = new SimpleArrayMap<Decor, ArrayList<Animation>>(3);
+        mAnimations = new SimpleArrayMap<>(3);
+        mDecorAnimations = new SimpleArrayMap<>(3);
     }
 
     /**
@@ -88,13 +83,13 @@ final class SparkleAnimationPresenter {
 
                 final View viewToAnimate;
 
-                if (key == parent.getId() || key == Animation.ANIMATION_ID_PAGE) {
+                if (key == parent.getId() || key == Animation.FULL_PAGE) {
                     viewToAnimate = parent;
                 } else {
                     viewToAnimate = parent.findViewById(key);
                 }
 
-                if (animation == null || viewToAnimate == null || !animation.shouldAnimate(mCurrentPage)) {
+                if (animation == null || viewToAnimate == null) {
                     continue;
                 }
 
@@ -126,6 +121,10 @@ final class SparkleAnimationPresenter {
 
                 if (decor.contentView.getParent() == null
                         || decor.contentView.getVisibility() != View.VISIBLE || !animation.shouldAnimate(position)) {
+                    if (offset == 0) {
+                        continue;
+                    }
+
                     // Add a rescue frame to the animation if the page is scrolled really fast.
                     if (animation.getCurrentOffset() < 1 && animation.pageEnd < position) {
                         animation.animate(decor.contentView, 1, 0);
@@ -138,9 +137,5 @@ final class SparkleAnimationPresenter {
                 animation.animate(decor.contentView, offset, 0);
             }
         }
-    }
-
-    void setCurrentPage(int currentPage) {
-        this.mCurrentPage = currentPage;
     }
 }

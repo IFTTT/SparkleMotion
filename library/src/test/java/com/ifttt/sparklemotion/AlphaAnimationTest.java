@@ -22,7 +22,7 @@ public class AlphaAnimationTest {
         SetterAnswer answer = new SetterAnswer();
         doAnswer(answer).when(alphaView).setAlpha(Mockito.anyFloat());
 
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 0.8f, 0f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.8f, 0f);
         alphaAnimation.onAnimate(alphaView, 0.3f, 0);
         assertTrue(answer.value - 0.24f < 0.001f);
     }

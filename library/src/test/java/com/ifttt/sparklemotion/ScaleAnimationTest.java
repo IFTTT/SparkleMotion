@@ -19,11 +19,11 @@ public class ScaleAnimationTest {
     @Test
     public void testScaleAnimation() throws Exception {
         View dummyView = mock(View.class);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1.0f, 0f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1.0f, 1.0f, 0f, 0f);
 
         SetterAnswer answer = new SetterAnswer();
         doAnswer(answer).when(dummyView).setScaleX(Mockito.anyFloat());
-        scaleAnimation.onAnimate(dummyView, 0.3f, 0);
+        scaleAnimation.onAnimate(dummyView, 0.7f, 0);
 
         assertTrue(answer.value - 0.3f < 0.001f);
     }

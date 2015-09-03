@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import com.ifttt.sparklemotion.animations.TranslationAnimation;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -26,6 +25,8 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * Index of the ViewPager within this layout.
      */
     private int mViewPagerIndex;
+
+    private float mPositionOffset;
 
     private final ArrayList<Decor> mDecors = new ArrayList<Decor>();
 
@@ -48,25 +49,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         }
 
         super.addView(child, index, params);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        for (Decor decor : mDecors) {
-            // If slide out attribute is true, build a TranslationAnimation for the last page to
-            // change the translation X when the ViewPager is scrolling.
-            if (decor.slideOutAnimation == null && decor.slideOut) {
-                decor.slideOutAnimation = new TranslationAnimation(decor.endPage, decor.endPage, true,
-                        getWidth() - decor.contentView.getTranslationX(), decor.contentView.getTranslationY());
-
-                SparkleAnimationPresenter presenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);
-                if (presenter != null) {
-                    presenter.addAnimation(decor, decor.slideOutAnimation);
-                }
-            }
-        }
     }
 
     /**
@@ -127,6 +109,18 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         decor.decorIndex = mDecors.size();
         mDecors.add(decor);
 
+        // If slide out attribute is true, build a TranslationAnimation for the last page to
+        // change the translation X when the ViewPager is scrolling.
+        if (decor.slideOutAnimation == null && decor.slideOut) {
+            decor.slideOutAnimation = new SlideOutAnimation(decor.endPage);
+
+            SparkleAnimationPresenter presenter =
+                    SparkleMotionCompat.getAnimationPresenter(mViewPager);
+            if (presenter != null) {
+                presenter.addAnimation(decor, decor.slideOutAnimation);
+            }
+        }
+
         layoutDecors(mViewPager.getCurrentItem());
 
         setChildrenDrawingOrderEnabled(true);
@@ -176,7 +170,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (positionOffset >= 0) {
-            layoutDecors(position + positionOffset);
+            mPositionOffset = position + positionOffset;
         }
     }
 
@@ -187,6 +181,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     @Override
     public void onPageScrollStateChanged(int state) {
         enableLayer(state != ViewPager.SCROLL_STATE_IDLE);
+        layoutDecors(mPositionOffset);
     }
 
     /**
@@ -222,10 +217,10 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             if (decor.endPage + 1 <= currentPageOffset && decor.slideOut && decor.slideOutAnimation != null
                     && decor.isAdded) {
                 decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.startPage != Animation.ALL_PAGES && (decor.startPage > currentPageOffset
-                    || decor.endPage < currentPageOffset) && decor.isAdded) {
-                if (decor.contentView.getVisibility() == VISIBLE && (!decor.slideOut || (decor.endPage + 1
-                        < currentPageOffset))) {
+            } else if (decor.startPage != Animation.ALL_PAGES && decor.isAdded
+                    && decor.contentView.getVisibility() == VISIBLE) {
+                int endPage = decor.slideOut ? decor.endPage + 1 : decor.endPage;
+                if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
                     decor.contentView.setVisibility(GONE);
                 }
             } else if ((decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset

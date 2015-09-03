@@ -16,7 +16,7 @@ public abstract class Animation {
      */
     public static final int ALL_PAGES = -1;
 
-    public static final int ANIMATION_ID_PAGE = -2;
+    public static final int FULL_PAGE = -2;
 
     protected int pageStart;
     protected int pageEnd;
@@ -35,22 +35,6 @@ public abstract class Animation {
      * Currently animated offset. Used to determine whether the animation is finished.
      */
     private float mCurrentOffset;
-
-    /**
-     * Convenient constructor that has default page start and end set to {@link #ALL_PAGES}.
-     */
-    public Animation() {
-        this(ALL_PAGES);
-    }
-
-    /**
-     * Convenient constructor that sets the page start and end to be the same page.
-     *
-     * @param page Page index that this animation should run.
-     */
-    public Animation(int page) {
-        this(page, page);
-    }
 
     /**
      * Base constructor of the class, accepting common information about the animation to this

@@ -3,7 +3,9 @@ package com.ifttt.sparklemotion.animations;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.view.View;
+
 import com.ifttt.sparklemotion.Animation;
+import com.ifttt.sparklemotion.Decor;
 
 /**
  * Subclass of {@link Animation} that animates the view based on a {@link Path}. It is essentially
@@ -13,20 +15,47 @@ public class PathAnimation extends Animation {
 
     private final PathMeasure mPathMeasure;
 
-    /**
-     * Flag to set whether this animation should be relative to the scrolling page or not. If set
-     * to true, the View being animated will ignore the scrolling of the parent View.
-     */
     private final boolean mAbsolute;
 
-    public PathAnimation(int page, boolean absolute, Path path) {
-        this(page, page, absolute, path);
+    /**
+     * Constructor for building a PathAnimation for all pages. This should be used for ViewPager View animations,
+     * as they will also be involved in ViewPager scrolling, therefore making them invisible once they are scrolled
+     * to left or right.
+     */
+    public PathAnimation(Path path, boolean absolute) {
+        this(ALL_PAGES, path, absolute);
     }
 
-    public PathAnimation(int start, int end, boolean absolute, Path path) {
+    /**
+     * Constructor for building a PathAnimation for a specific page. This is recommended to use
+     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
+     * run different animations.
+     *
+     * @param page Page index that this animation should run on.
+     */
+    public PathAnimation(int page, Path path, boolean absolute) {
+        this(page, page, path, absolute);
+    }
+
+    /**
+     * Constructor for building a PathAnimation for a range of pages. This is recommended to use
+     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
+     * run different animations.
+     *
+     * Note that for animating {@link Decor}, {@code absolute} will be ignored and always be true, meaning that the
+     * Decor content View will only animate the translation X value given by the animation, instead of the combination
+     * of the translation X value of the animation and ViewPager scrolling.
+     *
+     * @param start    Page index that this animation should start.
+     * @param end      Page index that this animation should end.
+     * @param path     Path object that the animated View will follow.
+     * @param absolute Flag to set whether this animation should be relative to the scrolling page or not. If set
+     *                 to true, the View being animated will ignore the scrolling of the parent View.
+     */
+    public PathAnimation(int start, int end, Path path, boolean absolute) {
         super(start, end);
-        mAbsolute = absolute;
         mPathMeasure = new PathMeasure(path, false);
+        mAbsolute = absolute;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.ifttt.sparklemotion.animations;
 
 import android.view.View;
+
 import com.ifttt.sparklemotion.Animation;
 
 /**
@@ -8,45 +9,51 @@ import com.ifttt.sparklemotion.Animation;
  */
 public class RotationAnimation extends Animation {
 
-    private float mRotationX;
-    private float mRotationY;
-    private float mRotation;
+    private final float mInRotation;
+    private final float mOutRotation;
 
-    public RotationAnimation(int page, float rotation) {
-        this(page, page, rotation);
+    /**
+     * Constructor for building a RotationAnimation for all pages. This should be used for ViewPager View animations,
+     * as they will also be involved in ViewPager scrolling, therefore making them invisible once they are scrolled
+     * to left or right.
+     */
+    public RotationAnimation(float inRotation, float outRotation) {
+        this(ALL_PAGES, inRotation, outRotation);
     }
 
-    public RotationAnimation(int start, int end, float rotation) {
+    /**
+     * Constructor for building a RotationAnimation for a specific page. This is recommended to use
+     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
+     * run different animations.
+     *
+     * @param page Page index that this animation should run on.
+     */
+    public RotationAnimation(int page, float inRotation, float outRotation) {
+        this(page, page, inRotation, outRotation);
+    }
+
+    /**
+     * Constructor for building a RotationAnimation for a range of pages. This is recommended to use
+     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
+     * run different animations.
+     *
+     * @param start       Page index that this animation should start.
+     * @param end         Page index that this animation should end.
+     * @param inRotation  Rotation value when the page of the View is currently primary page.
+     * @param outRotation Rotation value when the page of the View is not visible, i.e. the page is scrolled to either
+     *                    left or right of the primary page.
+     */
+    public RotationAnimation(int start, int end, float inRotation, float outRotation) {
         super(start, end);
 
-        this.mRotation = rotation;
-    }
-
-    public RotationAnimation(int page, float rotationX, float rotationY) {
-        this(page, page, rotationX, rotationY);
-    }
-
-    public RotationAnimation(int start, int end, float rotationX, float rotationY) {
-        super(start, end);
-
-        this.mRotationX = rotationX;
-        this.mRotationY = rotationY;
+        mInRotation = inRotation;
+        mOutRotation = outRotation;
     }
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
         offset = Math.abs(offset);
 
-        if (mRotationX > 0) {
-            v.setRotationX(offset * mRotationX);
-        }
-
-        if (mRotationY > 0) {
-            v.setRotationY(offset * mRotationY);
-        }
-
-        if (mRotation > 0) {
-            v.setRotation(offset * mRotation);
-        }
+        v.setRotation(mInRotation + offset * (mOutRotation - mInRotation));
     }
 }

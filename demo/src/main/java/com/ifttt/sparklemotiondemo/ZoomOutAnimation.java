@@ -1,4 +1,4 @@
-package com.ifttt.sparklemotion.animations;
+package com.ifttt.sparklemotiondemo;
 
 import android.view.View;
 import com.ifttt.sparklemotion.Animation;
@@ -18,28 +18,27 @@ public class ZoomOutAnimation extends Animation {
     private final float mMinScale;
     private final float mMinAlpha;
 
-    /**
-     * Base constructor of the class, accepting common information about the animation to this
-     * instance.
-     *
-     * @param start Page index that this animation should start.
-     * @param end Page index that this animation should stop.
-     * @param minScale Minimum scale X and Y of the View when animating.
-     * @param minAlpha Minimum alpha of the View when animating.
-     */
-    public ZoomOutAnimation(int start, int end, float minScale, float minAlpha) {
-        super(start, end);
+    public ZoomOutAnimation() {
+        this(ALL_PAGES);
+    }
 
-        mMinAlpha = minAlpha;
-        mMinScale = minScale;
+    public ZoomOutAnimation(int page) {
+        this(page, page);
     }
 
     public ZoomOutAnimation(int start, int end) {
         this(start, end, DEFAULT_MIN_SCALE, DEFAULT_MIN_ALPHA);
     }
 
-    public ZoomOutAnimation(int page) {
-        this(page, page);
+    public ZoomOutAnimation(int page, float minScale, float minAlpha) {
+        this(page, page, minScale, minAlpha);
+    }
+
+    public ZoomOutAnimation(int start, int end, float minScale, float minAlpha) {
+        super(start, end);
+
+        mMinAlpha = minAlpha;
+        mMinScale = minScale;
     }
 
     @Override

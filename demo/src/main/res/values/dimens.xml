@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_sun_size">240dp</dimen>
+    <dimen name="icon_cloud_margin">24dp</dimen>
+    <dimen name="ifttt_cloud_translation_x">300dp</dimen>
+    <dimen name="path_translation_y">-16dp</dimen>
+    <dimen name="path_translation_x">-128dp</dimen>
+    <dimen name="music_notes_margin_top">18dp</dimen>
+    <dimen name="motion_translation_y">200dp</dimen>
+</resources>

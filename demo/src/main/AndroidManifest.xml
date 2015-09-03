@@ -9,26 +9,28 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/SparkleMotionTheme">
 
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/label_activity">
+        <activity android:name=".AlphaViewPagerActivity"
+            android:label="@string/alpha_animation"/>
+
+        <activity android:name=".ScaleViewPagerActivity"
+            android:label="@string/scale_animation"/>
+
+        <activity android:name=".RotationViewPagerActivity"
+            android:label="@string/rotation_animation"/>
+
+        <activity android:name=".ParallaxViewPagerActivity"
+            android:label="@string/parallax_animation"/>
+
+        <activity android:name=".ZoomOutViewPagerActivity"
+            android:label="@string/zoom_out_animation"/>
+
+        <activity android:name=".SparkleDemoActivity"
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity android:name=".AlphaViewPagerActivity"/>
-
-        <activity android:name=".ScaleViewPagerActivity"/>
-
-        <activity android:name=".RotationViewPagerActivity"/>
-
-        <activity android:name=".ParallaxViewPagerActivity"/>
-
-        <activity android:name=".ZoomOutViewPagerActivity"/>
-
-        <activity android:name=".PathAndTranslationViewPagerActivity"/>
 
     </application>
 

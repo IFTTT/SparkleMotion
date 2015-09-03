@@ -59,7 +59,6 @@ public final class SparkleMotionCompat {
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                presenter.setCurrentPage(position);
                 // Animate any Decor animations.
                 presenter.presentDecorAnimations(position, positionOffset);
             }
