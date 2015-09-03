@@ -77,17 +77,19 @@ public final class SparkleDemoActivity extends AppCompatActivity {
      * the ViewPager scrolls.
      */
     private void buildDecorForPage1(SparkleViewPagerLayout parent, SparkleMotion sparkleMotion) {
+
+        int windowWidth = ScreenConfig.getWindowSize(this)[0];
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1, parent, false);
         Decor decor = new Decor.Builder().setContentView(view).setStartPage(0).setEndPage(2).build();
 
-        TranslationAnimation translationAnimation = new TranslationAnimation(0, view.getTranslationX(), 0, 0, 0, true);
+        TranslationAnimation translationAnimation = new TranslationAnimation(0, windowWidth, 0, 0, 0, true);
         sparkleMotion.animate(translationAnimation).on(decor);
 
         View notes = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1_notes, parent, false);
         Decor notesDecor = new Decor.Builder().setContentView(notes).setStartPage(0).setEndPage(2).build();
 
-        TranslationAnimation translationAnimation1 =
-                new TranslationAnimation(0, notes.getTranslationX(), notes.getTranslationY(), 0, 0, true);
+        TranslationAnimation translationAnimation1 = new TranslationAnimation(0, windowWidth, 0, 0, 0, true);
         translationAnimation1.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(translationAnimation1).on(notesDecor);
 
@@ -181,7 +183,6 @@ public final class SparkleDemoActivity extends AppCompatActivity {
                 new TranslationAnimation(2, sunSize, -sunSize, -sunSize / 3f, -sunSize / 3f, true);
         sparkleMotion.animate(translationAnimation).on(decor);
     }
-
 
     private static class PagerAdapter extends ViewPagerAdapter {
 
