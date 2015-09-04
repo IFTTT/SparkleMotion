@@ -16,6 +16,9 @@ public abstract class Animation {
      */
     public static final int ALL_PAGES = -1;
 
+    /**
+     * Flag used to indicate that this animation should be run for the entire ViewPager page.
+     */
     public static final int FULL_PAGE = -2;
 
     protected int pageStart;
