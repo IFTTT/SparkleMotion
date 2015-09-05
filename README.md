@@ -5,7 +5,7 @@ A ViewPager animator that animates Views within pages as well as views across pa
 ## Overview
 Sparkle Motion is an animation library dedicated to animate ViewPager elements. It uses ViewPager's [PageTransformer](http://developer.android.com/reference/android/support/v4/view/ViewPager.PageTransformer.html) to control the progress of the animations, so that the animated Views respond to the scrolling, and thus provides an interactive effect.
 
-Sparkle Motion also supports cross page animations, meaning that you can animate Views across different pages in ViewPager. This is done through `Decor` and `SparkleViewPagerLayout`. By using them, you can specify Views that you want to animate through multiple pages, and the animations on them will also be controlled by the PageTransformer.
+Sparkle Motion also supports cross page animations, meaning that you can animate Views outisde of ViewPager based on the ViewPager's scrolling, thus achieve cross-page animations. This is done through `Decor` and `SparkleViewPagerLayout`. By using them, you can specify Views that you want to animate through multiple pages, and the animations on them will be controlled by the OnPageChangeListener.
 
 
 ## Usage
