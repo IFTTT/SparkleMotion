@@ -10,7 +10,9 @@ Sparkle Motion also supports cross page animations, meaning that you can animate
 
 ## Usage
 
-### ViewPager animations
+
+
+## ViewPager Animations
 To add an animation to a View using Sparkle Motion,
 
 ```java
@@ -23,8 +25,34 @@ SparkleMotion.with(viewPager)
 
 where `Animation.ALL_PAGES` indicates that the `AlphaAnimation` will be run on all pages within the ViewPager, and `Animation.ANIMATION_ID_PAGE` indicates this animation will be applied to the page View itself.
 
-### Cross page animations 
-Animations that require to be animated across different pages needs to be run on `Decor`, which is an element within `SparkleViewPagerLayout`. A `Decor` is a component that holds information about a View that should be controlled by the ViewPager and animates when there is at least one `Animation` associated.
+## Cross Page Animations 
+Animations that require to be animated across different pages needs to be run on `Decor`, which is an element within `SparkleViewPagerLayout`. 
+
+### SparkleViewPagerLayout
+`SparkleViewPagerLayout` is a custom FrameLayout that controls `Decor` objects to play ViewPager cross page animations. **To use this layout with SparkleMotion, you need to supply a ViewPager as a child View**. This can be done in layout xml or through `addView()` method. 
+
+Note that you should only have one ViewPager child in this layout.
+
+Example for layout xml,
+
+```xml
+<com.ifttt.sparklemotion.SparkleViewPagerLayout
+        android:id="@+id/view_pager_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</com.ifttt.sparklemotion.SparkleViewPagerLayout>
+
+```
+
+### Decor
+A `Decor` is a component that holds information about a View that should be controlled by the ViewPager and animates when there is at least one `Animation` associated.
+
 
 Important attributes of a `Decor`:
 
