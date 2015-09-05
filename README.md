@@ -20,10 +20,10 @@ ViewPager viewPager = (ViewPager) findViewById(/* view_pager_id */);
 AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 0f, 1f);
 SparkleMotion.with(viewPager)
 		 .animate(mAnimation)
-		 .on(Animation.ANIMATION_ID_PAGE)
+		 .on(R.id.view_id)
 ```
 
-where `Animation.ALL_PAGES` indicates that the `AlphaAnimation` will be run on all pages within the ViewPager, and `Animation.ANIMATION_ID_PAGE` indicates this animation will be applied to the page View itself.
+where `R.id.view_id` is the id of the View inside the page Views. By setting this, Sparkle Motion will animate every View that matches this id within a single page, a range of pages, or in this case, `Animation.ALL_PAGES`,  which indicates that the `AlphaAnimation` will be run on all pages within the ViewPager. You can also use `Animation.ANIMATION_ID_PAGE` instead of specific View id to apply this animation to the page View itself.
 
 ## Cross Page Animations 
 Animations that require to be animated across different pages needs to be run on `Decor`, which is an element within `SparkleViewPagerLayout`. 
@@ -62,14 +62,14 @@ Important attributes of a `Decor`:
 * `layoutBehindViewPage`: whether or not the `Decor` should be drawn behind the ViewPager within `SparkleViewPagerLayout`.
 * `slideOut`: indicates this Decor will be scrolled along with the ViewPager at the end of its range, instead of setting visibility to `GONE`.
 
-When there are more than one `Decor` in the layout, the drawing order of the content Views are based on the order that they are added through `SparkleMotion` or `SparkleViewPagerLayout#addDecor(Decor decor)`.
+When there are more than one `Decor` in the layout, the drawing order of the content Views are based on the order that they are added through `SparkleMotion` or `SparkleViewPagerLayout.addDecor(Decor decor)`.
 
-To build a `Decor`, simply use `Decor#Builder`.
+To build a `Decor`, simply use `Decor.Builder`.
 
 To assign an animation to Decor, in your Activity, for example, 
 
 ```java
-SparkleViewPagerLayout viewPager = (SparkleViewPagerLayout) findViewById(/* view_pager_id */);
+SparkleViewPagerLayout viewPagerLayout = (SparkleViewPagerLayout) findViewById(/* view_pager_id */);
 View contentView = new View(this);
 
 AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 0f, 1f);
@@ -78,14 +78,14 @@ Decor decor = new Decor.Builder()
 		 .setContentView(contentView)
 		 .build();
 		 
-SparkleMotion.with(viewPager)
+SparkleMotion.with(viewPagerLayout)
 		 .animate(alphaAnimation)
 		 .on(decor);
 ```
 
 a `Decor` will then be added to your `SparkleViewPagerLayout`, which will run the `alphaAnimation` during ViewPager scrolling.
 
-A `Decor.Builder` supports following methods,
+As mentioned above, a `Decor.Builder` supports following methods,
 
 ```java
 Decor decor = new Decor.Builder()
@@ -114,7 +114,7 @@ Decor decor = new Decor.Builder()
 ## Custom animations
 Sparkle Motion also supports customized animations through extending `Animation` class. There are 3 methods in `Animation` class that you might be interested:
 
-* `onAnimate(View v, float offset, float offsetInPixel)`: main method to override to provide customized animation. The `offset` value is ranged within [-1, 1]. 
+* `onAnimate(View v, float offset, float offsetInPixel)`: main method to override to provide customized animation. The `offset` value is ranged within [-1, 1]. **Note that for Decor animations, `offsetInPixel` will always be 0 as they are not part of the ViewPager and are not scrolled along with the ViewPager by default.** 
 * `onAnimateOffScreenLeft(View v, float offset, float offsetInPixel)` (optional): this method will be called when `offset` < -1, which means the page is currently to the left of the screen.
 * `onAnimateOffScreenRight(View v, float offset, float offsetInPixel)`(optional): this method will be called when `offset` > 1, which means the page is currently to the right of the screen.
 
