@@ -1,5 +1,6 @@
 package com.ifttt.sparklemotion;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.Interpolator;
 
@@ -10,11 +11,6 @@ import android.view.animation.Interpolator;
  * changed during ViewPager scrolling.
  */
 public abstract class Animation {
-
-    /**
-     * Flag used to indicate that this animation should be run for every page.
-     */
-    public static final int ALL_PAGES = -1;
 
     public static final int FULL_PAGE = -2;
 
@@ -40,12 +36,11 @@ public abstract class Animation {
      * Base constructor of the class, accepting common information about the animation to this
      * instance.
      *
-     * @param start Page index that this animation should start.
-     * @param end Page index that this animation should stop.
+     * @param page Page object with specific page information about this animation.
      */
-    public Animation(int start, int end) {
-        this.pageStart = start;
-        this.pageEnd = end;
+    public Animation(@NonNull Page page) {
+        this.pageStart = page.start;
+        this.pageEnd = page.end;
 
         mFractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
     }
@@ -57,9 +52,9 @@ public abstract class Animation {
     /**
      * Main method for animating Views within the pages.
      *
-     * @param v View to be animated.
-     * @param offset Fraction of the ViewPager scrolling, this is also the progression of the
-     * animation.
+     * @param v             View to be animated.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the
+     *                      animation.
      * @param offsetInPixel Page width offset.
      */
     void animate(View v, float offset, float offsetInPixel) {
@@ -67,7 +62,7 @@ public abstract class Animation {
             offset = mInterpolator.getInterpolation(offset);
         }
 
-        if (pageStart != ALL_PAGES && pageEnd != ALL_PAGES) {
+        if (pageStart != Page.ALL_PAGES && pageEnd != Page.ALL_PAGES) {
             if (offset > pageStart) {
                 offset -= pageStart;
             }
@@ -104,11 +99,11 @@ public abstract class Animation {
      * to the left of the window, and [0, 1] means the page is currently scrolling to the right of
      * the window.
      *
-     * @param v View being animated.
-     * @param offset Fraction of the ViewPager scrolling, this is also the progression of
-     * the
-     * animation, the
-     * range of the offset is [-1, 1].
+     * @param v             View being animated.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of
+     *                      the
+     *                      animation, the
+     *                      range of the offset is [-1, 1].
      * @param offsetInPixel Page width offset.
      */
     public abstract void onAnimate(View v, float offset, float offsetInPixel);
@@ -117,10 +112,10 @@ public abstract class Animation {
      * Called when the animation is running when the View is off screen and is to the left of the
      * current screen.
      *
-     * @param v View being animated.
-     * @param offset Fraction of the ViewPager scrolling, this is also the progression of
-     * the
-     * animation.
+     * @param v             View being animated.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of
+     *                      the
+     *                      animation.
      * @param offsetInPixel Page width offset.
      */
     @SuppressWarnings("unused")
@@ -131,10 +126,10 @@ public abstract class Animation {
      * Called when the animation is running when the View is off screen and is to the right of the
      * current screen.
      *
-     * @param v View being animated.
-     * @param offset Fraction of the ViewPager scrolling, this is also the progression of
-     * the
-     * animation.
+     * @param v             View being animated.
+     * @param offset        Fraction of the ViewPager scrolling, this is also the progression of
+     *                      the
+     *                      animation.
      * @param offsetInPixel Page width offset.
      */
     @SuppressWarnings("unused")
@@ -149,7 +144,7 @@ public abstract class Animation {
      * @return True if the animation should run, false otherwise.
      */
     boolean shouldAnimate(int currentPage) {
-        return (pageStart == pageEnd && pageStart == Animation.ALL_PAGES)
+        return (pageStart == pageEnd && pageStart == Page.ALL_PAGES)
                 || pageStart <= currentPage && pageEnd >= currentPage;
     }
 
@@ -164,7 +159,7 @@ public abstract class Animation {
         /**
          * Called when the animation is running.
          *
-         * @param view View being animated.
+         * @param view     View being animated.
          * @param fraction Current fraction of the animation.
          */
         void onAnimationRunning(View view, float fraction);

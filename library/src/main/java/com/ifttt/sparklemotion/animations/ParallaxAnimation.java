@@ -3,6 +3,7 @@ package com.ifttt.sparklemotion.animations;
 import android.view.View;
 
 import com.ifttt.sparklemotion.Animation;
+import com.ifttt.sparklemotion.Page;
 
 /**
  * Subclass of {@link Animation} that changes the view's translation by a {@link #mFactor} for
@@ -10,47 +11,37 @@ import com.ifttt.sparklemotion.Animation;
  */
 public class ParallaxAnimation extends Animation {
 
+    private static final float DEFAULT_FACTOR = 2.0f;
+
     private float mFactor;
 
     /**
-     * Constructor for building a ParallaxAnimation for all pages. This should be used for ViewPager View animations,
-     * as they will also be involved in ViewPager scrolling, therefore making them invisible once they are scrolled to
-     * left or right.
+     * Constructor for building a ParallaxAnimation for specific {@link Page} with a default factor of 2.0.
+     *
+     * @param page Page object with specific page information about this animation.
      */
-    public ParallaxAnimation(float factor) {
-        this(ALL_PAGES, factor);
+    public ParallaxAnimation(Page page) {
+        this(page, DEFAULT_FACTOR);
     }
 
     /**
-     * Constructor for building a ParallaxAnimation for a specific page. This is recommended to use
+     * Constructor for building a ParallaxAnimation for specific {@link Page}. This is recommended to use
      * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
      * run different animations.
      *
-     * @param page Page index that this animation should run on.
-     */
-    public ParallaxAnimation(int page, float factor) {
-        this(page, page, factor);
-    }
-
-    /**
-     * Constructor for building a ParallaxAnimation for a range of pages. This is recommended to use
-     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
-     * run different animations.
-     *
-     * @param start  Page index that this animation should start.
-     * @param end    Page index that this animation should end.
+     * @param page   Page object with specific page information about this animation.
      * @param factor Parallax factor used to adjust the translationX of the View.
      */
-    public ParallaxAnimation(int start, int end, float factor) {
-        super(start, end);
+    public ParallaxAnimation(Page page, float factor) {
+        super(page);
 
         mFactor = factor;
     }
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
-        int pageWidth = v.getWidth();
+        int width = v.getWidth();
 
-        v.setTranslationX(pageWidth * -offset / mFactor);
+        v.setTranslationX(width * -offset / mFactor);
     }
 }

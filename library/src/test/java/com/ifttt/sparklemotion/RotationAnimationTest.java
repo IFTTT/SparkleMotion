@@ -22,7 +22,7 @@ public class RotationAnimationTest {
         SetterAnswer answer = new SetterAnswer();
         doAnswer(answer).when(rotationView).setRotation(Mockito.anyFloat());
 
-        RotationAnimation rotationAnimation = new RotationAnimation(0, 270);
+        RotationAnimation rotationAnimation = new RotationAnimation(Page.allPages(), 0, 270);
         rotationAnimation.onAnimate(rotationView, 0.3f, 0);
         assertEquals(answer.value, 270 * 0.3f);
     }
