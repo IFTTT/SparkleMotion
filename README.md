@@ -131,6 +131,8 @@ Both `Animation` and `Decor` have an attribute that ties to the index of the pag
 Even though both the Views within ViewPager and Decor animations are controlled by the ViewPager, there is still one difference between the two: Because child Views in ViewPager also scroll to left/right naturally, in `Animation.onAnimate(View v, float offset, float offsetInPixel)` the last parameter outputs the offset in pixel of the page scrolling; on the other hand, because Decor content View doesn't participate the scrolling, the last parameter will always be 0.
 
 ## Sparkle Motion and PageTransformer
+You can use Sparkle Motion instead of PageTransformer to play regular ViewPager page animations. One example is the `ZoomOutAnimation`, which takes the [PageTransformer implementation](http://developer.android.com/training/animation/screen-slide.html#pagetransformer) and implement as an Animation class. Simply apply this to the entire page to achieve the same effect.
+
 If you need to have a custom PageTrasnformer for your ViewPager while using Sparkle Motion, you need to call `SparkleMotionCompat.setPageTransformer(ViewPager, boolean, PageTransformer)` to set your PageTransformer.
 
 
