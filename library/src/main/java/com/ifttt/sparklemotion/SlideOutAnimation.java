@@ -21,8 +21,8 @@ final class SlideOutAnimation extends Animation {
      */
     private float mOriginalTranslationX;
 
-    public SlideOutAnimation(int page) {
-        super(page, page);
+    public SlideOutAnimation(Page page) {
+        super(page);
     }
 
     @Override

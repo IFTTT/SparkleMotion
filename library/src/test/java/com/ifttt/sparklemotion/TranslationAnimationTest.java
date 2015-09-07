@@ -35,7 +35,7 @@ public class TranslationAnimationTest {
 
     @Test
     public void testTranslationAnimationWithoutAbsolute() throws Exception {
-        TranslationAnimation animation = new TranslationAnimation(0, 0, 200, 200, false);
+        TranslationAnimation animation = new TranslationAnimation(Page.allPages(), 0, 0, 200, 200, false);
         animation.onAnimate(mDummyView, 0.3f, 150);
 
         assertTrue(mXAnswer.value - 60f < 0.001f);
@@ -48,7 +48,7 @@ public class TranslationAnimationTest {
 
     @Test
     public void testTranslationAnimationWithAbsolute() throws Exception {
-        TranslationAnimation animation = new TranslationAnimation(0, 0, 200, 200, true);
+        TranslationAnimation animation = new TranslationAnimation(Page.allPages(), 0, 0, 200, 200, true);
         animation.onAnimate(mDummyView, 0.3f, -150);
 
         assertTrue(mXAnswer.value + 90f < 0.001f);

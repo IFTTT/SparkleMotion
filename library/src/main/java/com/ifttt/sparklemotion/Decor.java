@@ -2,6 +2,7 @@ package com.ifttt.sparklemotion;
 
 import android.support.annotation.NonNull;
 import android.view.View;
+
 import com.ifttt.sparklemotion.animations.TranslationAnimation;
 
 /**
@@ -21,13 +22,13 @@ public class Decor implements Comparable<Decor> {
      * The starting page of this Decor. If the current page is smaller than the starting page, the
      * Decor will not be added.
      */
-    public final int startPage;
+    final int startPage;
 
     /**
      * The ending page of thie Decor. If the current page is larger than the ending page, the Decor
      * will not be added.
      */
-    public final int endPage;
+    final int endPage;
 
     /**
      * A flag used to indicate whether this Decor should be drawn behind the ViewPager or not.
@@ -56,11 +57,11 @@ public class Decor implements Comparable<Decor> {
      */
     Animation slideOutAnimation;
 
-    private Decor(@NonNull View contentView, int startPage, int endPage, boolean layoutBehind,
+    private Decor(@NonNull View contentView, @NonNull Page page, boolean layoutBehind,
             boolean slideOut) {
         this.contentView = contentView;
-        this.startPage = startPage;
-        this.endPage = endPage;
+        this.startPage = page.start;
+        this.endPage = page.end;
         this.layoutBehindViewPage = layoutBehind;
         this.slideOut = slideOut;
     }
@@ -84,16 +85,13 @@ public class Decor implements Comparable<Decor> {
     public static class Builder {
         private View mContentView;
 
-        private int mStartPage;
-        private int mEndPage;
+        private Page mPage;
 
         private boolean mLayoutBehindViewPage;
         private boolean mSlideOut;
 
         public Builder() {
-            // Set default values for start and end page.
-            mStartPage = Animation.ALL_PAGES;
-            mEndPage = Integer.MIN_VALUE;
+            mPage = Page.allPages();
         }
 
         /**
@@ -108,25 +106,14 @@ public class Decor implements Comparable<Decor> {
         }
 
         /**
-         * Optional starting page of the Decor. The default value is {@link Animation#ALL_PAGES},
-         * which makes the Decor visible in every page.
+         * Optional attribute for setting pages for this Decor. The default value is {@link Page#allPages()}, which
+         * means the Decor will exist for all pages in the ViewPager.
          *
-         * @param startPage Page index that this Decor should start to be visible.
+         * @param page Page object.
          * @return This object for chaining.
          */
-        public Builder setStartPage(int startPage) {
-            mStartPage = startPage;
-            return this;
-        }
-
-        /**
-         * Optional ending page of the Decor. The default value is the same as the starting page.
-         *
-         * @param endPage Page index that this Decor should be removed.
-         * @return This object for chaining.
-         */
-        public Builder setEndPage(int endPage) {
-            mEndPage = endPage;
+        public Builder setPage(Page page) {
+            mPage = page;
             return this;
         }
 
@@ -161,18 +148,7 @@ public class Decor implements Comparable<Decor> {
                 throw new NullPointerException("Content View cannot be null");
             }
 
-            if (mStartPage >= Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES) {
-                mEndPage = mStartPage + 1;
-            }
-
-            if (mStartPage != Animation.ALL_PAGES && (
-                    (mStartPage < Animation.ALL_PAGES && mEndPage < Animation.ALL_PAGES)
-                            || mStartPage > mEndPage)) {
-                throw new IllegalArgumentException(
-                        "Invalid startPage or endPage: (" + mStartPage + ", " + mEndPage + ")");
-            }
-
-            return new Decor(mContentView, mStartPage, mEndPage, mLayoutBehindViewPage, mSlideOut);
+            return new Decor(mContentView, mPage, mLayoutBehindViewPage, mSlideOut);
         }
     }
 }

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.animation.AccelerateInterpolator;
+
+import com.ifttt.sparklemotion.Page;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.animations.AlphaAnimation;
 
@@ -21,7 +23,7 @@ public final class AlphaViewPagerActivity extends Activity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new PagerAdapter());
 
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(Page.allPages(), 0f, 1f);
         alphaAnimation.setInterpolator(new AccelerateInterpolator());
 
         SparkleMotion.with(viewPager) //

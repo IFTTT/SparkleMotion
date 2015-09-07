@@ -2,6 +2,7 @@ package com.ifttt.sparklemotiondemo;
 
 import android.view.View;
 import com.ifttt.sparklemotion.Animation;
+import com.ifttt.sparklemotion.Page;
 
 /**
  * Subclass of {@link Animation} that runs a more complex animation, which scales the view down and
@@ -18,24 +19,12 @@ public class ZoomOutAnimation extends Animation {
     private final float mMinScale;
     private final float mMinAlpha;
 
-    public ZoomOutAnimation() {
-        this(ALL_PAGES);
+    public ZoomOutAnimation(Page page) {
+        this(page, DEFAULT_MIN_SCALE, DEFAULT_MIN_ALPHA);
     }
 
-    public ZoomOutAnimation(int page) {
-        this(page, page);
-    }
-
-    public ZoomOutAnimation(int start, int end) {
-        this(start, end, DEFAULT_MIN_SCALE, DEFAULT_MIN_ALPHA);
-    }
-
-    public ZoomOutAnimation(int page, float minScale, float minAlpha) {
-        this(page, page, minScale, minAlpha);
-    }
-
-    public ZoomOutAnimation(int start, int end, float minScale, float minAlpha) {
-        super(start, end);
+    public ZoomOutAnimation(Page page, float minScale, float minAlpha) {
+        super(page);
 
         mMinAlpha = minAlpha;
         mMinScale = minScale;
