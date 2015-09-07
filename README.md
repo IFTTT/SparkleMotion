@@ -11,19 +11,18 @@ Sparkle Motion also supports cross page animations, meaning that you can animate
 ## Usage
 
 
-
 ## ViewPager Animations
 To add an animation to a View using Sparkle Motion,
 
 ```java
 ViewPager viewPager = (ViewPager) findViewById(/* view_pager_id */);
-AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 0f, 1f);
+AlphaAnimation alphaAnimation = new AlphaAnimation(Page.allPages(), 0f, 1f);
 SparkleMotion.with(viewPager)
 		 .animate(mAnimation)
 		 .on(R.id.view_id)
 ```
 
-where `R.id.view_id` is the id of the View inside the page Views. By setting this, Sparkle Motion will animate every View that matches this id within a single page, a range of pages, or in this case, `Animation.ALL_PAGES`,  which indicates that the `AlphaAnimation` will be run on all pages within the ViewPager. You can also use `Animation.ANIMATION_ID_PAGE` instead of specific View id to apply this animation to the page View itself.
+where `R.id.view_id` is the id of the View inside the page Views. `Page.allPages()` tells Sparkle Motion that this animation should be run for all pages that has the View `R.id.view_id` (See [below](#page) for details about Page). You can also use `Animation.ANIMATION_ID_PAGE` instead of specific View id to apply this animation to the page View itself.
 
 ## Cross Page Animations 
 Animations that require to be animated across different pages needs to be run on `Decor`, which is an element within `SparkleViewPagerLayout`. 
@@ -72,7 +71,7 @@ To assign an animation to Decor, in your Activity, for example,
 SparkleViewPagerLayout viewPagerLayout = (SparkleViewPagerLayout) findViewById(/* view_pager_id */);
 View contentView = new View(this);
 
-AlphaAnimation alphaAnimation = new AlphaAnimation(Animation.ALL_PAGES, 0f, 1f);
+AlphaAnimation alphaAnimation = new AlphaAnimation(Page.allPages(), 0f, 1f);
 
 Decor decor = new Decor.Builder()
 		 .setContentView(contentView)
@@ -91,10 +90,8 @@ As mentioned above, a `Decor.Builder` supports following methods,
 Decor decor = new Decor.Builder()
                 .setContentView(View) // Content View of the Decor, must not be null
                 
-                .setStartPage(int)    // Visible page start, default Animation.ALL_PAGES
-                
-                .setEndPage(int)      // Visible page end, default Animation.ALL_PAGES
-                
+                .setPage(Page)        // Set the Page attribute for this Decor, default to Page.allPages()
+                                
                 .behindViewPage()     // Set to draw the content View behind the ViewPager
                 
                 .slideOut()           // Set to scroll with ViewPager after last visible page
@@ -119,6 +116,19 @@ Sparkle Motion also supports customized animations through extending `Animation`
 * `onAnimateOffScreenRight(View v, float offset, float offsetInPixel)`(optional): this method will be called when `offset` > 1, which means the page is currently to the right of the screen.
 
 The other two parameters, View `v` is the target View to be animated, `offsetInPixel` is the **entire page View's** scrolling offset in pixel, which might or might not be the same as `View.getWidth() * offset`.
+
+<a name="page"></a>
+## Page 
+Both `Animation` and `Decor` have an attribute that ties to the index of the pages, controlling whether or not the animation should run or the Decor should be shown. In Sparkle Motion we use a class `Page` to control such attribute. 
+
+`Page` provides 3 methods to return a Page object that controls the page attribute:
+
+* `allPages()`: indicates the animation should be run for all pages, or the Decor should be shown across all pages.
+* `singlePage(int)`: indicates the animation should be run on a specific page or the Decor should be shown on a specific page.
+* `pageRange(int, int)`: indicates the animation should be run on a range of pages or the Decor should be shown on a range of pages.
+
+## ViewPager View vs. Decor
+Even though both the Views within ViewPager and Decor animations are controlled by the ViewPager, there is still one difference between the two: Because child Views in ViewPager also scroll to left/right naturally, in `Animation.onAnimate(View v, float offset, float offsetInPixel)` the last parameter outputs the offset in pixel of the page scrolling; on the other hand, because Decor content View doesn't participate the scrolling, the last parameter will always be 0.
 
 ## Sparkle Motion and PageTransformer
 If you need to have a custom PageTrasnformer for your ViewPager while using Sparkle Motion, you need to call `SparkleMotionCompat.setPageTransformer(ViewPager, boolean, PageTransformer)` to set your PageTransformer.
