@@ -2,6 +2,6 @@
 
 <resources>
 
-    <item name="presenter_id" type="id">37839187</item>
+    <item name="presenter_id" type="id" />
 
 </resources>

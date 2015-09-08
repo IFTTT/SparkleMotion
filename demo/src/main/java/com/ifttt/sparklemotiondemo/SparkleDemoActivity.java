@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import com.ifttt.sparklemotion.Animation;
 import com.ifttt.sparklemotion.Decor;
+import com.ifttt.sparklemotion.Page;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.SparkleViewPagerLayout;
 import com.ifttt.sparklemotion.animations.ParallaxAnimation;
@@ -46,18 +48,20 @@ public final class SparkleDemoActivity extends Activity {
 
         // Build Sparkle Motion text animations.
         float motionTranslationY = getResources().getDimension(R.dimen.motion_translation_y);
-        sparkleMotion.animate(new RotationAnimation(0, -90)).on(R.id.sparkle_img, R.id.motion_img);
-        sparkleMotion.animate(new TranslationAnimation(0, 0, 0, motionTranslationY, false)).on(R.id.motion_img);
+        Page allPages = Page.allPages();
+        sparkleMotion.animate(new RotationAnimation(allPages, 0, -90)).on(R.id.sparkle_img, R.id.motion_img);
+        sparkleMotion.animate(
+                new TranslationAnimation(allPages, 0, 0, 0, motionTranslationY, false)).on(R.id.motion_img);
 
         // Build IFTTT cloud animation.
-        sparkleMotion.animate(new ParallaxAnimation(-2.0f)).on(R.id.ifttt_cloud);
+        sparkleMotion.animate(new ParallaxAnimation(allPages, -2.0f)).on(R.id.ifttt_cloud);
 
         // Build List animations.
-        sparkleMotion.animate(new ParallaxAnimation(-3.0f)).on(R.id.alpha_btn);
-        sparkleMotion.animate(new ParallaxAnimation(-2.0f)).on(R.id.scale_btn);
-        sparkleMotion.animate(new ParallaxAnimation(-0.5f)).on(R.id.rotation_btn);
-        sparkleMotion.animate(new ParallaxAnimation(-0.25f)).on(R.id.parallax_btn);
-        sparkleMotion.animate(new ParallaxAnimation(-0.1f)).on(R.id.zoom_out_btn);
+        sparkleMotion.animate(new ParallaxAnimation(allPages, -3.0f)).on(R.id.alpha_btn);
+        sparkleMotion.animate(new ParallaxAnimation(allPages, -2.0f)).on(R.id.scale_btn);
+        sparkleMotion.animate(new ParallaxAnimation(allPages, -0.5f)).on(R.id.rotation_btn);
+        sparkleMotion.animate(new ParallaxAnimation(allPages, -0.25f)).on(R.id.parallax_btn);
+        sparkleMotion.animate(new ParallaxAnimation(allPages, -0.1f)).on(R.id.zoom_out_btn);
 
         sparkleViewPagerLayout.getViewPager().setAdapter(new PagerAdapter());
     }
@@ -67,9 +71,9 @@ public final class SparkleDemoActivity extends Activity {
      */
     private void buildDecorForPage0(SparkleViewPagerLayout parent, SparkleMotion sparkleMotion) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_0_star, parent, false);
-        Decor decor = new Decor.Builder().setContentView(view).setStartPage(0).setEndPage(4).behindViewPage().build();
+        Decor decor = new Decor.Builder().setContentView(view).setPage(Page.pageRange(0, 4)).behindViewPage().build();
 
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1f, 1f, 7f, 7f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(Page.singlePage(0), 1f, 1f, 7f, 7f);
         sparkleMotion.animate(scaleAnimation).on(decor);
     }
 
@@ -82,20 +86,23 @@ public final class SparkleDemoActivity extends Activity {
         int windowWidth = ScreenConfig.getWindowSize(this)[0];
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1, parent, false);
-        Decor decor = new Decor.Builder().setContentView(view).setStartPage(0).setEndPage(2).build();
+        Decor decor = new Decor.Builder().setContentView(view).setPage(Page.pageRange(0, 2)).build();
 
-        TranslationAnimation translationAnimation = new TranslationAnimation(0, windowWidth, 0, 0, 0, true);
+        TranslationAnimation translationAnimation =
+                new TranslationAnimation(Page.singlePage(0), windowWidth, 0, 0, 0, true);
         sparkleMotion.animate(translationAnimation).on(decor);
 
         View notes = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1_notes, parent, false);
-        Decor notesDecor = new Decor.Builder().setContentView(notes).setStartPage(0).setEndPage(2).build();
+        Decor notesDecor = new Decor.Builder().setContentView(notes).setPage(Page.pageRange(0, 2)).build();
 
-        TranslationAnimation translationAnimation1 = new TranslationAnimation(0, windowWidth, 0, 0, 0, true);
+        TranslationAnimation translationAnimation1 =
+                new TranslationAnimation(Page.singlePage(0), windowWidth, 0, 0, 0, true);
         translationAnimation1.setInterpolator(new AccelerateInterpolator());
         sparkleMotion.animate(translationAnimation1).on(notesDecor);
 
         int windowHeight = ScreenConfig.getWindowSize(this)[1];
-        TranslationAnimation translationAnimation2 = new TranslationAnimation(1, 0, 0, 0, windowHeight, true);
+        TranslationAnimation translationAnimation2 =
+                new TranslationAnimation(Page.singlePage(1), 0, 0, 0, windowHeight, true);
         sparkleMotion.animate(translationAnimation2).on(decor, notesDecor);
     }
 
@@ -110,13 +117,12 @@ public final class SparkleDemoActivity extends Activity {
                 .inflate(R.layout.sparkle_page_2_plane, parent, false);
 
         Decor decor = new Decor.Builder().setContentView(view)
-                .setStartPage(1)
-                .setEndPage(2)
+                .setPage(Page.pageRange(1, 2))
                 .behindViewPage()
                 .slideOut()
                 .build();
 
-        sparkleMotion.animate(new Animation(1, 1) {
+        sparkleMotion.animate(new Animation(Page.singlePage(1)) {
             @Override
             public void onAnimate(View v, float offset, float offsetInPixel) {
                 offset = Math.abs(offset);
@@ -151,15 +157,16 @@ public final class SparkleDemoActivity extends Activity {
         bigCloud.setScaleY(1.6f);
         bigCloud.setImageDrawable(cloud);
 
+        Page page = Page.pageRange(1, 2);
         Decor cloudDecor1 =
-                new Decor.Builder().setContentView(smallCloud).setStartPage(1).setEndPage(2).slideOut().build();
+                new Decor.Builder().setContentView(smallCloud).setPage(page).slideOut().build();
         Decor cloudDecor2 =
-                new Decor.Builder().setContentView(bigCloud).setStartPage(1).setEndPage(2).slideOut().build();
+                new Decor.Builder().setContentView(bigCloud).setPage(page).slideOut().build();
 
         TranslationAnimation translationAnimation1 =
-                new TranslationAnimation(1, 0, smallCloud.getTranslationY(), 0, 0, true);
+                new TranslationAnimation(Page.singlePage(1), 0, smallCloud.getTranslationY(), 0, 0, true);
         TranslationAnimation translationAnimation2 =
-                new TranslationAnimation(1, 0, bigCloud.getTranslationY(), 0, 0, true);
+                new TranslationAnimation(Page.singlePage(1), 0, bigCloud.getTranslationY(), 0, 0, true);
 
         sparkleMotion.animate(translationAnimation1).on(cloudDecor1);
         sparkleMotion.animate(translationAnimation2).on(cloudDecor2);
@@ -178,10 +185,10 @@ public final class SparkleDemoActivity extends Activity {
         sunImageView.setTranslationY(-sunSize);
         sunImageView.setTranslationX(sunSize);
 
-        Decor decor = new Decor.Builder().setContentView(sunImageView).setStartPage(2).setEndPage(4).build();
+        Decor decor = new Decor.Builder().setContentView(sunImageView).setPage(Page.pageRange(2, 4)).build();
 
         TranslationAnimation translationAnimation =
-                new TranslationAnimation(2, sunSize, -sunSize, -sunSize / 3f, -sunSize / 3f, true);
+                new TranslationAnimation(Page.singlePage(2), sunSize, -sunSize, -sunSize / 3f, -sunSize / 3f, true);
         sparkleMotion.animate(translationAnimation).on(decor);
     }
 

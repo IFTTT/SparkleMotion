@@ -1,6 +1,7 @@
 package com.ifttt.sparklemotion;
 
 import android.test.suitebuilder.annotation.SmallTest;
+import android.util.Log;
 import android.view.View;
 import com.ifttt.sparklemotion.animations.ParallaxAnimation;
 import org.junit.Test;
@@ -21,9 +22,23 @@ public class ParallaxAnimationTest {
 
         SetterAnswer answer = new SetterAnswer();
         doAnswer(answer).when(dummyView).setTranslationX(Mockito.anyFloat());
-        ParallaxAnimation animation = new ParallaxAnimation(0, 4);
+        ParallaxAnimation animation = new ParallaxAnimation(Page.singlePage(0), 4);
         animation.onAnimate(dummyView, 0.3f, 0);
 
         assertTrue(-7.5f - answer.value < 0.001f);
+    }
+
+    @Test
+    public void testParallaxAnimationWithDefaultFactor() throws Exception {
+        View dummyView = mock(View.class);
+        when(dummyView.getWidth()).thenReturn(100);
+
+        SetterAnswer answer = new SetterAnswer();
+        doAnswer(answer).when(dummyView).setTranslationX(Mockito.anyFloat());
+        ParallaxAnimation animation = new ParallaxAnimation(Page.singlePage(0));
+        animation.onAnimate(dummyView, 0.3f, 0);
+
+        assertTrue(-15f - answer.value < 0.001f);
+
     }
 }

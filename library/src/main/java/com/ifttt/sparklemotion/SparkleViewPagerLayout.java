@@ -112,7 +112,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         // If slide out attribute is true, build a TranslationAnimation for the last page to
         // change the translation X when the ViewPager is scrolling.
         if (decor.slideOutAnimation == null && decor.slideOut) {
-            decor.slideOutAnimation = new SlideOutAnimation(decor.endPage);
+            decor.slideOutAnimation = new SlideOutAnimation(Page.singlePage(decor.endPage));
 
             SparkleAnimationPresenter presenter =
                     SparkleMotionCompat.getAnimationPresenter(mViewPager);
@@ -217,14 +217,14 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             if (decor.endPage + 1 <= currentPageOffset && decor.slideOut && decor.slideOutAnimation != null
                     && decor.isAdded) {
                 decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.startPage != Animation.ALL_PAGES && decor.isAdded
+            } else if (decor.startPage != Page.ALL_PAGES && decor.isAdded
                     && decor.contentView.getVisibility() == VISIBLE) {
                 int endPage = decor.slideOut ? decor.endPage + 1 : decor.endPage;
                 if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
                     decor.contentView.setVisibility(GONE);
                 }
             } else if ((decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset
-                    || decor.startPage == Animation.ALL_PAGES)) {
+                    || decor.startPage == Page.ALL_PAGES)) {
                 // If the current page and offset is within the range, add the Decor content View.
                 if (!decor.isAdded) {
                     decor.isAdded = true;

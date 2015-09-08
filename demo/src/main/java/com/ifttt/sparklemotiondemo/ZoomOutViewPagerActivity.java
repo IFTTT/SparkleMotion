@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import com.ifttt.sparklemotion.Animation;
+import com.ifttt.sparklemotion.Page;
 import com.ifttt.sparklemotion.SparkleMotion;
 
 /**
@@ -20,7 +21,7 @@ public final class ZoomOutViewPagerActivity extends Activity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new PagerAdapter());
 
-        ZoomOutAnimation zoomOutAnimation = new ZoomOutAnimation(Animation.ALL_PAGES);
+        ZoomOutAnimation zoomOutAnimation = new ZoomOutAnimation(Page.allPages());
         SparkleMotion.with(viewPager).animate(zoomOutAnimation).on(Animation.FULL_PAGE);
     }
 }

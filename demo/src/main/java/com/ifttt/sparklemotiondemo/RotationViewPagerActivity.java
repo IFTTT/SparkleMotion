@@ -3,6 +3,8 @@ package com.ifttt.sparklemotiondemo;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+
+import com.ifttt.sparklemotion.Page;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.animations.RotationAnimation;
 
@@ -20,7 +22,7 @@ public class RotationViewPagerActivity extends Activity {
         ViewPager viewPager =
                 (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new PagerAdapter());
-        RotationAnimation rotationAnimation = new RotationAnimation(0, 360);
+        RotationAnimation rotationAnimation = new RotationAnimation(Page.allPages(), 0, 360);
 
         SparkleMotion.with(viewPager) //
                 .animate(rotationAnimation) //
