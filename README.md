@@ -2,8 +2,7 @@
 
 ![Sparkle Motion](./art/sparklemotion-title.png)
 
-# Sparkle Motion
-A ViewPager animator that animates Views within pages as well as views across pages.
+Sparkle Motion is a ViewPager animator that animates Views within pages as well as views across pages.
 
 ![Sparkle Motion](./art/sparklemotion.gif)
 
