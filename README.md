@@ -1,6 +1,11 @@
+[![Open Source at IFTTT](http://ifttt.github.io/images/open-source-ifttt.svg)](http://ifttt.github.io)
+
+![Sparkle Motion](./art/sparklemotion-title.png)
+
 # Sparkle Motion
 A ViewPager animator that animates Views within pages as well as views across pages.
 
+![Sparkle Motion](./art/sparklemotion.gif)
 
 ## Overview
 Sparkle Motion is an animation library dedicated to animate ViewPager elements. It uses ViewPager's [PageTransformer](http://developer.android.com/reference/android/support/v4/view/ViewPager.PageTransformer.html) to control the progress of the animations, so that the animated Views respond to the scrolling, and thus provides an interactive effect.
@@ -9,7 +14,14 @@ Sparkle Motion also supports cross page animations, meaning that you can animate
 
 
 ## Usage
+Add Sparkle Motion as dependency via Gradle:
 
+```
+compile 'com.ifttt:sparklemotion:1.0'
+```
+
+## JazzHands and RazzleDazzle
+Looking for libraries to build awesome keyframe animations like Sparkle Motion on iOS? Check out [`JazzHands`](https://github.com/IFTTT/JazzHands) and [`RazzleDazzle`](https://github.com/IFTTT/RazzleDazzle).
 
 ## ViewPager Animations
 To add an animation to a View using Sparkle Motion,
