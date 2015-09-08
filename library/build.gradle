@@ -1,26 +1,9 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
-    }
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'checkstyle'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 version = "1.0"
-
-repositories {
-    jcenter()
-}
 
 android {
     compileSdkVersion 23
@@ -37,7 +20,7 @@ android {
 def siteUrl = 'https://github.com/IFTTT/SparkleMotion'
 def gitUrl = 'https://github.com/IFTTT/SparkleMotion.git'
 def issueUrl = 'https://github.com/IFTTT/SparkleMotion/issues'
-group = "com.ifttt.sparklemotion"
+group = "com.ifttt"
 
 install {
     repositories.mavenInstaller {
@@ -45,17 +28,16 @@ install {
             project {
                 packaging 'aar'
 
-                // Add your description here
                 name 'Sparkle Motion'
                 url siteUrl
 
-                // Set your license
                 licenses {
                     license {
                         name 'MIT License'
                         url 'http://opensource.org/licenses/MIT'
                     }
                 }
+
                 developers {
                     developer {
                         id 'lzanita09'
