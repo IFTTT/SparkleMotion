@@ -1,0 +1,100 @@
+apply plugin: 'com.android.library'
+apply plugin: 'checkstyle'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+version = "1.0"
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+def siteUrl = 'https://github.com/IFTTT/SparkleMotion'
+def gitUrl = 'https://github.com/IFTTT/SparkleMotion.git'
+def issueUrl = 'https://github.com/IFTTT/SparkleMotion/issues'
+group = "com.ifttt"
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+
+                name 'Sparkle Motion'
+                url siteUrl
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                        url 'http://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'lzanita09'
+                        name 'Zhe Lu'
+                        email 'zhe@ifttt.com'
+                    }
+
+                    developer {
+                        id 'NightlyNexus'
+                        name 'Eric Cochran'
+                        email 'eric@ifttt.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:23.0.1'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'junit:junit:4.12'
+}
+
+task checkstyle(type: Checkstyle) {
+    configFile file("${project.rootDir}/checkstyle.xml")
+    source 'src/main/java/com/ifttt/sparklemotion'
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+
+    publish = true
+
+    pkg {
+        repo = 'maven'
+        name = 'sparklemotion'
+        userOrg = 'ifttt'
+        licenses = ['MIT']
+        labels = ['android', 'animation', 'IFTTT', 'sparklemotion']
+        websiteUrl = siteUrl
+        issueTrackerUrl = issueUrl
+        vcsUrl = gitUrl
+    }
+}
+

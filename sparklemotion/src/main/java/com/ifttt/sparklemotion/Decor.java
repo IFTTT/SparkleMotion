@@ -16,7 +16,7 @@ public class Decor implements Comparable<Decor> {
     /**
      * Content View of this Decor. Must not be null.
      */
-    public final View contentView;
+    final View contentView;
 
     /**
      * The starting page of this Decor. If the current page is smaller than the starting page, the

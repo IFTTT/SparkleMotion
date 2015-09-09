@@ -12,6 +12,9 @@ import android.view.animation.Interpolator;
  */
 public abstract class Animation {
 
+    /**
+     * Flag used to indicate that this animation should be run for the entire ViewPager page.
+     */
     public static final int FULL_PAGE = -2;
 
     protected int pageStart;
@@ -148,7 +151,13 @@ public abstract class Animation {
                 || pageStart <= currentPage && pageEnd >= currentPage;
     }
 
-    public final void setAnimationListener(AnimationListener listener) {
+    /**
+     * Set an {@link AnimationListener} for this animation.
+     *
+     * @param listener AnimationListener object.
+     */
+    @SuppressWarnings("unused")
+    public void setAnimationListener(AnimationListener listener) {
         mAnimationListener = listener;
     }
 
