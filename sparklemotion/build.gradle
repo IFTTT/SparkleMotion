@@ -88,13 +88,7 @@ task checkstyle(type: Checkstyle) {
     classpath = files()
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-
     configurations = ['archives']
 
     publish = true
@@ -109,5 +103,10 @@ bintray {
         issueTrackerUrl = issueUrl
         vcsUrl = gitUrl
     }
+}
+
+if (project.hasProperty('bintrayUser') && project.hasProperty('bintrayKey')) {
+    bintray.user = project.bintrayUser
+    bintray.key = project.bintrayKey
 }
 
