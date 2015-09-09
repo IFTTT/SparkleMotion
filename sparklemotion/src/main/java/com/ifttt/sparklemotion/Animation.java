@@ -151,7 +151,13 @@ public abstract class Animation {
                 || pageStart <= currentPage && pageEnd >= currentPage;
     }
 
-    public final void setAnimationListener(AnimationListener listener) {
+    /**
+     * Set an {@link AnimationListener} for this animation.
+     *
+     * @param listener AnimationListener object.
+     */
+    @SuppressWarnings("unused")
+    public void setAnimationListener(AnimationListener listener) {
         mAnimationListener = listener;
     }
 
