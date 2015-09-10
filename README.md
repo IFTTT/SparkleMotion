@@ -110,7 +110,7 @@ SparkleMotion.with(viewPager)
 		 .on(R.id.view_id)
 ```
 
-In the code snippet above, `AlphaAnimation` is a class that Sparkle Motion contains for running alpha animation on View (See [here](#supported_animations) for details about supported animations). `R.id.view_id` is the id of the View inside the page that is going to run the animation, you can also use `Animation.ANIMATION_ID_PAGE` instead of specific View id to apply this animation to the page View itself.
+In the code snippet above, `AlphaAnimation` is a class that Sparkle Motion contains for running alpha animation on View (See [here](#supported_animations) for details about supported animations). `R.id.view_id` is the id of the View inside the page that is going to run the animation, you can also use `Animation.FULL_PAGE` instead of specific View id to apply this animation to the page View itself.
 
 
 <a name="supported_animations"></a>
