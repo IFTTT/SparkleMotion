@@ -7,36 +7,25 @@ Sparkle Motion is a ViewPager animator that animates Views within pages as well 
 ![Sparkle Motion](./art/sparklemotion.gif)
 
 ## Overview
-Sparkle Motion is an animation library dedicated to animate ViewPager elements. It uses ViewPager's [PageTransformer](http://developer.android.com/reference/android/support/v4/view/ViewPager.PageTransformer.html) to control the progress of the animations, so that the animated Views respond to the scrolling, and thus provides an interactive effect.
+Sparkle Motion is an animation library dedicated to animate ViewPager elements. 
 
-Sparkle Motion also supports cross page animations, meaning that you can animate Views outisde of ViewPager based on the ViewPager's scrolling, thus achieve cross-page animations. This is done through `Decor` and `SparkleViewPagerLayout`. By using them, you can specify Views that you want to animate through multiple pages, and the animations on them will be controlled by the OnPageChangeListener.
+Sparkle Motion supports cross page animations, meaning that you can animate Views outside of ViewPager based on the ViewPager's scrolling, thus achieve cross-page animations. This is done through `Decor` and `SparkleViewPagerLayout`. By using them, you can specify Views that you want to animate through multiple pages, and the animations on them will be controlled by the OnPageChangeListener.
+
+Sparkle Motion can also animate Views within ViewPager. It uses ViewPager's [PageTransformer](http://developer.android.com/reference/android/support/v4/view/ViewPager.PageTransformer.html) to control the progress of the animations, so that the animated Views respond to the scrolling, and thus provides an interactive effect.
 
 
 ## Usage
 Add Sparkle Motion as dependency via Gradle:
 
-```
+```groovy
 compile 'com.ifttt:sparklemotion:1.0'
 ```
 
 ## JazzHands and RazzleDazzle
 Looking for libraries to build awesome keyframe animations like Sparkle Motion on iOS? Check out [`JazzHands`](https://github.com/IFTTT/JazzHands) and [`RazzleDazzle`](https://github.com/IFTTT/RazzleDazzle).
 
-## ViewPager Animations
-To add an animation to a View using Sparkle Motion,
-
-```java
-ViewPager viewPager = (ViewPager) findViewById(/* view_pager_id */);
-AlphaAnimation alphaAnimation = new AlphaAnimation(Page.allPages(), 0f, 1f);
-SparkleMotion.with(viewPager)
-		 .animate(mAnimation)
-		 .on(R.id.view_id)
-```
-
-In the code snippet above, `AlphaAnimation` is a class that Sparkle Motion contains for running alpha animation on View (See [here](#supported_animations) for details about supported animations). `R.id.view_id` is the id of the View inside the page that is going to run the animation, you can also use `Animation.ANIMATION_ID_PAGE` instead of specific View id to apply this animation to the page View itself.
-
 ## Cross Page Animations 
-Animations that require to be animated across different pages needs to be run on `Decor`, which is an element within `SparkleViewPagerLayout`. 
+One of the main features that Sparkle Motion offers is running cross page animations with ViewPager. Animations that require to be animated across different pages needs to be run on `Decor`, which is an element within `SparkleViewPagerLayout`. 
 
 ### SparkleViewPagerLayout
 `SparkleViewPagerLayout` is a custom FrameLayout that controls `Decor` objects to play ViewPager cross page animations. **To use this layout with SparkleMotion, you need to supply a ViewPager as a child View**. This can be done in layout xml or through `addView()` method. 
@@ -109,6 +98,21 @@ Decor decor = new Decor.Builder()
                 .build();
 			
 ```
+
+## ViewPager Animations
+To add an animation to a View using Sparkle Motion,
+
+```java
+ViewPager viewPager = (ViewPager) findViewById(/* view_pager_id */);
+AlphaAnimation alphaAnimation = new AlphaAnimation(Page.allPages(), 0f, 1f);
+SparkleMotion.with(viewPager)
+		 .animate(mAnimation)
+		 .on(R.id.view_id)
+```
+
+In the code snippet above, `AlphaAnimation` is a class that Sparkle Motion contains for running alpha animation on View (See [here](#supported_animations) for details about supported animations). `R.id.view_id` is the id of the View inside the page that is going to run the animation, you can also use `Animation.ANIMATION_ID_PAGE` instead of specific View id to apply this animation to the page View itself.
+
+
 <a name="supported_animations"></a>
 ## Supported animations
 Sparkle Motion provides several animation classes that can be used directly to animate View properties.
@@ -116,10 +120,10 @@ Sparkle Motion provides several animation classes that can be used directly to a
 * Basic View animations:
     * `AlphaAnimation`: animates the alpha property of the target Views.
     * `RotationAnimation`: animates the rotation property of the target Views.
-    * `ScaleAniamtion`: animates the scale X and/or Y properties of the target Views.
+    * `ScaleAnimation`: animates the scale X and/or Y properties of the target Views.
     * `TranslationAnimation`: animates the translation X and/or Y properties of the target Views.
 * `PathAnimation`: animates the target Views' translation X and Y so that it follows a [path](http://developer.android.com/reference/android/graphics/Path.html).
-* `ParallaxAnimation`: animates the target Views' translation X to the opposite direction of the ViewPager scrolling to achieve a paralax effect.
+* `ParallaxAnimation`: animates the target Views' translation X to the opposite direction of the ViewPager scrolling to achieve a parallax effect.
 
 ## Custom animations
 Sparkle Motion also supports customized animations through extending `Animation` class. There are 3 methods in `Animation` class that you might be interested:
@@ -145,7 +149,7 @@ Both `Animation` and `Decor` have an attribute that ties to the index of the pag
 ## Sparkle Motion and PageTransformer
 You can use Sparkle Motion instead of PageTransformer to play regular ViewPager page animations. One example is the `ZoomOutAnimation`, which takes the [PageTransformer implementation](http://developer.android.com/training/animation/screen-slide.html#pagetransformer) and implement as an Animation class. Simply apply this to the entire page to achieve the same effect.
 
-If you need to have a custom PageTrasnformer for your ViewPager while using Sparkle Motion, you need to call `SparkleMotionCompat.setPageTransformer(ViewPager, boolean, PageTransformer)` to set your PageTransformer.
+If you need to have a custom PageTransformer for your ViewPager while using Sparkle Motion, you need to call `SparkleMotionCompat.setPageTransformer(ViewPager, boolean, PageTransformer)` to set your PageTransformer.
 
 
 ## Contributing
