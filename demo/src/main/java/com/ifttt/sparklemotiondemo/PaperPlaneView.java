@@ -114,10 +114,12 @@ public final class PaperPlaneView extends View {
 
         // Draw the paper plane bitmap.
         float angle = (float) (Math.atan2(mPlaneAngle[1], mPlaneAngle[0]) * 180.0f / Math.PI);
+        float bitmapCenterX = mPlaneBitmap.getWidth() / 2;
+        float bitmapCenterY = mPlaneBitmap.getHeight() / 2;
         mMatrix.reset();
-        mMatrix.postRotate(180f + angle, mPlaneBitmap.getWidth() / 2, mPlaneBitmap.getHeight() / 2);
-        mMatrix.postTranslate(mPlaneCoordinate[0] - mPlaneBitmap.getWidth() / 2,
-                mPlaneCoordinate[1] - mPlaneBitmap.getHeight() / 2);
+        mMatrix.postRotate(180f + angle, bitmapCenterX, bitmapCenterY);
+        mMatrix.postTranslate(mPlaneCoordinate[0] - bitmapCenterX,
+                mPlaneCoordinate[1] - bitmapCenterY);
 
         canvas.drawBitmap(mPlaneBitmap, mMatrix, null);
     }

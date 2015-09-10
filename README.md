@@ -100,7 +100,7 @@ Decor decor = new Decor.Builder()
 ```
 
 ## ViewPager Animations
-To add an animation to a View using Sparkle Motion,
+Sparkle Motion can also run animations on Views within the ViewPager. To add an animation to a View using Sparkle Motion,
 
 ```java
 ViewPager viewPager = (ViewPager) findViewById(/* view_pager_id */);
@@ -133,8 +133,10 @@ Sparkle Motion also supports customized animations through extending `Animation`
 * `onAnimateOffScreenRight(View v, float offset, float offsetInPixel)`(optional): this method will be called when `offset` > 1, which means the page is currently to the right of the screen.
 
 There are differences between running an Animation on a View within ViewPager an on a Decor: 
+
 * For View animations, the `offset` value is ranged within [-1, 1], `offsetInPixel` is the negative value of the scrolling offset of the entire page in pixel.
 *  For Decor animations, the `offset` value is ranged within [0, 1), `offsetInPixel` will always be 0 as they are not part of the ViewPager and are not scrolled along with the ViewPager by default.
+*  `onAnimateOffScreenLeft` and `onAnimateOffScreenRight` will be called on for animations running on Views inside ViewPager.
 
 <a name="page"></a>
 ## Page 

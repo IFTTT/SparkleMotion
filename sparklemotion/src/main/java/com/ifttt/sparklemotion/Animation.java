@@ -102,6 +102,7 @@ public abstract class Animation {
      * to the left of the window, and [0, 1] means the page is currently scrolling to the right of
      * the window.
      *
+     *
      * @param v             View being animated.
      * @param offset        Fraction of the ViewPager scrolling, this is also the progression of
      *                      the
@@ -114,6 +115,8 @@ public abstract class Animation {
     /**
      * Called when the animation is running when the View is off screen and is to the left of the
      * current screen.
+     *
+     * This method is called only for Views inside ViewPager.
      *
      * @param v             View being animated.
      * @param offset        Fraction of the ViewPager scrolling, this is also the progression of
@@ -128,6 +131,8 @@ public abstract class Animation {
     /**
      * Called when the animation is running when the View is off screen and is to the right of the
      * current screen.
+     *
+     * This method is called only for Views inside ViewPager.
      *
      * @param v             View being animated.
      * @param offset        Fraction of the ViewPager scrolling, this is also the progression of
