@@ -44,7 +44,7 @@ public final class SparkleDemoActivity extends Activity {
         buildDecorForPage0(sparkleViewPagerLayout, sparkleMotion);
         buildDecorForPage1(sparkleViewPagerLayout, sparkleMotion);
         buildDecorForPage2(sparkleViewPagerLayout, sparkleMotion);
-        buildDecor3(sparkleViewPagerLayout, sparkleMotion);
+        buildDecorForPage3(sparkleViewPagerLayout, sparkleMotion);
 
         // Build Sparkle Motion text animations.
         float motionTranslationY = getResources().getDimension(R.dimen.motion_translation_y);
@@ -86,24 +86,24 @@ public final class SparkleDemoActivity extends Activity {
         int windowWidth = ScreenConfig.getWindowSize(this)[0];
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1, parent, false);
-        Decor decor = new Decor.Builder().setContentView(view).setPage(Page.pageRange(0, 2)).build();
+        Decor standDecor = new Decor.Builder().setContentView(view).setPage(Page.pageRange(0, 2)).build();
 
-        TranslationAnimation translationAnimation =
+        TranslationAnimation standTranslationAnim =
                 new TranslationAnimation(Page.singlePage(0), windowWidth, 0, 0, 0, true);
-        sparkleMotion.animate(translationAnimation).on(decor);
+        sparkleMotion.animate(standTranslationAnim).on(standDecor);
 
         View notes = LayoutInflater.from(parent.getContext()).inflate(R.layout.sparkle_page_1_notes, parent, false);
         Decor notesDecor = new Decor.Builder().setContentView(notes).setPage(Page.pageRange(0, 2)).build();
 
-        TranslationAnimation translationAnimation1 =
+        TranslationAnimation noteTranslationAnim =
                 new TranslationAnimation(Page.singlePage(0), windowWidth, 0, 0, 0, true);
-        translationAnimation1.setInterpolator(new AccelerateInterpolator());
-        sparkleMotion.animate(translationAnimation1).on(notesDecor);
+        noteTranslationAnim.setInterpolator(new AccelerateInterpolator());
+        sparkleMotion.animate(noteTranslationAnim).on(notesDecor);
 
         int windowHeight = ScreenConfig.getWindowSize(this)[1];
-        TranslationAnimation translationAnimation2 =
+        TranslationAnimation slideDownAnim =
                 new TranslationAnimation(Page.singlePage(1), 0, 0, 0, windowHeight, true);
-        sparkleMotion.animate(translationAnimation2).on(decor, notesDecor);
+        sparkleMotion.animate(slideDownAnim).on(standDecor, notesDecor);
     }
 
     /**
@@ -175,7 +175,7 @@ public final class SparkleDemoActivity extends Activity {
     /**
      * Build the fourth page Decors: a sun that slides down as the ViewPager scrolls.
      */
-    private void buildDecor3(SparkleViewPagerLayout parent, SparkleMotion sparkleMotion) {
+    private void buildDecorForPage3(SparkleViewPagerLayout parent, SparkleMotion sparkleMotion) {
         ImageView sunImageView = new ImageView(parent.getContext());
         sunImageView.setImageResource(R.drawable.sun);
 
