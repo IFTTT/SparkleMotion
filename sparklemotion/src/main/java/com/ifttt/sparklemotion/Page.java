@@ -53,7 +53,7 @@ public class Page {
      * @throws IllegalArgumentException when either {@code start} or {@code end} is smaller than 0 or
      *                                  {@code end} is smaller than {@code start}.
      */
-    public static Page pageRange(int start, int end) throws IllegalArgumentException {
+    public static Page pageRange(int start, int end) {
         if (start < 0 || end < 0) {
             throw new IllegalArgumentException("Invalid pages: (" + start + " ," + end + ")");
         }
