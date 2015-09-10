@@ -2,7 +2,6 @@ package com.ifttt.sparklemotion;
 
 import android.support.annotation.NonNull;
 import android.view.View;
-
 import com.ifttt.sparklemotion.animations.TranslationAnimation;
 
 /**
@@ -83,26 +82,23 @@ public class Decor implements Comparable<Decor> {
      * Builder of the Decor.
      */
     public static class Builder {
-        private View mContentView;
+        @NonNull
+        private final View mContentView;
 
         private Page mPage;
 
         private boolean mLayoutBehindViewPage;
         private boolean mSlideOut;
 
-        public Builder() {
-            mPage = Page.allPages();
-        }
-
         /**
-         * Mandatory View for the content of the Decor.
-         *
          * @param contentView View for this Decor, must not be null.
-         * @return This object for chaining.
          */
-        public Builder setContentView(@NonNull View contentView) {
+        public Builder(@NonNull View contentView) {
+            if (contentView == null) {
+                throw new NullPointerException("Content View cannot be null");
+            }
             mContentView = contentView;
-            return this;
+            mPage = Page.allPages();
         }
 
         /**
@@ -144,10 +140,6 @@ public class Decor implements Comparable<Decor> {
          * @return Decor object.
          */
         public Decor build() {
-            if (mContentView == null) {
-                throw new NullPointerException("Content View cannot be null");
-            }
-
             return new Decor(mContentView, mPage, mLayoutBehindViewPage, mSlideOut);
         }
     }
