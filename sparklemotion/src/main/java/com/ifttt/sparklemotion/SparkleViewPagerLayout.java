@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -201,26 +202,26 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * Based on the <code>startPage</code>, <code>endPage</code> and <code>layoutBehindViewPager</code>
      * from {@link Decor}, show or hide Decors to this FrameLayout.
      *
-     * @param currentPageOffset Currently displayed ViewPager page and its offset.
+     * @param currentPage Currently displayed ViewPager page.
+     * @param offset ViewPager scrolling offset.
      */
     private void layoutDecors(int currentPage, float offset) {
         float currentPageOffset = currentPage + offset;
         int decorsSize = mDecors.size();
         for (int i = 0; i < decorsSize; i++) {
             Decor decor = mDecors.get(i);
-            if (decor.endPage + 1 <= currentPageOffset && decor.slideOut
+            if (decor.startPage == Page.ALL_PAGES && decor.contentView.getVisibility() != VISIBLE) {
+                decor.contentView.setVisibility(VISIBLE);
+            } else if (decor.endPage + 1 >= currentPageOffset && decor.slideOut
                     && decor.contentView.getVisibility() != VISIBLE) {
                 decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.startPage != Page.ALL_PAGES && decor.contentView.getVisibility() == VISIBLE) {
+            } else if (decor.contentView.getVisibility() == VISIBLE) {
                 int endPage = decor.slideOut ? decor.endPage + 1 : decor.endPage;
                 if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
-                    decor.contentView.setVisibility(GONE);
+                    decor.contentView.setVisibility(INVISIBLE);
                 }
-            } else if ((decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset
-                    || decor.startPage == Page.ALL_PAGES)) {
-                if (decor.contentView.getVisibility() == GONE) {
-                    decor.contentView.setVisibility(VISIBLE);
-                }
+            } else if (decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset) {
+                decor.contentView.setVisibility(VISIBLE);
             }
         }
     }
