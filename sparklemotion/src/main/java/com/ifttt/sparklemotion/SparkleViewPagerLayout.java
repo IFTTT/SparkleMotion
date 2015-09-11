@@ -26,8 +26,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      */
     private int mViewPagerIndex;
 
-    private float mPositionOffset;
-
     private final ArrayList<Decor> mDecors = new ArrayList<Decor>();
 
     public SparkleViewPagerLayout(Context context) {
@@ -55,12 +53,11 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * Setup a ViewPager within this layout, so that we can use it to run animations.
      *
      * @param viewPager ViewPager object being added to this layout.
-     * @param index     Index of the ViewPager being added to this layout.
+     * @param index Index of the ViewPager being added to this layout.
      */
     private void setViewPager(@NonNull ViewPager viewPager, int index) {
         if (mViewPager != null) {
-            throw new IllegalStateException(
-                    "SparkleViewPagerLayout already has a ViewPager set.");
+            throw new IllegalStateException("SparkleViewPagerLayout already has a ViewPager set.");
         }
 
         if (!SparkleMotionCompat.hasPresenter(viewPager)) {
@@ -111,17 +108,20 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
 
         // If slide out attribute is true, build a TranslationAnimation for the last page to
         // change the translation X when the ViewPager is scrolling.
-        if (decor.slideOutAnimation == null && decor.slideOut) {
-            decor.slideOutAnimation = new SlideOutAnimation(Page.singlePage(decor.endPage));
-
-            SparkleAnimationPresenter presenter =
-                    SparkleMotionCompat.getAnimationPresenter(mViewPager);
+        if (decor.slideOut) {
+            SparkleAnimationPresenter presenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);
             if (presenter != null) {
-                presenter.addAnimation(decor, decor.slideOutAnimation);
+                presenter.addAnimation(decor, new SlideOutAnimation(Page.singlePage(decor.endPage)));
             }
         }
 
-        layoutDecors(mViewPager.getCurrentItem());
+        decor.layoutIndex = getChildCount();
+        Collections.sort(mDecors);
+        addView(decor.contentView);
+        if (decor.layoutBehindViewPage) {
+            mViewPagerIndex++;
+        }
+        layoutDecors(mViewPager.getCurrentItem(), 0);
 
         setChildrenDrawingOrderEnabled(true);
     }
@@ -137,10 +137,8 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             throw new IllegalArgumentException("Decor is not added to SparkleViewPagerLayout");
         }
 
-        if (decor.isAdded) {
-            mDecors.remove(decor);
-            removeDecorView(decor);
-        }
+        mDecors.remove(decor);
+        removeDecorView(decor);
 
         int decorSize = mDecors.size();
         for (int i = indexOfRemoved + 1; i < decorSize; i++) {
@@ -170,7 +168,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (positionOffset >= 0) {
-            mPositionOffset = position + positionOffset;
+            layoutDecors(position, positionOffset);
         }
     }
 
@@ -181,7 +179,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     @Override
     public void onPageScrollStateChanged(int state) {
         enableLayer(state != ViewPager.SCROLL_STATE_IDLE);
-        layoutDecors(mPositionOffset);
     }
 
     /**
@@ -192,10 +189,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      */
     private void enableLayer(boolean enable) {
         for (Decor decor : mDecors) {
-            if (!decor.isAdded) {
-                continue;
-            }
-
             if (enable && decor.contentView.getLayerType() != LAYER_TYPE_HARDWARE) {
                 decor.contentView.setLayerType(LAYER_TYPE_HARDWARE, null);
             } else if (!enable && decor.contentView.getLayerType() != LAYER_TYPE_NONE) {
@@ -210,31 +203,22 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      *
      * @param currentPageOffset Currently displayed ViewPager page and its offset.
      */
-    private void layoutDecors(float currentPageOffset) {
+    private void layoutDecors(int currentPage, float offset) {
+        float currentPageOffset = currentPage + offset;
         int decorsSize = mDecors.size();
         for (int i = 0; i < decorsSize; i++) {
             Decor decor = mDecors.get(i);
-            if (decor.endPage + 1 <= currentPageOffset && decor.slideOut && decor.slideOutAnimation != null
-                    && decor.isAdded) {
+            if (decor.endPage + 1 <= currentPageOffset && decor.slideOut
+                    && decor.contentView.getVisibility() != VISIBLE) {
                 decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.startPage != Page.ALL_PAGES && decor.isAdded
-                    && decor.contentView.getVisibility() == VISIBLE) {
+            } else if (decor.startPage != Page.ALL_PAGES && decor.contentView.getVisibility() == VISIBLE) {
                 int endPage = decor.slideOut ? decor.endPage + 1 : decor.endPage;
                 if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
                     decor.contentView.setVisibility(GONE);
                 }
             } else if ((decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset
                     || decor.startPage == Page.ALL_PAGES)) {
-                // If the current page and offset is within the range, add the Decor content View.
-                if (!decor.isAdded) {
-                    decor.isAdded = true;
-                    decor.layoutIndex = getChildCount();
-                    Collections.sort(mDecors);
-                    addView(decor.contentView);
-                    if (decor.layoutBehindViewPage) {
-                        mViewPagerIndex++;
-                    }
-                } else if (decor.contentView.getVisibility() == GONE) {
+                if (decor.contentView.getVisibility() == GONE) {
                     decor.contentView.setVisibility(VISIBLE);
                 }
             }
@@ -248,10 +232,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         // Update affected Decors' indices to reflect the change.
         int decorsSize = mDecors.size();
         for (int i = 0; i < decorsSize; i++) {
-            if (!mDecors.get(i).isAdded) {
-                continue;
-            }
-
             if (mDecors.get(i).layoutIndex > indexOfRemoved) {
                 mDecors.get(i).layoutIndex -= 1;
             }

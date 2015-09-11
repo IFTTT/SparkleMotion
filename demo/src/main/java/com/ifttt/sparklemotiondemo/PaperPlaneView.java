@@ -13,6 +13,7 @@ import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import android.os.Build;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 import com.larvalabs.svgandroid.SVGParser;
@@ -85,6 +86,17 @@ public final class PaperPlaneView extends View {
         mPlaneCoordinate[1] = -mPlaneBitmap.getHeight();
 
         mPath = SVGParser.parsePath(PATH);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable state = super.onSaveInstanceState();
+        return state;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
     }
 
     @Override

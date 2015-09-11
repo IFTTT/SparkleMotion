@@ -119,12 +119,8 @@ final class SparkleAnimationPresenter {
                     continue;
                 }
 
-                if (decor.contentView.getParent() == null
-                        || decor.contentView.getVisibility() != View.VISIBLE || !animation.shouldAnimate(position)) {
-                    if (offset == 0) {
-                        continue;
-                    }
-
+                if (decor.contentView.getParent() == null || decor.contentView.getVisibility() != View.VISIBLE
+                        || !animation.shouldAnimate(position)) {
                     // Add a rescue frame to the animation if the page is scrolled really fast.
                     if (animation.getCurrentOffset() < 1 && animation.pageEnd < position) {
                         animation.animate(decor.contentView, 1, 0);

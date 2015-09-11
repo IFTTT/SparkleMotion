@@ -3,8 +3,6 @@ package com.ifttt.sparklemotion;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.ifttt.sparklemotion.animations.TranslationAnimation;
-
 /**
  * An animation decoration of the {@link SparkleViewPagerLayout}. A Decor will respond to the
  * scrolling of the ViewPager and run animations based on it. One main usage of a Decor is to play
@@ -36,11 +34,6 @@ public class Decor implements Comparable<Decor> {
     boolean layoutBehindViewPage = false;
 
     /**
-     * A flag indicating whether the Decor has been added to this layout.
-     */
-    boolean isAdded;
-
-    /**
      * Index of the Decor's content View within the layout.
      */
     int layoutIndex;
@@ -51,11 +44,6 @@ public class Decor implements Comparable<Decor> {
      * Boolean flag to indicate whether this Decor should scroll with ViewPager when it is done.
      */
     boolean slideOut;
-
-    /**
-     * Reference to the slide out {@link TranslationAnimation}.
-     */
-    Animation slideOutAnimation;
 
     private Decor(@NonNull View contentView, @NonNull Page page, boolean layoutBehind,
             boolean slideOut) {
@@ -68,10 +56,6 @@ public class Decor implements Comparable<Decor> {
 
     @Override
     public int compareTo(@NonNull Decor another) {
-        if (isAdded != another.isAdded) {
-            return isAdded ? -1 : 1;
-        }
-
         if (layoutBehindViewPage != another.layoutBehindViewPage) {
             return layoutBehindViewPage ? -1 : 1;
         }
