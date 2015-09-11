@@ -26,13 +26,11 @@ public class DecorSortingTest {
 
     @Test
     public void sortDecorWithBehind() throws Exception {
-        Decor decor0 = new Decor.Builder() //
-                .setContentView(mDummyView) //
+        Decor decor0 = new Decor.Builder(mDummyView)
                 .build();
 
-        Decor decor1 = new Decor.Builder() //
-                .setContentView(mDummyView) //
-                .behindViewPage() //
+        Decor decor1 = new Decor.Builder(mDummyView)
+                .behindViewPage()
                 .build();
 
         List<Decor> decors = new ArrayList<>();
@@ -47,12 +45,10 @@ public class DecorSortingTest {
     @Test
     public void sortDecorWithoutBehind() throws Exception {
 
-        Decor decor0 = new Decor.Builder() //
-                .setContentView(mDummyView) //
+        Decor decor0 = new Decor.Builder(mDummyView)
                 .build();
 
-        Decor decor1 = new Decor.Builder() //
-                .setContentView(mDummyView) //
+        Decor decor1 = new Decor.Builder(mDummyView)
                 .build();
 
         List<Decor> decors = new ArrayList<>();
@@ -68,16 +64,11 @@ public class DecorSortingTest {
     public void sortDecorWithRemoved() throws Exception {
         View dummyView = mock(View.class);
 
-        Decor decor0 = new Decor.Builder() //
-                .setContentView(dummyView) //
+        Decor decor0 = new Decor.Builder(dummyView)
                 .build();
 
-        Decor decor1 = new Decor.Builder() //
-                .setContentView(dummyView) //
+        Decor decor1 = new Decor.Builder(dummyView)
                 .build();
-
-        decor0.isAdded = false;
-        decor1.isAdded = true;
 
         List<Decor> decors = new ArrayList<>();
         decors.add(decor0);
@@ -92,8 +83,7 @@ public class DecorSortingTest {
     public void testMultipleDecor() throws Exception {
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
-            Decor decor = new Decor.Builder() //
-                    .setContentView(mDummyView) //
+            Decor decor = new Decor.Builder(mDummyView)
                     .build();
             decor.layoutIndex = 10 - i;
             decor.decorIndex = i;
@@ -109,8 +99,7 @@ public class DecorSortingTest {
     public void testMultipleDecorWithBehind() throws Exception {
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
-            Decor decor = new Decor.Builder() //
-                    .setContentView(mDummyView) //
+            Decor decor = new Decor.Builder(mDummyView)
                     .build();
 
             if (i == 3) {
@@ -131,11 +120,8 @@ public class DecorSortingTest {
         View dummy = mock(View.class);
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
-            Decor decor = new Decor.Builder() //
-                    .setContentView(dummy) //
+            Decor decor = new Decor.Builder(dummy)
                     .build();
-
-            decor.isAdded = i != 3;
 
             decor.layoutIndex = 10 - i;
             decor.decorIndex = i;
@@ -150,11 +136,9 @@ public class DecorSortingTest {
     public void testMultipleWithBehindAndRemoved() throws Exception {
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 100; i++) {
-            Decor decor = new Decor.Builder() //
-                    .setContentView(mDummyView) //
+            Decor decor = new Decor.Builder(mDummyView)
                     .build();
 
-            decor.isAdded = i != 3;
             if (i % 2 == 0) {
                 decor.layoutBehindViewPage = true;
             }
