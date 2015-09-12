@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -54,7 +55,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * Setup a ViewPager within this layout, so that we can use it to run animations.
      *
      * @param viewPager ViewPager object being added to this layout.
-     * @param index Index of the ViewPager being added to this layout.
+     * @param index     Index of the ViewPager being added to this layout.
      */
     private void setViewPager(@NonNull ViewPager viewPager, int index) {
         if (mViewPager != null) {
@@ -203,25 +204,26 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * from {@link Decor}, show or hide Decors to this FrameLayout.
      *
      * @param currentPage Currently displayed ViewPager page.
-     * @param offset ViewPager scrolling offset.
+     * @param offset      ViewPager scrolling offset.
      */
     private void layoutDecors(int currentPage, float offset) {
         float currentPageOffset = currentPage + offset;
         int decorsSize = mDecors.size();
         for (int i = 0; i < decorsSize; i++) {
             Decor decor = mDecors.get(i);
-            if (decor.startPage == Page.ALL_PAGES && decor.contentView.getVisibility() != VISIBLE) {
-                decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.endPage + 1 >= currentPageOffset && decor.slideOut
-                    && decor.contentView.getVisibility() != VISIBLE) {
-                decor.contentView.setVisibility(VISIBLE);
-            } else if (decor.contentView.getVisibility() == VISIBLE) {
+            if (decor.contentView.getVisibility() == VISIBLE && decor.startPage != Page.ALL_PAGES) {
                 int endPage = decor.slideOut ? decor.endPage + 1 : decor.endPage;
                 if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
                     decor.contentView.setVisibility(INVISIBLE);
                 }
-            } else if (decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset) {
-                decor.contentView.setVisibility(VISIBLE);
+            } else {
+                if (decor.startPage == Page.ALL_PAGES) {
+                    decor.contentView.setVisibility(VISIBLE);
+                } else if (decor.endPage + 1 >= currentPageOffset && decor.slideOut) {
+                    decor.contentView.setVisibility(VISIBLE);
+                } else if (decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset) {
+                    decor.contentView.setVisibility(VISIBLE);
+                }
             }
         }
     }

@@ -135,7 +135,7 @@ Sparkle Motion also supports customized animations through extending `Animation`
 There are differences between running an Animation on a View within ViewPager an on a Decor: 
 
 * For View animations, the `offset` value is ranged within [-1, 1], `offsetInPixel` is the negative value of the scrolling offset of the entire page in pixel.
-*  For Decor animations, the `offset` value is ranged within [0, 1), `offsetInPixel` will always be 0 as they are not part of the ViewPager and are not scrolled along with the ViewPager by default.
+*  For Decor animations, the `offset` value is ranged within [0, 1], `offsetInPixel` will always be 0 as they are not part of the ViewPager and are not scrolled along with the ViewPager by default.
 *  `onAnimateOffScreenLeft` and `onAnimateOffScreenRight` will be called on for animations running on Views inside ViewPager.
 
 <a name="page"></a>
