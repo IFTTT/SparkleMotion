@@ -61,25 +61,6 @@ public class DecorSortingTest {
     }
 
     @Test
-    public void sortDecorWithRemoved() throws Exception {
-        View dummyView = mock(View.class);
-
-        Decor decor0 = new Decor.Builder(dummyView)
-                .build();
-
-        Decor decor1 = new Decor.Builder(dummyView)
-                .build();
-
-        List<Decor> decors = new ArrayList<>();
-        decors.add(decor0);
-        decors.add(decor1);
-
-        Collections.sort(decors);
-
-        assertEquals(decors.get(0), decor1);
-    }
-
-    @Test
     public void testMultipleDecor() throws Exception {
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 10; i++) {
@@ -116,23 +97,6 @@ public class DecorSortingTest {
     }
 
     @Test
-    public void testMultipleWithRemoved() throws Exception {
-        View dummy = mock(View.class);
-        List<Decor> decors = new ArrayList<>(10);
-        for (int i = 0; i < 10; i++) {
-            Decor decor = new Decor.Builder(dummy)
-                    .build();
-
-            decor.layoutIndex = 10 - i;
-            decor.decorIndex = i;
-            decors.add(decor);
-        }
-
-        Collections.sort(decors);
-        assertEquals(3, decors.get(9).decorIndex);
-    }
-
-    @Test
     public void testMultipleWithBehindAndRemoved() throws Exception {
         List<Decor> decors = new ArrayList<>(10);
         for (int i = 0; i < 100; i++) {
@@ -149,7 +113,6 @@ public class DecorSortingTest {
         }
 
         Collections.sort(decors);
-        assertEquals(3, decors.get(99).decorIndex);
 
         for (int i = 0, j = 0; i < 100; i = i + 2, j++) {
             assertEquals(i, decors.get(j).decorIndex);
