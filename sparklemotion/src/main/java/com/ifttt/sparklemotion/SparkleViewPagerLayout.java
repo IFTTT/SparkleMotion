@@ -90,6 +90,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * @param decor Decor object to be added to this layout.
      * @throws IllegalStateException when ViewPager is not set in this layout.
      */
+    @SuppressWarnings("unused")
     public void addDecor(Decor decor) {
         if (mViewPager == null) {
             throw new IllegalStateException(
@@ -117,12 +118,14 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             }
         }
 
+        // Add View to this layout.
         decor.layoutIndex = getChildCount();
         Collections.sort(mDecors);
         addView(decor.contentView);
         if (decor.layoutBehindViewPage) {
             mViewPagerIndex++;
         }
+
         layoutDecors(mViewPager.getCurrentItem(), 0);
 
         setChildrenDrawingOrderEnabled(true);
@@ -133,6 +136,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      *
      * @param decor Decor objects to be removed.
      */
+    @SuppressWarnings("unused")
     public void removeDecor(Decor decor) {
         int indexOfRemoved = mDecors.indexOf(decor);
         if (indexOfRemoved < 0) {

@@ -37,6 +37,13 @@ final class SlideOutAnimation extends Animation {
         view.setTranslationX(mOriginalTranslationX + offset * mDistance);
     }
 
+    /**
+     * Initialize the View's position by adding a {@link android.view.ViewTreeObserver.OnPreDrawListener}, listening to
+     * pre-draw, then assign the initial frame and destination frame.
+     *
+     * @param view   View to be animated.
+     * @param offset Initial offset.
+     */
     private void initViewPosition(final View view, final float offset) {
         view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -44,6 +51,8 @@ final class SlideOutAnimation extends Animation {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 mOriginalTranslationX = view.getTranslationX();
                 mDistance = -(view.getLeft() + view.getWidth() * view.getScaleX());
+
+                // Once initialized, run the initial animation frame.
                 view.setTranslationX(mOriginalTranslationX + Math.abs(offset) * mDistance);
                 return false;
             }
