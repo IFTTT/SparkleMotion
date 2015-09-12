@@ -13,8 +13,10 @@ import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import android.os.Build;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import com.larvalabs.svgandroid.SVGParser;
 
@@ -46,6 +48,7 @@ public final class PaperPlaneView extends View {
     private PathMeasure mPathMeasure;
     private float mLength;
     private Bitmap mPlaneBitmap;
+    private float mProgress;
 
     public PaperPlaneView(Context context) {
         super(context);
@@ -91,12 +94,17 @@ public final class PaperPlaneView extends View {
     @Override
     protected Parcelable onSaveInstanceState() {
         Parcelable state = super.onSaveInstanceState();
-        return state;
+        SavedState ss = new SavedState(state);
+        ss.progress = mProgress;
+        return ss;
     }
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        super.onRestoreInstanceState(state);
+        SavedState ss = (SavedState) state;
+        super.onRestoreInstanceState(ss.getSuperState());
+        mProgress = ss.progress;
+        animate(mProgress);
     }
 
     @Override
@@ -117,6 +125,11 @@ public final class PaperPlaneView extends View {
 
         mPathMeasure = new PathMeasure(mPath, false);
         mLength = mPathMeasure.getLength();
+
+        if (mProgress != 0) {
+            // Animate the restored frame.
+            animate(mProgress);
+        }
     }
 
     @Override
@@ -146,11 +159,47 @@ public final class PaperPlaneView extends View {
             return;
         }
 
-        int stopD = (int) (mLength * progress);
+        mProgress = progress;
+        int stopD = (int) (mLength * mProgress);
         mSegmentPath.reset();
         mPathMeasure.getSegment(0, stopD, mSegmentPath, true);
         mSegmentPath.rLineTo(0.0f, 0.0f);
         mPathMeasure.getPosTan(stopD, mPlaneCoordinate, mPlaneAngle);
         invalidate();
+    }
+
+    /**
+     * Subclass of {@link android.view.View.BaseSavedState} to store the progress of the animation, so that when the
+     * View's View hierarchy state is restored, the progress is also restored.
+     */
+    private static class SavedState extends BaseSavedState {
+
+        float progress;
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        public SavedState(Parcel source) {
+            super(source);
+            progress = source.readFloat();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeFloat(progress);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR
+                = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 }
