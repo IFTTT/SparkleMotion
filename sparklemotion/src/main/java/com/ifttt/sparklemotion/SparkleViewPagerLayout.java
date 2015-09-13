@@ -106,7 +106,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             return;
         }
 
-        decor.decorIndex = mDecors.size();
         mDecors.add(decor);
 
         // If slide out attribute is true, build a TranslationAnimation for the last page to
@@ -117,10 +116,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
                 presenter.addAnimation(decor, new SlideOutAnimation(Page.singlePage(decor.endPage)));
             }
         }
-
-        // Add View to this layout.
-        decor.layoutIndex = getChildCount();
-        Collections.sort(mDecors);
 
         if (decor.layoutBehindViewPage) {
             addView(decor.contentView, mViewPagerIndex);
@@ -146,11 +141,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
 
         mDecors.remove(decor);
         removeDecorView(decor);
-
-        int decorSize = mDecors.size();
-        for (int i = indexOfRemoved + 1; i < decorSize; i++) {
-            mDecors.get(i).decorIndex = i;
-        }
     }
 
     @Override
@@ -202,29 +192,17 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
                 if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
                     decor.contentView.setVisibility(INVISIBLE);
                 }
-            } else {
-                if (decor.startPage == Page.ALL_PAGES) {
-                    decor.contentView.setVisibility(VISIBLE);
-                } else if (decor.endPage + 1 >= currentPageOffset && decor.slideOut) {
-                    decor.contentView.setVisibility(VISIBLE);
-                } else if (decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset) {
-                    decor.contentView.setVisibility(VISIBLE);
-                }
+            } else if (decor.startPage == Page.ALL_PAGES
+                    || (decor.endPage + 1 >= currentPageOffset && decor.slideOut)
+                    || (decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset)) {
+                decor.contentView.setVisibility(VISIBLE);
+
             }
         }
     }
 
     private void removeDecorView(Decor decor) {
-        final int indexOfRemoved = decor.layoutIndex;
         removeView(decor.contentView);
-
-        // Update affected Decors' indices to reflect the change.
-        int decorsSize = mDecors.size();
-        for (int i = 0; i < decorsSize; i++) {
-            if (mDecors.get(i).layoutIndex > indexOfRemoved) {
-                mDecors.get(i).layoutIndex -= 1;
-            }
-        }
 
         if (decor.layoutBehindViewPage) {
             mViewPagerIndex--;
