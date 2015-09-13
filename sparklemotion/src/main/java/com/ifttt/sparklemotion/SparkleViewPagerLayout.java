@@ -4,13 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * A wrapper FrameLayout containing a {@link ViewPager}. This class supports adding
@@ -94,7 +92,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     public void addDecor(Decor decor) {
         if (mViewPager == null) {
             throw new IllegalStateException(
-                    "ViewPager is not found in JazzHandsViewPagerLayout, please call setViewPager() first");
+                    "ViewPager is not found in JazzHandsViewPagerLayout, please provide a ViewPager first");
         }
 
         if (decor == null) {
@@ -108,7 +106,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
 
         mDecors.add(decor);
 
-        // If slide out attribute is true, build a TranslationAnimation for the last page to
+        // If slide out attribute is true, build a SlideOutAnimation for the last page to
         // change the translation X when the ViewPager is scrolling.
         if (decor.slideOut) {
             SparkleAnimationPresenter presenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);

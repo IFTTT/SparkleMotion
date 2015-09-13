@@ -34,6 +34,10 @@ public abstract class Animation {
      * Base constructor of the class, accepting common information about the animation to this
      * instance.
      *
+     * For animations that will run on multiple pages, the progress of the animation will be evenly split
+     * across the pages. For ViewPager View animation, it might not be necessary to run such animation, as the View
+     * will be invisible once the page is scrolled off-screen.
+     *
      * @param page Page object with specific page information about this animation.
      */
     public Animation(@NonNull Page page) {

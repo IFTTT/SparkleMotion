@@ -19,9 +19,7 @@ public class TranslationAnimation extends Animation {
     private final boolean mAbsolute;
 
     /**
-     * Constructor for building a TranslationAnimation that animates in a range of pages. This is recommended to use
-     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
-     * run different animations.
+     * Constructor for building a TranslationAnimation that animates in a range of pages.
      * <p/>
      * Note that for animating {@link Decor}, {@code absolute} will be ignored and always be true, meaning that the
      * Decor content View will only animate the translation X value given by the animation, instead of the combination
