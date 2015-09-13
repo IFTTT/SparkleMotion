@@ -121,14 +121,15 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         // Add View to this layout.
         decor.layoutIndex = getChildCount();
         Collections.sort(mDecors);
-        addView(decor.contentView);
+
         if (decor.layoutBehindViewPage) {
+            addView(decor.contentView, mViewPagerIndex);
             mViewPagerIndex++;
+        } else {
+            addView(decor.contentView);
         }
 
         layoutDecors(mViewPager.getCurrentItem(), 0);
-
-        setChildrenDrawingOrderEnabled(true);
     }
 
     /**
@@ -150,25 +151,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         for (int i = indexOfRemoved + 1; i < decorSize; i++) {
             mDecors.get(i).decorIndex = i;
         }
-
-        if (mDecors.isEmpty()) {
-            // Since there's no Decor left, we can disable children drawing order.
-            setChildrenDrawingOrderEnabled(false);
-        }
-    }
-
-    @Override
-    protected int getChildDrawingOrder(int childCount, int i) {
-        if (childCount == 1) {
-            return super.getChildDrawingOrder(childCount, i);
-        }
-
-        if (i == mViewPagerIndex) {
-            return 0;
-        }
-
-        int index = i > mViewPagerIndex ? i - 1 : i;
-        return mDecors.get(index).layoutIndex;
     }
 
     @Override
