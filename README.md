@@ -72,8 +72,7 @@ View contentView = new View(this);
 Page firstPage = Page.singlePage(0);
 AlphaAnimation alphaAnimation = new AlphaAnimation(firstPage, 0f, 1f);
 
-Decor decor = new Decor.Builder()
-		 .setContentView(contentView)
+Decor decor = new Decor.Builder(contentView)
 		 .setPage(firstPage)
 		 .build();
 		 
@@ -87,9 +86,8 @@ a `Decor` will then be added to your `SparkleViewPagerLayout`, which will run th
 As mentioned above, a `Decor.Builder` supports following methods,
 
 ```java
-Decor decor = new Decor.Builder()
-                .setContentView(View) // Content View of the Decor, must not be null
-                
+Decor decor = new Decor.Builder(View) // Content View of the Decor, must not be null
+
                 .setPage(Page)        // Set the Page attribute for this Decor, default to Page.allPages()
                                 
                 .behindViewPage()     // Set to draw the content View behind the ViewPager
@@ -114,7 +112,12 @@ In the code snippet above, `AlphaAnimation` is a class that Sparkle Motion conta
 
 
 <a name="supported_animations"></a>
-## Supported animations
+## Animation
+`Animation` is an abstract class for storing animation information for Sparkle Motion. To animate a View through Sparkle Motion, you need to assign an `Animation` instance to a View, so that Sparkle Motion will know how to animation it.
+
+To create an instance of `Animation`, you need to pass an instance of [`Page`](#page), and the animation will be run through the pages that you assign to. 
+
+### Supported animations
 Sparkle Motion provides several animation classes that can be used directly to animate View properties.
 
 * Basic View animations:
@@ -125,7 +128,7 @@ Sparkle Motion provides several animation classes that can be used directly to a
 * `PathAnimation`: animates the target Views' translation X and Y so that it follows a [path](http://developer.android.com/reference/android/graphics/Path.html).
 * `ParallaxAnimation`: animates the target Views' translation X to the opposite direction of the ViewPager scrolling to achieve a parallax effect.
 
-## Custom animations
+### Custom animations
 Sparkle Motion also supports customized animations through extending `Animation` class. There are 3 methods in `Animation` class that you might be interested:
 
 * `onAnimate(View v, float offset, float offsetInPixel)`: main method to override to provide customized animation. 
@@ -138,6 +141,7 @@ There are differences between running an Animation on a View within ViewPager an
 *  For Decor animations, the `offset` value is ranged within [0, 1], `offsetInPixel` will always be 0 as they are not part of the ViewPager and are not scrolled along with the ViewPager by default.
 *  `onAnimateOffScreenLeft` and `onAnimateOffScreenRight` will be called on for animations running on Views inside ViewPager.
 
+
 <a name="page"></a>
 ## Page 
 Both `Animation` and `Decor` have an attribute that ties to the index of the pages, controlling whether or not the animation should run or the Decor should be shown. In Sparkle Motion we use a class `Page` to control such attribute. 
@@ -146,7 +150,11 @@ Both `Animation` and `Decor` have an attribute that ties to the index of the pag
 
 * `allPages()`: indicates the animation should be run for all pages, or the Decor should be shown across all pages.
 * `singlePage(int)`: indicates the animation should be run on a specific page or the Decor should be shown on a specific page.
-* `pageRange(int, int)`: indicates the animation should be run on a range of pages or the Decor should be shown on a range of pages.
+* `pageRange(int, int)`: indicates the animation should be run on a range of pages or the Decor should be shown on a range of pages. 
+
+For Decor, a page stands for the period where the page is still visible. For example, if a Decor has `Page.singlePage(0)`, the Decor is visible from the point where the page at index 0 is the current page, till the page at index 1 is the current page. 
+
+For animations that will run on multiple pages, the progress of the animation will be evenly split across the pages. For ViewPager View animation, it might not be necessary to run such animation, as the View will be invisible once the page is scrolled off-screen.
 
 ## Sparkle Motion and PageTransformer
 You can use Sparkle Motion instead of PageTransformer to play regular ViewPager page animations. One example is the `ZoomOutAnimation`, which takes the [PageTransformer implementation](http://developer.android.com/training/animation/screen-slide.html#pagetransformer) and implement as an Animation class. Simply apply this to the entire page to achieve the same effect.

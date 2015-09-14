@@ -9,7 +9,7 @@ import android.view.View;
  * cross page animations. Because a Decor is drawn outside of the ViewPager, it won't be clipped by
  * any page, therefore capable of running animations that require Views to go across pages.
  */
-public class Decor implements Comparable<Decor> {
+public class Decor {
 
     /**
      * Content View of this Decor. Must not be null.
@@ -34,13 +34,6 @@ public class Decor implements Comparable<Decor> {
     boolean layoutBehindViewPage = false;
 
     /**
-     * Index of the Decor's content View within the layout.
-     */
-    int layoutIndex;
-
-    int decorIndex;
-
-    /**
      * Boolean flag to indicate whether this Decor should scroll with ViewPager when it is done.
      */
     boolean slideOut;
@@ -52,15 +45,6 @@ public class Decor implements Comparable<Decor> {
         this.endPage = page.end;
         this.layoutBehindViewPage = layoutBehind;
         this.slideOut = slideOut;
-    }
-
-    @Override
-    public int compareTo(@NonNull Decor another) {
-        if (layoutBehindViewPage != another.layoutBehindViewPage) {
-            return layoutBehindViewPage ? -1 : 1;
-        }
-
-        return decorIndex - another.decorIndex;
     }
 
     /**

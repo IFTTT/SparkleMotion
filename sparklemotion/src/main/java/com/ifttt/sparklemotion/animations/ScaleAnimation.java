@@ -17,9 +17,7 @@ public class ScaleAnimation extends Animation {
     private float mInScaleY;
 
     /**
-     * Constructor for building a ScaleAnimation for a range of pages. This is recommended to use
-     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
-     * run different animations.
+     * Constructor for building a ScaleAnimation for a range of pages.
      *
      * @param page      Page object with specific page information about this animation.
      * @param outScaleX ScaleX value when the page of the View is not visible, i.e. the page is scrolled to either

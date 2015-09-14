@@ -25,9 +25,7 @@ public class ParallaxAnimation extends Animation {
     }
 
     /**
-     * Constructor for building a ParallaxAnimation for specific {@link Page}. This is recommended to use
-     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
-     * run different animations.
+     * Constructor for building a ParallaxAnimation for specific {@link Page}.
      *
      * @param page   Page object with specific page information about this animation.
      * @param factor Parallax factor used to adjust the translationX of the View.

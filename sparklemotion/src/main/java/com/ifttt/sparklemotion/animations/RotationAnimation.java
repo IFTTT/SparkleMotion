@@ -14,9 +14,7 @@ public class RotationAnimation extends Animation {
     private final float mOutRotation;
 
     /**
-     * Constructor for building a RotationAnimation for a range of pages. This is recommended to use
-     * for running {@link com.ifttt.sparklemotion.Decor} animations, as a Decor can exists in a range of pages, and
-     * run different animations.
+     * Constructor for building a RotationAnimation for a range of pages.
      *
      * @param page   Page object with specific page information about this animation.
      * @param inRotation  Rotation value when the page of the View is currently primary page.

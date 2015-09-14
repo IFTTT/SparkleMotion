@@ -4,13 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * A wrapper FrameLayout containing a {@link ViewPager}. This class supports adding
@@ -94,7 +92,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
     public void addDecor(Decor decor) {
         if (mViewPager == null) {
             throw new IllegalStateException(
-                    "ViewPager is not found in JazzHandsViewPagerLayout, please call setViewPager() first");
+                    "ViewPager is not found in JazzHandsViewPagerLayout, please provide a ViewPager first");
         }
 
         if (decor == null) {
@@ -106,10 +104,9 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             return;
         }
 
-        decor.decorIndex = mDecors.size();
         mDecors.add(decor);
 
-        // If slide out attribute is true, build a TranslationAnimation for the last page to
+        // If slide out attribute is true, build a SlideOutAnimation for the last page to
         // change the translation X when the ViewPager is scrolling.
         if (decor.slideOut) {
             SparkleAnimationPresenter presenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);
@@ -118,17 +115,14 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             }
         }
 
-        // Add View to this layout.
-        decor.layoutIndex = getChildCount();
-        Collections.sort(mDecors);
-        addView(decor.contentView);
         if (decor.layoutBehindViewPage) {
+            addView(decor.contentView, mViewPagerIndex);
             mViewPagerIndex++;
+        } else {
+            addView(decor.contentView);
         }
 
         layoutDecors(mViewPager.getCurrentItem(), 0);
-
-        setChildrenDrawingOrderEnabled(true);
     }
 
     /**
@@ -145,30 +139,6 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
 
         mDecors.remove(decor);
         removeDecorView(decor);
-
-        int decorSize = mDecors.size();
-        for (int i = indexOfRemoved + 1; i < decorSize; i++) {
-            mDecors.get(i).decorIndex = i;
-        }
-
-        if (mDecors.isEmpty()) {
-            // Since there's no Decor left, we can disable children drawing order.
-            setChildrenDrawingOrderEnabled(false);
-        }
-    }
-
-    @Override
-    protected int getChildDrawingOrder(int childCount, int i) {
-        if (childCount == 1) {
-            return super.getChildDrawingOrder(childCount, i);
-        }
-
-        if (i == mViewPagerIndex) {
-            return 0;
-        }
-
-        int index = i > mViewPagerIndex ? i - 1 : i;
-        return mDecors.get(index).layoutIndex;
     }
 
     @Override
@@ -220,29 +190,17 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
                 if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
                     decor.contentView.setVisibility(INVISIBLE);
                 }
-            } else {
-                if (decor.startPage == Page.ALL_PAGES) {
-                    decor.contentView.setVisibility(VISIBLE);
-                } else if (decor.endPage + 1 >= currentPageOffset && decor.slideOut) {
-                    decor.contentView.setVisibility(VISIBLE);
-                } else if (decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset) {
-                    decor.contentView.setVisibility(VISIBLE);
-                }
+            } else if (decor.startPage == Page.ALL_PAGES
+                    || (decor.endPage + 1 >= currentPageOffset && decor.slideOut)
+                    || (decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset)) {
+                decor.contentView.setVisibility(VISIBLE);
+
             }
         }
     }
 
     private void removeDecorView(Decor decor) {
-        final int indexOfRemoved = decor.layoutIndex;
         removeView(decor.contentView);
-
-        // Update affected Decors' indices to reflect the change.
-        int decorsSize = mDecors.size();
-        for (int i = 0; i < decorsSize; i++) {
-            if (mDecors.get(i).layoutIndex > indexOfRemoved) {
-                mDecors.get(i).layoutIndex -= 1;
-            }
-        }
 
         if (decor.layoutBehindViewPage) {
             mViewPagerIndex--;

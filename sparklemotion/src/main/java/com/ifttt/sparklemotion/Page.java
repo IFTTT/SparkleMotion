@@ -37,8 +37,14 @@ public class Page {
      *
      * @param page Index of the ViewPager page.
      * @return Page object.
+     *
+     * @throws IllegalArgumentException when either {@code page} is smaller than 0.
      */
     public static Page singlePage(int page) {
+        if (page < 0) {
+            throw new IllegalArgumentException("Invalid pages: (" + page + " ," + page + ")");
+        }
+
         return new Page(page, page);
     }
 
