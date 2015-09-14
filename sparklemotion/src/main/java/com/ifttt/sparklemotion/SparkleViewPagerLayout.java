@@ -106,14 +106,9 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
 
         mDecors.add(decor);
 
-        // If slide out attribute is true, build a SlideOutAnimation for the last page to
-        // change the translation X when the ViewPager is scrolling.
-        if (decor.slideOut) {
-            SparkleAnimationPresenter presenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);
-            if (presenter != null) {
-                presenter.addAnimation(decor, new SlideOutAnimation(Page.singlePage(decor.endPage)));
-            }
-        }
+        // Add slide in and slide out animations to the presenter.
+        SparkleAnimationPresenter presenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);
+        presenter.addAnimation(decor, decor.slideInAnimation, decor.slideOutAnimation);
 
         if (decor.layoutBehindViewPage) {
             addView(decor.contentView, mViewPagerIndex);
@@ -186,15 +181,12 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         for (int i = 0; i < decorsSize; i++) {
             Decor decor = mDecors.get(i);
             if (decor.contentView.getVisibility() == VISIBLE && decor.startPage != Page.ALL_PAGES) {
-                int endPage = decor.slideOut ? decor.endPage + 1 : decor.endPage;
-                if (decor.startPage > currentPageOffset || endPage < currentPageOffset) {
+                if (decor.startPage > currentPageOffset || decor.endPage + 1 < currentPageOffset) {
                     decor.contentView.setVisibility(INVISIBLE);
                 }
             } else if (decor.startPage == Page.ALL_PAGES
-                    || (decor.endPage + 1 >= currentPageOffset && decor.slideOut)
-                    || (decor.startPage <= currentPageOffset && decor.endPage >= currentPageOffset)) {
+                    || (decor.startPage <= currentPageOffset && decor.endPage + 1 >= currentPageOffset)) {
                 decor.contentView.setVisibility(VISIBLE);
-
             }
         }
     }

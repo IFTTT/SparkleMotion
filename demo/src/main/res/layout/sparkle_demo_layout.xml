@@ -12,7 +12,7 @@
         android:layout_marginTop="12dp"/>
 
     <com.ifttt.sparklemotion.SparkleViewPagerLayout
-        android:id="@+id/view_pager"
+        android:id="@+id/view_pager_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -36,7 +36,7 @@ public final class SparkleDemoActivity extends Activity {
 
         setContentView(R.layout.sparkle_demo_layout);
 
-        SparkleViewPagerLayout sparkleViewPagerLayout = (SparkleViewPagerLayout) findViewById(R.id.view_pager);
+        SparkleViewPagerLayout sparkleViewPagerLayout = (SparkleViewPagerLayout) findViewById(R.id.view_pager_layout);
 
         SparkleMotion sparkleMotion = SparkleMotion.with(sparkleViewPagerLayout);
 
@@ -117,7 +117,7 @@ public final class SparkleDemoActivity extends Activity {
                 .inflate(R.layout.sparkle_page_2_plane, parent, false);
 
         Decor decor = new Decor.Builder(view)
-                .setPage(Page.pageRange(1, 2))
+                .setPage(Page.singlePage(1))
                 .behindViewPage()
                 .slideOut()
                 .build();
@@ -157,16 +157,16 @@ public final class SparkleDemoActivity extends Activity {
         bigCloud.setScaleY(1.6f);
         bigCloud.setImageDrawable(cloud);
 
-        Page page = Page.pageRange(1, 2);
+        Page page = Page.singlePage(1);
         Decor cloudDecor1 =
                 new Decor.Builder(smallCloud).setPage(page).slideOut().build();
         Decor cloudDecor2 =
                 new Decor.Builder(bigCloud).setPage(page).slideOut().build();
 
         TranslationAnimation translationAnimation1 =
-                new TranslationAnimation(Page.singlePage(1), 0, smallCloud.getTranslationY(), 0, 0, true);
+                new TranslationAnimation(page, 0, smallCloud.getTranslationY(), 0, 0, true);
         TranslationAnimation translationAnimation2 =
-                new TranslationAnimation(Page.singlePage(1), 0, bigCloud.getTranslationY(), 0, 0, true);
+                new TranslationAnimation(page, 0, bigCloud.getTranslationY(), 0, 0, true);
 
         sparkleMotion.animate(translationAnimation1).on(cloudDecor1);
         sparkleMotion.animate(translationAnimation2).on(cloudDecor2);

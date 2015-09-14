@@ -11,4 +11,4 @@ android:
     - android-19
 
   script:
-    - ./gradlew test -PdisablePreDex
+    - ./gradlew sparklemotion:test
