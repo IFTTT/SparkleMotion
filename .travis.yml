@@ -11,4 +11,5 @@ android:
     - android-19
 
   script:
+    - ./gradlew sparklemotion:checkstyle
     - ./gradlew sparklemotion:test
