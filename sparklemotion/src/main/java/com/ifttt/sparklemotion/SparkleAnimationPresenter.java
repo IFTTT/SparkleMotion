@@ -1,7 +1,6 @@
 package com.ifttt.sparklemotion;
 
 import android.support.v4.util.SimpleArrayMap;
-import android.util.Log;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,8 +125,7 @@ final class SparkleAnimationPresenter {
                     continue;
                 }
 
-                if (decor.contentView.getParent() == null || decor.contentView.getVisibility() != View.VISIBLE
-                        || !animation.shouldAnimate(position)) {
+                if (decor.contentView.getParent() == null || !animation.shouldAnimate(position)) {
                     // Add a rescue frame to the animation if the page is scrolled really fast.
                     if (mPreviousPosition < position && animation.pageEnd < position) {
                         animation.animate(decor.contentView, 1, 0);
