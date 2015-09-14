@@ -20,11 +20,11 @@ public class AlphaAnimation extends Animation {
      *                  of the primary page.
      * @param inAlpha   Alpha value when the View is visible as the primary page.
      */
-    public AlphaAnimation(Page page, float outAlpha, float inAlpha) {
+    public AlphaAnimation(Page page, float inAlpha, float outAlpha) {
         super(page);
 
-        this.mOutAlpha = outAlpha;
         this.mInAlpha = inAlpha;
+        this.mOutAlpha = outAlpha;
     }
 
     @Override
