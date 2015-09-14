@@ -31,11 +31,6 @@ public abstract class Animation {
     private AnimationListener mAnimationListener;
 
     /**
-     * Currently animated offset. Used to determine whether the animation is finished.
-     */
-    private float mCurrentOffset;
-
-    /**
      * Base constructor of the class, accepting common information about the animation to this
      * instance.
      *
@@ -73,8 +68,6 @@ public abstract class Animation {
             offset = offset / mFractionAdjustment;
         }
 
-        mCurrentOffset = offset;
-
         if (offset < -1) {
             onAnimateOffScreenLeft(v, offset, offsetInPixel);
         } else if (offset <= 1) {
@@ -86,13 +79,6 @@ public abstract class Animation {
         if (mAnimationListener != null) {
             mAnimationListener.onAnimationRunning(v, offset);
         }
-    }
-
-    /**
-     * Return the current offset of this animation.
-     */
-    float getCurrentOffset() {
-        return mCurrentOffset;
     }
 
     /**

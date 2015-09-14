@@ -1,6 +1,7 @@
 package com.ifttt.sparklemotion;
 
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 /**
  * {@link Animation} subclass used for running slide out animation when {@link Decor#slideOut} is true.
@@ -26,14 +27,35 @@ final class SlideOutAnimation extends Animation {
     }
 
     @Override
-    public void onAnimate(View v, float offset, float offsetInPixel) {
+    public void onAnimate(final View view, float offset, float offsetInPixel) {
         if (!mOriginalTranslationSet) {
-            mOriginalTranslationX = v.getTranslationX();
-            mDistance = -(v.getLeft() + v.getWidth() * v.getScaleX());
             mOriginalTranslationSet = true;
+            initViewPosition(view, offset);
         }
 
         offset = Math.abs(offset);
-        v.setTranslationX(mOriginalTranslationX + offset * mDistance);
+        view.setTranslationX(mOriginalTranslationX + offset * mDistance);
+    }
+
+    /**
+     * Initialize the View's position by adding a {@link android.view.ViewTreeObserver.OnPreDrawListener}, listening to
+     * pre-draw, then assign the initial frame and destination frame.
+     *
+     * @param view   View to be animated.
+     * @param offset Initial offset.
+     */
+    private void initViewPosition(final View view, final float offset) {
+        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                view.getViewTreeObserver().removeOnPreDrawListener(this);
+                mOriginalTranslationX = view.getTranslationX();
+                mDistance = -(view.getLeft() + view.getWidth() * view.getScaleX());
+
+                // Once initialized, run the initial animation frame.
+                view.setTranslationX(mOriginalTranslationX + Math.abs(offset) * mDistance);
+                return false;
+            }
+        });
     }
 }

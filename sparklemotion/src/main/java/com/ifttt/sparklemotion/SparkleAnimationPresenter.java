@@ -1,6 +1,7 @@
 package com.ifttt.sparklemotion;
 
 import android.support.v4.util.SimpleArrayMap;
+import android.util.Log;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +24,12 @@ final class SparkleAnimationPresenter {
      * {@link Decor} as key.
      */
     private SimpleArrayMap<Decor, ArrayList<Animation>> mDecorAnimations;
+
+    /**
+     * Stored previous frame's ViewPager position to determine whether we should animate one more frame when
+     * the ViewPager scroll across pages.
+     */
+    private int mPreviousPosition;
 
     public SparkleAnimationPresenter() {
         mAnimations = new SimpleArrayMap<>(3);
@@ -119,23 +126,22 @@ final class SparkleAnimationPresenter {
                     continue;
                 }
 
-                if (decor.contentView.getParent() == null
-                        || decor.contentView.getVisibility() != View.VISIBLE || !animation.shouldAnimate(position)) {
-                    if (offset == 0) {
-                        continue;
-                    }
-
+                if (decor.contentView.getParent() == null || decor.contentView.getVisibility() != View.VISIBLE
+                        || !animation.shouldAnimate(position)) {
                     // Add a rescue frame to the animation if the page is scrolled really fast.
-                    if (animation.getCurrentOffset() < 1 && animation.pageEnd < position) {
+                    if (mPreviousPosition < position && animation.pageEnd < position) {
                         animation.animate(decor.contentView, 1, 0);
-                    } else if (animation.getCurrentOffset() > 0 && animation.pageStart > position) {
+                    } else if (mPreviousPosition > position && animation.pageStart > position) {
                         animation.animate(decor.contentView, 0, 0);
                     }
+
                     continue;
                 }
 
                 animation.animate(decor.contentView, offset, 0);
             }
         }
+
+        mPreviousPosition = position;
     }
 }
