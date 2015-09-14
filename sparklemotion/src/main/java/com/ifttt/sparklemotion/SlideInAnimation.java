@@ -1,14 +1,15 @@
 package com.ifttt.sparklemotion;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 /**
- * {@link Animation} subclass used for running slide out animation when {@link Decor.Builder#slideOut()} is used.
+ * {@link Animation} subclass used for running slide out animation when {@link Decor.Builder#slideIn()} is used.
  * Note that this animation has state, therefore cannot be reused by other Views, each View needs to have
  * a new instance of it.
  */
-final class SlideOutAnimation extends Animation {
+final class SlideInAnimation extends Animation {
 
     private boolean mOriginalTranslationSet;
 
@@ -22,19 +23,19 @@ final class SlideOutAnimation extends Animation {
      */
     private float mOriginalTranslationX;
 
-    public SlideOutAnimation(Page page) {
+    public SlideInAnimation(@NonNull Page page) {
         super(page);
     }
 
     @Override
-    public void onAnimate(final View view, float offset, float offsetInPixel) {
+    public void onAnimate(View view, float offset, float offsetInPixel) {
         if (!mOriginalTranslationSet) {
             mOriginalTranslationSet = true;
-            initViewPosition(view, offset);
+            initViewPosition(view, 1 - offset);
         }
 
         offset = Math.abs(offset);
-        view.setTranslationX(mOriginalTranslationX + offset * mDistance);
+        view.setTranslationX(mOriginalTranslationX + (1 - offset) * mDistance);
     }
 
     /**
@@ -50,7 +51,12 @@ final class SlideOutAnimation extends Animation {
             public boolean onPreDraw() {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 mOriginalTranslationX = view.getTranslationX();
-                mDistance = -(view.getLeft() + view.getWidth() * view.getScaleX());
+                View parent = (View) view.getParent();
+                if (parent == null) {
+                    return false;
+                }
+
+                mDistance = parent.getWidth() - view.getLeft();
 
                 // Once initialized, run the initial animation frame.
                 view.setTranslationX(mOriginalTranslationX + Math.abs(offset) * mDistance);

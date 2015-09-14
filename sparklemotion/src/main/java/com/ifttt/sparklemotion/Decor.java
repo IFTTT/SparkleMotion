@@ -31,20 +31,28 @@ public class Decor {
     /**
      * A flag used to indicate whether this Decor should be drawn behind the ViewPager or not.
      */
-    boolean layoutBehindViewPage = false;
+    final boolean layoutBehindViewPage;
 
     /**
-     * Boolean flag to indicate whether this Decor should scroll with ViewPager when it is done.
+     * {@link Animation} used for sliding the Decor in when the ViewPager is scrolling. This Animation will be applied
+     * one page before the Decor's starting page.
      */
-    boolean slideOut;
+    final Animation slideInAnimation;
+
+    /**
+     * {@link Animation} used for sliding the Decor out when the ViewPager is scrolling. This Animation will be applied
+     * one page after the Decor's ending page.
+     */
+    final Animation slideOutAnimation;
 
     private Decor(@NonNull View contentView, @NonNull Page page, boolean layoutBehind,
-            boolean slideOut) {
+            Animation slideInAnimation, Animation slideOutAnimation) {
         this.contentView = contentView;
         this.startPage = page.start;
         this.endPage = page.end;
         this.layoutBehindViewPage = layoutBehind;
-        this.slideOut = slideOut;
+        this.slideInAnimation = slideInAnimation;
+        this.slideOutAnimation = slideOutAnimation;
     }
 
     /**
@@ -57,6 +65,9 @@ public class Decor {
         private Page mPage;
 
         private boolean mLayoutBehindViewPage;
+
+        private boolean mSlideIn;
+
         private boolean mSlideOut;
 
         /**
@@ -93,6 +104,17 @@ public class Decor {
         }
 
         /**
+         * Optional attribute for setting the Decor to be scrolled in when it is shown.
+         *
+         * @return This object for chaining.
+         */
+        public Builder slideIn() {
+            mSlideIn = true;
+
+            return this;
+        }
+
+        /**
          * Optional attribute for setting the Decor to scroll along with the page after it passes
          * the end page.
          *
@@ -100,6 +122,7 @@ public class Decor {
          */
         public Builder slideOut() {
             mSlideOut = true;
+
             return this;
         }
 
@@ -109,7 +132,23 @@ public class Decor {
          * @return Decor object.
          */
         public Decor build() {
-            return new Decor(mContentView, mPage, mLayoutBehindViewPage, mSlideOut);
+            Animation slideInAnimation = null;
+            Animation slideOutAnimation = null;
+            if (mSlideIn && mPage.start > 0) {
+                mPage = Page.pageRange(Math.max(0, mPage.start - 1), mPage.end);
+
+                Page slideInPage = Page.singlePage(mPage.start);
+                slideInAnimation = new SlideInAnimation(slideInPage);
+            }
+
+            if (mSlideOut) {
+                // Reset the range of the Decor to animate slide out.
+                mPage = Page.pageRange(mPage.start, mPage.end + 1);
+
+                Page slideOutPage = Page.singlePage(mPage.end);
+                slideOutAnimation = new SlideOutAnimation(slideOutPage);
+            }
+            return new Decor(mContentView, mPage, mLayoutBehindViewPage, slideInAnimation, slideOutAnimation);
         }
     }
 }

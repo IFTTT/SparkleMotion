@@ -83,7 +83,7 @@ SparkleMotion.with(viewPagerLayout)
 
 a `Decor` will then be added to your `SparkleViewPagerLayout`, which will run the `alphaAnimation` during ViewPager scrolling.
 
-As mentioned above, a `Decor.Builder` supports following methods,
+A `Decor.Builder` supports following methods,
 
 ```java
 Decor decor = new Decor.Builder(View) // Content View of the Decor, must not be null
@@ -92,7 +92,10 @@ Decor decor = new Decor.Builder(View) // Content View of the Decor, must not be 
                                 
                 .behindViewPage()     // Set to draw the content View behind the ViewPager
                 
+                .slideIn()		      // Set to scroll with ViewPager before the first visible page
+                
                 .slideOut()           // Set to scroll with ViewPager after last visible page
+                
                 .build();
 			
 ```
