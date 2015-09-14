@@ -15,8 +15,6 @@ public class SparkleMotion {
     private SparkleViewPagerLayout mViewPagerLayout;
     private SparkleAnimationPresenter mPresenter;
 
-    private boolean mReversedOrder;
-
     /**
      * Animations to be used for a set of target Views. Will be cleared after calling
      * {@link #on(int...)}.
@@ -82,16 +80,6 @@ public class SparkleMotion {
     }
 
     /**
-     * Set child drawing order to reversed for the ViewPager. Default value is false.
-     *
-     * @return this instance to chain functions.
-     */
-    public SparkleMotion reverseDrawingOrder() {
-        mReversedOrder = true;
-        return this;
-    }
-
-    /**
      * Assign animations to SparkleMotion, which will then associate the animations to target Views.
      *
      * @param animations Animations to run.
@@ -134,7 +122,7 @@ public class SparkleMotion {
             throw new NullPointerException("ViewPager cannot be null");
         }
 
-        SparkleMotionCompat.installAnimationPresenter(viewPager, mReversedOrder, mPresenter);
+        SparkleMotionCompat.installAnimationPresenter(viewPager, false, mPresenter);
 
         for (Decor decor : decors) {
             mViewPagerLayout.addDecor(decor);
@@ -171,6 +159,6 @@ public class SparkleMotion {
             throw new NullPointerException("ViewPager cannot be null");
         }
 
-        SparkleMotionCompat.installAnimationPresenter(viewPager, mReversedOrder, mPresenter);
+        SparkleMotionCompat.installAnimationPresenter(viewPager, false, mPresenter);
     }
 }
