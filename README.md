@@ -2,6 +2,8 @@
 
 ![Sparkle Motion](./art/sparklemotion-title.png)
 
+[![Build Status](https://travis-ci.org/IFTTT/SparkleMotion.svg?branch=more_tests)](https://travis-ci.org/IFTTT/SparkleMotion)
+
 Sparkle Motion is a ViewPager animator that animates Views within pages as well as views across pages.
 
 ![Sparkle Motion](./art/sparklemotion.gif)
