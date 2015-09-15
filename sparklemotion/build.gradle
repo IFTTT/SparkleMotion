@@ -19,7 +19,7 @@ apply plugin: 'com.jfrog.bintray'
 version = "1.0.0"
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "22.0.1"
 
     defaultConfig {
@@ -108,5 +108,24 @@ bintray {
 if (project.hasProperty('bintrayUser') && project.hasProperty('bintrayKey')) {
     bintray.user = project.bintrayUser
     bintray.key = project.bintrayKey
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
 
