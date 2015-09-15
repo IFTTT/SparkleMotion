@@ -76,4 +76,16 @@ public final class DecorTest {
         assertEquals(0, decorSinglePage.startPage);
         assertEquals(2, decorSinglePage.endPage);
     }
+
+    @Test
+    public void testDecorCreationWithLayoutBehind() throws Exception {
+        View dummyView = mock(View.class);
+        Decor decorSinglePage = new Decor.Builder(dummyView)
+                .setPage(Page.singlePage(1))
+                .behindViewPage()
+                .build();
+
+        assertEquals(true, decorSinglePage.layoutBehindViewPage);
+
+    }
 }
