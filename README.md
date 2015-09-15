@@ -20,7 +20,7 @@ Sparkle Motion can also animate Views within ViewPager. It uses ViewPager's [Pag
 Add Sparkle Motion as dependency via Gradle:
 
 ```groovy
-compile 'com.ifttt:sparklemotion:1.0'
+compile 'com.ifttt:sparklemotion:1.0.0'
 ```
 
 ## JazzHands and RazzleDazzle

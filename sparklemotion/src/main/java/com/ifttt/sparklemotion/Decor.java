@@ -135,14 +135,16 @@ public class Decor {
             Animation slideInAnimation = null;
             Animation slideOutAnimation = null;
             if (mSlideIn && mPage.start > 0) {
+                // Slide in animation only applies to a Decor that starts from at least the second page.
+                // Will not apply to Decor that is ALL_PAGE.
                 mPage = Page.pageRange(Math.max(0, mPage.start - 1), mPage.end);
 
                 Page slideInPage = Page.singlePage(mPage.start);
                 slideInAnimation = new SlideInAnimation(slideInPage);
             }
 
-            if (mSlideOut) {
-                // Reset the range of the Decor to animate slide out.
+            if (mSlideOut && mPage.end != Page.ALL_PAGES) {
+                // Slide out animation will not apply to Decor that is ALL_PAGE.
                 mPage = Page.pageRange(mPage.start, mPage.end + 1);
 
                 Page slideOutPage = Page.singlePage(mPage.end);
