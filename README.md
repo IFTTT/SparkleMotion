@@ -164,6 +164,9 @@ You can use Sparkle Motion instead of PageTransformer to play regular ViewPager 
 
 If you need to have a custom PageTransformer for your ViewPager while using Sparkle Motion, you need to call `SparkleMotionCompat.setPageTransformer(ViewPager, boolean, PageTransformer)` to set your PageTransformer.
 
+## Contributors
+* [Zhe Lu](https://github.com/lzanita09)
+* [Eric Cochran](https://github.com/NightlyNexus)
 
 ## Contributing
 

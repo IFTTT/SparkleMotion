@@ -3,6 +3,7 @@ android:
   components:
      - platform-tools
      - tools
+     - extra-android-m2repository
 
     # The BuildTools version used by your project
     - build-tools-22.0.1
