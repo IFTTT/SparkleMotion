@@ -72,6 +72,7 @@ public final class DecorTest {
                 .setPage(Page.singlePage(1))
                 .build();
 
+        // The start and end page should not be affected by the order of the method calls.
         assertEquals(0, decorSinglePage.startPage);
         assertEquals(2, decorSinglePage.endPage);
     }
