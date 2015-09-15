@@ -1,9 +1,11 @@
 language: android
+jdk: oraclejdk7
+
 android:
   components:
-     - platform-tools
-     - tools
-     - extra-android-m2repository
+    - platform-tools
+    - tools
+    - extra-android-m2repository
 
     # The BuildTools version used by your project
     - build-tools-22.0.1
@@ -11,6 +13,6 @@ android:
     # The SDK version used to compile your project
     - android-19
 
-  script:
+script:
     - ./gradlew sparklemotion:checkstyle
     - ./gradlew sparklemotion:test
