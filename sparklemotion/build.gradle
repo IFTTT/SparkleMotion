@@ -42,6 +42,7 @@ install {
                 packaging 'aar'
 
                 name 'Sparkle Motion'
+                description 'A ViewPager animator that animates Views within pages as well as views across pages.'
                 url siteUrl
 
                 licenses {

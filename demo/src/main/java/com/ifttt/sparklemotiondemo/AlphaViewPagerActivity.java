@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.animation.AccelerateInterpolator;
-
 import com.ifttt.sparklemotion.Page;
 import com.ifttt.sparklemotion.SparkleMotion;
 import com.ifttt.sparklemotion.animations.AlphaAnimation;
