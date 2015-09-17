@@ -45,14 +45,20 @@ public class Decor {
      */
     final Animation slideOutAnimation;
 
-    private Decor(@NonNull View contentView, @NonNull Page page, boolean layoutBehind,
-            Animation slideInAnimation, Animation slideOutAnimation) {
+    /**
+     * A flag used to indicate whether the animation(s) running on this Decor should use hardware layer.
+     */
+    final boolean withLayer;
+
+    private Decor(@NonNull View contentView, @NonNull Page page, boolean layoutBehind, Animation slideInAnimation,
+            Animation slideOutAnimation, boolean withLayer) {
         this.contentView = contentView;
         this.startPage = page.start;
         this.endPage = page.end;
         this.layoutBehindViewPage = layoutBehind;
         this.slideInAnimation = slideInAnimation;
         this.slideOutAnimation = slideOutAnimation;
+        this.withLayer = withLayer;
     }
 
     /**
@@ -69,6 +75,8 @@ public class Decor {
         private boolean mSlideIn;
 
         private boolean mSlideOut;
+
+        private boolean mWithLayer;
 
         /**
          * @param contentView View for this Decor, must not be null.
@@ -127,6 +135,17 @@ public class Decor {
         }
 
         /**
+         * Optional attribute for setting the Decor to animate the View using hardware layer.
+         *
+         * @return  This object for chaining.
+         */
+        public Builder withLayer() {
+            mWithLayer = true;
+
+            return this;
+        }
+
+        /**
          * Build the Decor based on the attributes set in this Builder.
          *
          * @return Decor object.
@@ -150,7 +169,8 @@ public class Decor {
                 Page slideOutPage = Page.singlePage(mPage.end);
                 slideOutAnimation = new SlideOutAnimation(slideOutPage);
             }
-            return new Decor(mContentView, mPage, mLayoutBehindViewPage, slideInAnimation, slideOutAnimation);
+            return new Decor(mContentView, mPage, mLayoutBehindViewPage, slideInAnimation, slideOutAnimation,
+                    mWithLayer);
         }
     }
 }

@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
 import java.util.ArrayList;
 
 /**
@@ -163,11 +162,10 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * @param enable Whether or not hardware layer should be used for Decor content views.
      */
     private void enableLayer(boolean enable) {
+        final int layerType = enable ? LAYER_TYPE_HARDWARE : LAYER_TYPE_NONE;
         for (Decor decor : mDecors) {
-            if (enable && decor.contentView.getLayerType() != LAYER_TYPE_HARDWARE) {
-                decor.contentView.setLayerType(LAYER_TYPE_HARDWARE, null);
-            } else if (!enable && decor.contentView.getLayerType() != LAYER_TYPE_NONE) {
-                decor.contentView.setLayerType(LAYER_TYPE_NONE, null);
+            if (decor.withLayer) {
+                decor.contentView.setLayerType(layerType, null);
             }
         }
     }

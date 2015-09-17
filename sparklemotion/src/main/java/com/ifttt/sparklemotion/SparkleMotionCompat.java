@@ -62,6 +62,30 @@ public final class SparkleMotionCompat {
                 // Animate any Decor animations.
                 presenter.presentDecorAnimations(position, positionOffset);
             }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                final int layerType =
+                        state == ViewPager.SCROLL_STATE_IDLE ? View.LAYER_TYPE_NONE : View.LAYER_TYPE_HARDWARE;
+
+                final int animatedViewsCount = presenter.getAnimatedViews().size();
+                for (int id : presenter.getAnimatedViews()) {
+                    View child = viewPager.findViewById(id);
+                    if (child != null) {
+                        child.setLayerType(layerType, null);
+                    }
+                }
+
+                if (animatedViewsCount > 0) {
+                    // Set layer type back to none when there is ViewPager animations from Sparkle Motion.
+                    final int viewPagerChildCount = viewPager.getChildCount();
+                    for (int i = 0; i < viewPagerChildCount; i++) {
+                        View child = viewPager.getChildAt(i);
+                        child.setLayerType(View.LAYER_TYPE_NONE, null);
+                    }
+                }
+
+            }
         });
 
         viewPager.setPageTransformer(reverseDrawingOrder, transformer);

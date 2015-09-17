@@ -98,6 +98,8 @@ Decor decor = new Decor.Builder(View) // Content View of the Decor, must not be 
                 
                 .slideOut()           // Set to scroll with ViewPager after last visible page
                 
+                .withLayer()          // Set to use hardware layer when animating this Decor's content View
+                
                 .build();
 			
 ```

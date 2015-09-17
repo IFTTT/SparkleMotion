@@ -4,6 +4,7 @@ import android.support.v4.util.SimpleArrayMap;
 import android.view.View;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Animation driver, used to store all {@link Animation} assigned to it and run animations given the current
@@ -25,6 +26,11 @@ final class SparkleAnimationPresenter {
     private SimpleArrayMap<Decor, ArrayList<Animation>> mDecorAnimations;
 
     /**
+     * An ArrayList that saves the ids of the Views being animated with Sparkle Motion.
+     */
+    private ArrayList<Integer> mAnimatedViews;
+
+    /**
      * Stored previous frame's ViewPager position to determine whether we should animate one more frame when
      * the ViewPager scroll across pages.
      */
@@ -33,6 +39,7 @@ final class SparkleAnimationPresenter {
     public SparkleAnimationPresenter() {
         mAnimations = new SimpleArrayMap<>(3);
         mDecorAnimations = new SimpleArrayMap<>(3);
+        mAnimatedViews = new ArrayList<>(3);
     }
 
     /**
@@ -44,6 +51,9 @@ final class SparkleAnimationPresenter {
     public void addAnimation(int id, Animation... animations) {
         if (mAnimations.get(id) == null) {
             mAnimations.put(id, new ArrayList<Animation>(animations.length));
+            if (id != Animation.FULL_PAGE) {
+                mAnimatedViews.add(id);
+            }
         }
 
         ArrayList<Animation> anims = mAnimations.get(id);
@@ -141,5 +151,12 @@ final class SparkleAnimationPresenter {
         }
 
         mPreviousPosition = position;
+    }
+
+    /**
+     * @return A List of ids that Sparkle Motion animates within the ViewPager.
+     */
+    List<Integer> getAnimatedViews() {
+        return mAnimatedViews;
     }
 }
