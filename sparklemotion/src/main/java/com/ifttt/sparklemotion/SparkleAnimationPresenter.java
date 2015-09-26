@@ -17,13 +17,15 @@ final class SparkleAnimationPresenter {
     /**
      * A SimpleArrayMap that saves all animations with the target View's ID as key.
      */
-    private SimpleArrayMap<Integer, ArrayList<Animation>> mAnimations;
+    private final SimpleArrayMap<Integer, ArrayList<Animation>> mAnimations;
+
+    private final SimpleArrayMap<View, ArrayList<Animation>> mViewAnimations;
 
     /**
      * A SimpleArrayMap that saves all animations with the target
      * {@link Decor} as key.
      */
-    private SimpleArrayMap<Decor, ArrayList<Animation>> mDecorAnimations;
+    private final SimpleArrayMap<Decor, ArrayList<Animation>> mDecorAnimations;
 
     /**
      * An ArrayList that saves the ids of the Views being animated with Sparkle Motion.
@@ -39,6 +41,7 @@ final class SparkleAnimationPresenter {
     public SparkleAnimationPresenter() {
         mAnimations = new SimpleArrayMap<>(3);
         mDecorAnimations = new SimpleArrayMap<>(3);
+        mViewAnimations = new SimpleArrayMap<>(3);
         mAnimatedViews = new ArrayList<>(3);
     }
 
@@ -72,6 +75,17 @@ final class SparkleAnimationPresenter {
         }
 
         ArrayList<Animation> anims = mDecorAnimations.get(decor);
+        if (anims != null) {
+            Collections.addAll(anims, animations);
+        }
+    }
+
+    public void addAnimation(View view, Animation... animations) {
+        if (mViewAnimations.get(view) == null) {
+            mViewAnimations.put(view, new ArrayList<Animation>(animations.length));
+        }
+
+        ArrayList<Animation> anims = mViewAnimations.get(view);
         if (anims != null) {
             Collections.addAll(anims, animations);
         }
@@ -151,6 +165,10 @@ final class SparkleAnimationPresenter {
         }
 
         mPreviousPosition = position;
+    }
+
+    void presentViewAnimations(float progress) {
+        //TODO: implement
     }
 
     /**
