@@ -98,6 +98,18 @@ public final class SparkleMotionCompat {
         return presenter;
     }
 
+    static SparkleAnimationPresenter installAnimationPresenter(SparkleAnimationBehavior behavior) {
+        SparkleAnimationPresenter presenter = behavior.getPresenter();
+        if (behavior.getPresenter() != null) {
+            return presenter;
+        }
+
+        presenter = new SparkleAnimationPresenter();
+        behavior.installPresenter(presenter);
+
+        return presenter;
+    }
+
     /**
      * Convenient method for installing {@link SparkleAnimationPresenter} without reversing
      * ViewPager's child Views drawing order.

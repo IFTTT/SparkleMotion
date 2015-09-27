@@ -2,8 +2,6 @@ package com.ifttt.sparklemotion;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Top level Builder class. Used for constructing a {@link SparkleAnimationPresenter} and
@@ -19,7 +17,7 @@ public class SparkleMotion {
      * @param viewPager Target ViewPager.
      * @return this instance to chain functions.
      */
-    public static ViewPagerAnimBuilder with(@NonNull ViewPager viewPager) {
+    public static ViewAnimationBuilder with(@NonNull ViewPager viewPager) {
         return new ViewPagerAnimBuilder(viewPager);
     }
 
@@ -33,6 +31,10 @@ public class SparkleMotion {
      */
     public static ViewPagerLayoutAnimBuilder with(@NonNull SparkleViewPagerLayout viewPagerLayout) {
         return new ViewPagerLayoutAnimBuilder(viewPagerLayout);
+    }
+
+    public static CoordinatorAnimBuilder with(@NonNull SparkleAnimationBehavior behavior) {
+        return new CoordinatorAnimBuilder(behavior);
     }
 
 }

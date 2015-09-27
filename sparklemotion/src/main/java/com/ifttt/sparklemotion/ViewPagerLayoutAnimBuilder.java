@@ -3,25 +3,13 @@ package com.ifttt.sparklemotion;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 
-public final class ViewPagerLayoutAnimBuilder  {
-
-    private ViewPagerAnimBuilder mViewPagerAnimBuilder;
+public final class ViewPagerLayoutAnimBuilder extends ViewPagerAnimBuilder {
 
     private final SparkleViewPagerLayout mViewPagerLayout;
 
     ViewPagerLayoutAnimBuilder(@NonNull SparkleViewPagerLayout viewPagerLayout) {
-        mViewPagerAnimBuilder = new ViewPagerAnimBuilder(viewPagerLayout.getViewPager());
+        super(viewPagerLayout.getViewPager());
         mViewPagerLayout = viewPagerLayout;
-    }
-
-    public ViewPagerLayoutAnimBuilder animate(Animation... animations) {
-        mViewPagerAnimBuilder.animate(animations);
-
-        return this;
-    }
-
-    public void on(int id) {
-        mViewPagerAnimBuilder.on(id);
     }
 
     /**
@@ -38,12 +26,11 @@ public final class ViewPagerLayoutAnimBuilder  {
      * @throws IllegalStateException when a ViewPagerLayout is not provided.
      */
     public void on(Decor decor) {
-        Animation[] animations = new Animation[mViewPagerAnimBuilder.animations.size()];
-        mViewPagerAnimBuilder.animations.toArray(animations);
+        Animation[] animationsArray = new Animation[animations.size()];
+        animations.toArray(animationsArray);
+        animations.clear();
 
-        mViewPagerAnimBuilder.presenter.addAnimation(decor, animations);
-
-        mViewPagerAnimBuilder.animations.clear();
+        presenter.addAnimation(decor, animationsArray);
 
         ViewPager viewPager = mViewPagerLayout.getViewPager();
         if (viewPager == null) {
