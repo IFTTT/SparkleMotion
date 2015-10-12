@@ -153,7 +153,7 @@ final class SparkleAnimationPresenter {
 
             ArrayList<Animation> animations = mObjectAnimations.get(key);
             int animsSize = animations.size();
-            for (int j = 0 ; j < animsSize ; j++) {
+            for (int j = 0; j < animsSize; j++) {
                 Animation animation = animations.get(j);
                 animation.animate(view, progress, 0);
             }
