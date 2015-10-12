@@ -1,7 +1,9 @@
 package com.ifttt.sparklemotion;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.util.SimpleArrayMap;
 import android.view.View;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,15 +19,7 @@ final class SparkleAnimationPresenter {
     /**
      * A SimpleArrayMap that saves all animations with the target View's ID as key.
      */
-    private final SimpleArrayMap<Integer, ArrayList<Animation>> mAnimations;
-
-    private final SimpleArrayMap<View, ArrayList<Animation>> mViewAnimations;
-
-    /**
-     * A SimpleArrayMap that saves all animations with the target
-     * {@link Decor} as key.
-     */
-    private final SimpleArrayMap<Decor, ArrayList<Animation>> mDecorAnimations;
+    private final SimpleArrayMap<Object, ArrayList<Animation>> mObjectAnimations;
 
     /**
      * An ArrayList that saves the ids of the Views being animated with Sparkle Motion.
@@ -39,73 +33,47 @@ final class SparkleAnimationPresenter {
     private int mPreviousPosition;
 
     public SparkleAnimationPresenter() {
-        mAnimations = new SimpleArrayMap<>(3);
-        mDecorAnimations = new SimpleArrayMap<>(3);
-        mViewAnimations = new SimpleArrayMap<>(3);
         mAnimatedViews = new ArrayList<>(3);
+        mObjectAnimations = new SimpleArrayMap<>(3);
     }
 
     /**
      * Add animations to the target View. The View's id is used as key.
      *
-     * @param id Id of the target View.
+     * @param target     Id of the target View.
      * @param animations Animations to be associated to this View.
      */
-    public void addAnimation(int id, Animation... animations) {
-        if (mAnimations.get(id) == null) {
-            mAnimations.put(id, new ArrayList<Animation>(animations.length));
-            if (id != Animation.FULL_PAGE) {
-                mAnimatedViews.add(id);
+    public void addAnimation(Object target, Animation... animations) {
+        if (mObjectAnimations.get(target) == null) {
+            mObjectAnimations.put(target, new ArrayList<Animation>(animations.length));
+            if (target != Animation.FULL_PAGE && target instanceof Integer) {
+                mAnimatedViews.add((Integer) target);
             }
         }
 
-        ArrayList<Animation> anims = mAnimations.get(id);
+        ArrayList<Animation> anims = mObjectAnimations.get(target);
         Collections.addAll(anims, animations);
-    }
-
-    /**
-     * Add animations to the target {@link Decor}.
-     *
-     * @param decor Target Decor.
-     * @param animations Animations to be associated to this Decor.
-     */
-    public void addAnimation(Decor decor, Animation... animations) {
-        if (mDecorAnimations.get(decor) == null) {
-            mDecorAnimations.put(decor, new ArrayList<Animation>(animations.length));
-        }
-
-        ArrayList<Animation> anims = mDecorAnimations.get(decor);
-        if (anims != null) {
-            Collections.addAll(anims, animations);
-        }
-    }
-
-    public void addAnimation(View view, Animation... animations) {
-        if (mViewAnimations.get(view) == null) {
-            mViewAnimations.put(view, new ArrayList<Animation>(animations.length));
-        }
-
-        ArrayList<Animation> anims = mViewAnimations.get(view);
-        if (anims != null) {
-            Collections.addAll(anims, animations);
-        }
     }
 
     /**
      * Run the animations based on the View animations saved within the presenter and the offset of
      * the scrolling.
      *
-     * @param parent Current page View of the ViewPager.
-     * @param offset Scrolling offset of the ViewPager.
+     * @param parent        Current page View of the ViewPager.
+     * @param offset        Scrolling offset of the ViewPager.
      * @param offsetInPixel Scrolling offset in pixels based on the page View.
      */
     void presentAnimations(View parent, float offset, float offsetInPixel) {
-        int animMapSize = mAnimations.size();
+        int animMapSize = mObjectAnimations.size();
 
         // Animate all in-page animations.
         for (int i = 0; i < animMapSize; i++) {
-            int key = mAnimations.keyAt(i);
-            ArrayList<Animation> animations = mAnimations.get(key);
+            Object key = mObjectAnimations.keyAt(i);
+            if (!(key instanceof Integer)) {
+                continue;
+            }
+            int id = (int) key;
+            ArrayList<Animation> animations = mObjectAnimations.get(id);
 
             int animListSize = animations.size();
             for (int j = 0; j < animListSize; j++) {
@@ -113,10 +81,10 @@ final class SparkleAnimationPresenter {
 
                 final View viewToAnimate;
 
-                if (key == parent.getId() || key == Animation.FULL_PAGE) {
+                if (id == parent.getId() || id == Animation.FULL_PAGE) {
                     viewToAnimate = parent;
                 } else {
-                    viewToAnimate = parent.findViewById(key);
+                    viewToAnimate = parent.findViewById(id);
                 }
 
                 if (animation == null || viewToAnimate == null) {
@@ -133,14 +101,19 @@ final class SparkleAnimationPresenter {
      * of the scrolling.
      *
      * @param position Position of the current page.
-     * @param offset Offset of the ViewPager scrolling.
+     * @param offset   Offset of the ViewPager scrolling.
      */
     void presentDecorAnimations(int position, float offset) {
         // Animate all decor or other View animations.
-        int animMapSize = mDecorAnimations.size();
+        int animMapSize = mObjectAnimations.size();
         for (int i = 0; i < animMapSize; i++) {
-            Decor decor = mDecorAnimations.keyAt(i);
-            ArrayList<Animation> animations = mDecorAnimations.get(decor);
+            Object key = mObjectAnimations.keyAt(i);
+            if (!(key instanceof Decor)) {
+                continue;
+            }
+
+            Decor decor = (Decor) key;
+            ArrayList<Animation> animations = mObjectAnimations.get(decor);
 
             int animListSize = animations.size();
             for (int j = 0; j < animListSize; j++) {
@@ -168,7 +141,23 @@ final class SparkleAnimationPresenter {
     }
 
     void presentViewAnimations(float progress) {
-        //TODO: implement
+        int animMapSize = mObjectAnimations.size();
+        for (int i = 0; i < animMapSize; i++) {
+            Object key = mObjectAnimations.keyAt(i);
+            if (!(key instanceof View) ||
+                    !(((View) key).getLayoutParams() instanceof CoordinatorLayout.LayoutParams)) {
+                continue;
+            }
+
+            View view = (View) key;
+
+            ArrayList<Animation> animations = mObjectAnimations.get(key);
+            int animsSize = animations.size();
+            for (int j = 0 ; j < animsSize ; j++) {
+                Animation animation = animations.get(j);
+                animation.animate(view, progress, 0);
+            }
+        }
     }
 
     /**
