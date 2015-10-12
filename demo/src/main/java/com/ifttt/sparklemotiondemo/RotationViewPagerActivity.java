@@ -23,8 +23,8 @@ public class RotationViewPagerActivity extends Activity {
         viewPager.setAdapter(new PagerAdapter());
         RotationAnimation rotationAnimation = new RotationAnimation(Page.allPages(), 0, 360);
 
-        SparkleMotion.with(viewPager) //
-                .animate(rotationAnimation) //
+        SparkleMotion.with(viewPager)
+                .animate(rotationAnimation)
                 .on(R.id.pic_img_view);
     }
 }

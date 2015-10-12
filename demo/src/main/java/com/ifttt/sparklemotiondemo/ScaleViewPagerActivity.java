@@ -23,8 +23,8 @@ public final class ScaleViewPagerActivity extends Activity {
 
         ScaleAnimation scaleAnimation = new ScaleAnimation(Page.allPages(), 1f, 1f, 0.3f, 0.3f);
 
-        SparkleMotion.with(viewPager) //
-                .animate(scaleAnimation) //
+        SparkleMotion.with(viewPager)
+                .animate(scaleAnimation)
                 .on(R.id.pic_img_view);
     }
 }

@@ -23,8 +23,8 @@ public final class ParallaxViewPagerActivity extends Activity {
 
         ParallaxAnimation parallaxAnimation = new ParallaxAnimation(Page.allPages());
 
-        SparkleMotion.with(viewPager) //
-                .animate(parallaxAnimation) //
+        SparkleMotion.with(viewPager)
+                .animate(parallaxAnimation)
                 .on(R.id.pic_img_view);
     }
 }

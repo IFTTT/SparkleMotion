@@ -25,8 +25,8 @@ public final class AlphaViewPagerActivity extends Activity {
         AlphaAnimation alphaAnimation = new AlphaAnimation(Page.allPages(), 1f, 0f);
         alphaAnimation.setInterpolator(new AccelerateInterpolator());
 
-        SparkleMotion.with(viewPager) //
-                .animate(alphaAnimation) //
+        SparkleMotion.with(viewPager)
+                .animate(alphaAnimation)
                 .on(R.id.pic_img_view);
     }
 }
