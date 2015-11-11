@@ -98,16 +98,14 @@ public final class SparkleMotionCompat {
         return presenter;
     }
 
-    static SparkleAnimationPresenter installAnimationPresenter(SparkleAnimationBehavior behavior) {
-        SparkleAnimationPresenter presenter = behavior.getPresenter();
-        if (behavior.getPresenter() != null) {
-            return presenter;
+    static SparkleAnimationPresenter installAnimationPresenter(View view) {
+        Object tagObject = view.getTag(R.id.presenter_id);
+        if (tagObject != null && tagObject instanceof SparkleAnimationPresenter) {
+            // If the presenter is the same as the one already in the ViewPager, return.
+            return (SparkleAnimationPresenter) tagObject;
         }
 
-        presenter = new SparkleAnimationPresenter();
-        behavior.installPresenter(presenter);
-
-        return presenter;
+        return new SparkleAnimationPresenter();
     }
 
     /**

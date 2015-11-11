@@ -2,6 +2,7 @@ package com.ifttt.sparklemotion;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 /**
  * Top level Builder class. Used for constructing a {@link SparkleAnimationPresenter} and
@@ -35,11 +36,12 @@ public class SparkleMotion {
      * Start constructing a {@link CoordinatorAnimBuilder} with a {@link SparkleAnimationBehavior} instance.
      * Animations assigned to this builder will be controlled by the CoordinatorLayout.
      *
-     * @param behavior Target SparkleAnimationBehavior.
+     * @param dependency Dependency View of the animating View.
+     * @param progressGenerator Interface that controls the progress of the animation.
      * @return CoordinatorAnimBuilder instance.
      */
-    public static CoordinatorAnimBuilder with(@NonNull SparkleAnimationBehavior behavior) {
-        return new CoordinatorAnimBuilder(behavior);
+    public static CoordinatorAnimBuilder with(@NonNull View dependency,
+            @NonNull ProgressGenerator<View> progressGenerator) {
+        return new CoordinatorAnimBuilder(dependency, progressGenerator);
     }
-
 }

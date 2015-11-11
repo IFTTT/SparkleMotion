@@ -1,20 +1,23 @@
 package com.ifttt.sparklemotion;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.View;
 
 public class CoordinatorAnimBuilder extends ViewAnimationBuilder<View> {
 
-    private final SparkleAnimationBehavior mSparkleAnimationBehavior;
+    private SparkleAnimationBehavior<View> mSparkleAnimationBehavior;
 
-    CoordinatorAnimBuilder(SparkleAnimationBehavior behavior) {
-        super(null);
-        mSparkleAnimationBehavior = behavior;
+    CoordinatorAnimBuilder(@NonNull View dependency, @NonNull ProgressGenerator<View> progressGenerator) {
+        super(dependency);
+
+        mSparkleAnimationBehavior = new SparkleAnimationBehavior<>();
+        mSparkleAnimationBehavior.installPresenter(dependency, getPresenter(dependency), progressGenerator);
     }
 
     @Override
-    public SparkleAnimationPresenter getPresenter(View container) {
-        return SparkleMotionCompat.installAnimationPresenter(mSparkleAnimationBehavior);
+    public SparkleAnimationPresenter getPresenter(View view) {
+        return SparkleMotionCompat.installAnimationPresenter(view);
     }
 
     @Override
