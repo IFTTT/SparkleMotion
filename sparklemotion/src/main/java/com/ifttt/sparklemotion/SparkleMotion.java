@@ -11,15 +11,15 @@ import java.util.Collections;
  */
 public class SparkleMotion {
 
-    private final ViewPager mViewPager;
-    private SparkleViewPagerLayout mViewPagerLayout;
-    private SparkleAnimationPresenter mPresenter;
+    private final ViewPager viewPager;
+    private SparkleViewPagerLayout viewPagerLayout;
+    private SparkleAnimationPresenter presenter;
 
     /**
      * Animations to be used for a set of target Views. Will be cleared after calling
      * {@link #on(int...)}.
      */
-    private ArrayList<Animation> mAnimations;
+    private ArrayList<Animation> animations;
 
     /**
      * Start constructing a {@link SparkleMotion} builder with a {@link ViewPager} instance. Animations
@@ -52,7 +52,7 @@ public class SparkleMotion {
      * @param viewPager ViewPager object.
      */
     private SparkleMotion(@NonNull ViewPager viewPager) {
-        mViewPager = viewPager;
+        this.viewPager = viewPager;
         init();
     }
 
@@ -63,20 +63,20 @@ public class SparkleMotion {
      * @param viewPagerLayout ViewPagerLayout object.
      */
     private SparkleMotion(@NonNull SparkleViewPagerLayout viewPagerLayout) {
-        mViewPagerLayout = viewPagerLayout;
-        mViewPager = mViewPagerLayout.getViewPager();
+        this.viewPagerLayout = viewPagerLayout;
+        viewPager = this.viewPagerLayout.getViewPager();
 
         init();
     }
 
     private void init() {
-        if (SparkleMotionCompat.hasPresenter(mViewPager)) {
-            mPresenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);
+        if (SparkleMotionCompat.hasPresenter(viewPager)) {
+            presenter = SparkleMotionCompat.getAnimationPresenter(viewPager);
         } else {
-            mPresenter = new SparkleAnimationPresenter();
+            presenter = new SparkleAnimationPresenter();
         }
 
-        mAnimations = new ArrayList<Animation>();
+        animations = new ArrayList<Animation>();
     }
 
     /**
@@ -86,7 +86,7 @@ public class SparkleMotion {
      * @return this instance to chain functions.
      */
     public SparkleMotion animate(Animation... animations) {
-        Collections.addAll(mAnimations, animations);
+        Collections.addAll(this.animations, animations);
         return this;
     }
 
@@ -104,28 +104,28 @@ public class SparkleMotion {
      * @throws IllegalStateException when a ViewPagerLayout is not provided.
      */
     public void on(final Decor... decors) {
-        if (mViewPagerLayout == null) {
+        if (viewPagerLayout == null) {
             throw new IllegalStateException("A ViewPagerLayout must be provided for animating Decor");
         }
 
-        Animation[] animations = new Animation[mAnimations.size()];
-        mAnimations.toArray(animations);
+        Animation[] animations = new Animation[this.animations.size()];
+        this.animations.toArray(animations);
 
         for (Decor decor : decors) {
-            mPresenter.addAnimation(decor, animations);
+            presenter.addAnimation(decor, animations);
         }
 
-        mAnimations.clear();
+        this.animations.clear();
 
-        ViewPager viewPager = mViewPagerLayout.getViewPager();
+        ViewPager viewPager = viewPagerLayout.getViewPager();
         if (viewPager == null) {
             throw new NullPointerException("ViewPager cannot be null");
         }
 
-        SparkleMotionCompat.installAnimationPresenter(viewPager, false, mPresenter);
+        SparkleMotionCompat.installAnimationPresenter(viewPager, false, presenter);
 
         for (Decor decor : decors) {
-            mViewPagerLayout.addDecor(decor);
+            viewPagerLayout.addDecor(decor);
         }
     }
 
@@ -139,26 +139,26 @@ public class SparkleMotion {
      * @param ids Target View ids.
      */
     public void on(final int... ids) {
-        Animation[] anims = new Animation[mAnimations.size()];
-        mAnimations.toArray(anims);
+        Animation[] anims = new Animation[animations.size()];
+        animations.toArray(anims);
 
         for (int id : ids) {
-            mPresenter.addAnimation(id, anims);
+            presenter.addAnimation(id, anims);
         }
 
-        mAnimations.clear();
+        animations.clear();
 
         ViewPager viewPager;
-        if (mViewPagerLayout != null && mViewPager == null) {
-            viewPager = mViewPagerLayout.getViewPager();
+        if (viewPagerLayout != null && this.viewPager == null) {
+            viewPager = viewPagerLayout.getViewPager();
         } else {
-            viewPager = mViewPager;
+            viewPager = this.viewPager;
         }
 
         if (viewPager == null) {
             throw new NullPointerException("ViewPager cannot be null");
         }
 
-        SparkleMotionCompat.installAnimationPresenter(viewPager, false, mPresenter);
+        SparkleMotionCompat.installAnimationPresenter(viewPager, false, presenter);
     }
 }

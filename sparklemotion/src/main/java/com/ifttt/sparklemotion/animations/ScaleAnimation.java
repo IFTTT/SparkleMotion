@@ -10,11 +10,11 @@ import com.ifttt.sparklemotion.Page;
  */
 public class ScaleAnimation extends Animation {
 
-    private float mOutScaleX;
-    private float mOutScaleY;
+    private final float outScaleX;
+    private final float outScaleY;
 
-    private float mInScaleX;
-    private float mInScaleY;
+    private final float inScaleX;
+    private final float inScaleY;
 
     /**
      * Constructor for building a ScaleAnimation for a range of pages.
@@ -30,18 +30,18 @@ public class ScaleAnimation extends Animation {
     public ScaleAnimation(Page page, float inScaleX, float inScaleY, float outScaleX, float outScaleY) {
         super(page);
 
-        this.mInScaleX = inScaleX;
-        this.mInScaleY = inScaleY;
+        this.inScaleX = inScaleX;
+        this.inScaleY = inScaleY;
 
-        this.mOutScaleX = outScaleX;
-        this.mOutScaleY = outScaleY;
+        this.outScaleX = outScaleX;
+        this.outScaleY = outScaleY;
     }
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
         offset = Math.abs(offset);
 
-        v.setScaleX(mInScaleX + offset * (mOutScaleX - mInScaleX));
-        v.setScaleY(mInScaleY + offset * (mOutScaleY - mInScaleY));
+        v.setScaleX(inScaleX + offset * (outScaleX - inScaleX));
+        v.setScaleY(inScaleY + offset * (outScaleY - inScaleY));
     }
 }

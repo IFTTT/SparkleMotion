@@ -66,17 +66,17 @@ public class Decor {
      */
     public static class Builder {
         @NonNull
-        private final View mContentView;
+        private final View contentView;
 
-        private Page mPage;
+        private Page page;
 
-        private boolean mLayoutBehindViewPage;
+        private boolean layoutBehindViewPage;
 
-        private boolean mSlideIn;
+        private boolean slideIn;
 
-        private boolean mSlideOut;
+        private boolean slideOut;
 
-        private boolean mWithLayer;
+        private boolean withLayer;
 
         /**
          * @param contentView View for this Decor, must not be null.
@@ -85,8 +85,8 @@ public class Decor {
             if (contentView == null) {
                 throw new NullPointerException("Content View cannot be null");
             }
-            mContentView = contentView;
-            mPage = Page.allPages();
+            this.contentView = contentView;
+            page = Page.allPages();
         }
 
         /**
@@ -97,7 +97,7 @@ public class Decor {
          * @return This object for chaining.
          */
         public Builder setPage(Page page) {
-            mPage = page;
+            this.page = page;
             return this;
         }
 
@@ -107,7 +107,7 @@ public class Decor {
          * @return This object for chaining.
          */
         public Builder behindViewPage() {
-            mLayoutBehindViewPage = true;
+            layoutBehindViewPage = true;
             return this;
         }
 
@@ -117,7 +117,7 @@ public class Decor {
          * @return This object for chaining.
          */
         public Builder slideIn() {
-            mSlideIn = true;
+            slideIn = true;
 
             return this;
         }
@@ -129,7 +129,7 @@ public class Decor {
          * @return This object for chaining.
          */
         public Builder slideOut() {
-            mSlideOut = true;
+            slideOut = true;
 
             return this;
         }
@@ -140,7 +140,7 @@ public class Decor {
          * @return  This object for chaining.
          */
         public Builder withLayer() {
-            mWithLayer = true;
+            withLayer = true;
 
             return this;
         }
@@ -153,24 +153,24 @@ public class Decor {
         public Decor build() {
             Animation slideInAnimation = null;
             Animation slideOutAnimation = null;
-            if (mSlideIn && mPage.start > 0) {
+            if (slideIn && page.start > 0) {
                 // Slide in animation only applies to a Decor that starts from at least the second page.
                 // Will not apply to Decor that is ALL_PAGE.
-                mPage = Page.pageRange(Math.max(0, mPage.start - 1), mPage.end);
+                page = Page.pageRange(Math.max(0, page.start - 1), page.end);
 
-                Page slideInPage = Page.singlePage(mPage.start);
+                Page slideInPage = Page.singlePage(page.start);
                 slideInAnimation = new SlideInAnimation(slideInPage);
             }
 
-            if (mSlideOut && mPage.end != Page.ALL_PAGES) {
+            if (slideOut && page.end != Page.ALL_PAGES) {
                 // Slide out animation will not apply to Decor that is ALL_PAGE.
-                mPage = Page.pageRange(mPage.start, mPage.end + 1);
+                page = Page.pageRange(page.start, page.end + 1);
 
-                Page slideOutPage = Page.singlePage(mPage.end);
+                Page slideOutPage = Page.singlePage(page.end);
                 slideOutAnimation = new SlideOutAnimation(slideOutPage);
             }
-            return new Decor(mContentView, mPage, mLayoutBehindViewPage, slideInAnimation, slideOutAnimation,
-                    mWithLayer);
+            return new Decor(contentView, page, layoutBehindViewPage, slideInAnimation, slideOutAnimation,
+                    withLayer);
         }
     }
 }

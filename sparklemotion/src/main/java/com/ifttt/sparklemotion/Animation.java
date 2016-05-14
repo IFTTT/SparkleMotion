@@ -17,18 +17,18 @@ public abstract class Animation {
      */
     public static final int FULL_PAGE = -2;
 
-    protected int pageStart;
-    protected int pageEnd;
+    protected final int pageStart;
+    protected final int pageEnd;
 
     /**
      * Adjustment to page fraction taking animating pages into account. If an animation is going to
      * run cross multiple pages, the progress will be evenly distributed to the pages.
      */
-    private float mFractionAdjustment;
+    private final float fractionAdjustment;
 
-    private Interpolator mInterpolator;
+    private Interpolator interpolator;
 
-    private AnimationListener mAnimationListener;
+    private AnimationListener animationListener;
 
     /**
      * Base constructor of the class, accepting common information about the animation to this
@@ -44,11 +44,11 @@ public abstract class Animation {
         this.pageStart = page.start;
         this.pageEnd = page.end;
 
-        mFractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
+        fractionAdjustment = (float) Math.max((pageEnd - pageStart), 1);
     }
 
     public final void setInterpolator(Interpolator interpolator) {
-        mInterpolator = interpolator;
+        this.interpolator = interpolator;
     }
 
     /**
@@ -60,8 +60,8 @@ public abstract class Animation {
      * @param offsetInPixel Page width offset.
      */
     void animate(View v, float offset, float offsetInPixel) {
-        if (mInterpolator != null) {
-            offset = mInterpolator.getInterpolation(offset);
+        if (interpolator != null) {
+            offset = interpolator.getInterpolation(offset);
         }
 
         if (pageStart != Page.ALL_PAGES && pageEnd != Page.ALL_PAGES) {
@@ -69,7 +69,7 @@ public abstract class Animation {
                 offset -= pageStart;
             }
 
-            offset = offset / mFractionAdjustment;
+            offset = offset / fractionAdjustment;
         }
 
         if (offset < -1) {
@@ -80,8 +80,8 @@ public abstract class Animation {
             onAnimateOffScreenRight(v, offset, offsetInPixel);
         }
 
-        if (mAnimationListener != null) {
-            mAnimationListener.onAnimationRunning(v, offset);
+        if (animationListener != null) {
+            animationListener.onAnimationRunning(v, offset);
         }
     }
 
@@ -153,7 +153,7 @@ public abstract class Animation {
      */
     @SuppressWarnings("unused")
     public void setAnimationListener(AnimationListener listener) {
-        mAnimationListener = listener;
+        animationListener = listener;
     }
 
     /**

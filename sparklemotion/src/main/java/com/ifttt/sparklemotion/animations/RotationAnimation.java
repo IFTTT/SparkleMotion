@@ -10,8 +10,8 @@ import com.ifttt.sparklemotion.Page;
  */
 public class RotationAnimation extends Animation {
 
-    private final float mInRotation;
-    private final float mOutRotation;
+    private final float inRotation;
+    private final float outRotation;
 
     /**
      * Constructor for building a RotationAnimation for a range of pages.
@@ -24,14 +24,14 @@ public class RotationAnimation extends Animation {
     public RotationAnimation(Page page, float inRotation, float outRotation) {
         super(page);
 
-        mInRotation = inRotation;
-        mOutRotation = outRotation;
+        this.inRotation = inRotation;
+        this.outRotation = outRotation;
     }
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
         offset = Math.abs(offset);
 
-        v.setRotation(mInRotation + offset * (mOutRotation - mInRotation));
+        v.setRotation(inRotation + offset * (outRotation - inRotation));
     }
 }

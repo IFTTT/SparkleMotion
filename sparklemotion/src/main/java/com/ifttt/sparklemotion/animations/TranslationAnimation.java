@@ -11,10 +11,10 @@ import com.ifttt.sparklemotion.Page;
  */
 public class TranslationAnimation extends Animation {
 
-    private final float mInTranslationX;
-    private final float mInTranslationY;
-    private final float mOutTranslationX;
-    private final float mOutTranslationY;
+    private final float inTranslationX;
+    private final float inTranslationY;
+    private final float outTranslationX;
+    private final float outTranslationY;
 
     private final boolean mAbsolute;
 
@@ -40,10 +40,10 @@ public class TranslationAnimation extends Animation {
     public TranslationAnimation(Page page, float inTranslationX,
             float inTranslationY, float outTranslationX, float outTranslationY, boolean absolute) {
         super(page);
-        mInTranslationX = inTranslationX;
-        mInTranslationY = inTranslationY;
-        mOutTranslationX = outTranslationX;
-        mOutTranslationY = outTranslationY;
+        this.inTranslationX = inTranslationX;
+        this.inTranslationY = inTranslationY;
+        this.outTranslationX = outTranslationX;
+        this.outTranslationY = outTranslationY;
         mAbsolute = absolute;
     }
 
@@ -54,7 +54,7 @@ public class TranslationAnimation extends Animation {
         }
 
         offset = Math.abs(offset);
-        v.setTranslationX(mInTranslationX + offset * (mOutTranslationX - mInTranslationX) + offsetInPixel);
-        v.setTranslationY(mInTranslationY + offset * (mOutTranslationY - mInTranslationY));
+        v.setTranslationX(inTranslationX + offset * (outTranslationX - inTranslationX) + offsetInPixel);
+        v.setTranslationY(inTranslationY + offset * (outTranslationY - inTranslationY));
     }
 }

@@ -9,8 +9,8 @@ import com.ifttt.sparklemotion.Page;
  */
 public class AlphaAnimation extends Animation {
 
-    private float mOutAlpha;
-    private float mInAlpha;
+    private final float outAlpha;
+    private final float inAlpha;
 
     /**
      * Constructor for building an AlphaAnimation for a range of pages.
@@ -23,13 +23,13 @@ public class AlphaAnimation extends Animation {
     public AlphaAnimation(Page page, float inAlpha, float outAlpha) {
         super(page);
 
-        this.mInAlpha = inAlpha;
-        this.mOutAlpha = outAlpha;
+        this.inAlpha = inAlpha;
+        this.outAlpha = outAlpha;
     }
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
         offset = Math.abs(offset);
-        v.setAlpha(mInAlpha + offset * (mOutAlpha - mInAlpha));
+        v.setAlpha(inAlpha + offset * (outAlpha - inAlpha));
     }
 }

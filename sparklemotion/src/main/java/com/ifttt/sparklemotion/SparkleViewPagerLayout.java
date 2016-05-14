@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import java.util.ArrayList;
 
 /**
@@ -18,14 +19,14 @@ import java.util.ArrayList;
  */
 public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
 
-    private ViewPager mViewPager;
+    private ViewPager viewPager;
 
     /**
      * Index of the ViewPager within this layout.
      */
-    private int mViewPagerIndex;
+    private int viewPagerIndex;
 
-    private final ArrayList<Decor> mDecors = new ArrayList<Decor>();
+    private final ArrayList<Decor> decors = new ArrayList<Decor>();
 
     public SparkleViewPagerLayout(Context context) {
         super(context);
@@ -55,7 +56,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * @param index     Index of the ViewPager being added to this layout.
      */
     private void setViewPager(@NonNull ViewPager viewPager, int index) {
-        if (mViewPager != null) {
+        if (this.viewPager != null) {
             throw new IllegalStateException("SparkleViewPagerLayout already has a ViewPager set.");
         }
 
@@ -63,10 +64,10 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
             SparkleMotionCompat.installAnimationPresenter(viewPager);
         }
 
-        mViewPagerIndex = index < 0 ? getChildCount() : index;
+        viewPagerIndex = index < 0 ? getChildCount() : index;
 
-        mViewPager = viewPager;
-        mViewPager.addOnPageChangeListener(this);
+        this.viewPager = viewPager;
+        this.viewPager.addOnPageChangeListener(this);
     }
 
     /**
@@ -75,7 +76,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      * @return ViewPager object.
      */
     public ViewPager getViewPager() {
-        return mViewPager;
+        return viewPager;
     }
 
     /**
@@ -89,7 +90,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      */
     @SuppressWarnings("unused")
     public void addDecor(Decor decor) {
-        if (mViewPager == null) {
+        if (viewPager == null) {
             throw new IllegalStateException(
                     "ViewPager is not found in SparkleViewPagerLayout, please provide a ViewPager first");
         }
@@ -99,14 +100,14 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         }
 
         // Make sure there is no duplicate.
-        if (mDecors.contains(decor)) {
+        if (decors.contains(decor)) {
             return;
         }
 
-        mDecors.add(decor);
+        decors.add(decor);
 
         // Add slide in and slide out animations to the presenter.
-        SparkleAnimationPresenter presenter = SparkleMotionCompat.getAnimationPresenter(mViewPager);
+        SparkleAnimationPresenter presenter = SparkleMotionCompat.getAnimationPresenter(viewPager);
         if (presenter == null) {
             throw new IllegalStateException("Failed initializing animation");
         }
@@ -114,13 +115,13 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         presenter.addAnimation(decor, decor.slideInAnimation, decor.slideOutAnimation);
 
         if (decor.layoutBehindViewPage) {
-            addView(decor.contentView, mViewPagerIndex);
-            mViewPagerIndex++;
+            addView(decor.contentView, viewPagerIndex);
+            viewPagerIndex++;
         } else {
             addView(decor.contentView);
         }
 
-        layoutDecors(mViewPager.getCurrentItem(), 0);
+        layoutDecors(viewPager.getCurrentItem(), 0);
     }
 
     /**
@@ -130,12 +131,12 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      */
     @SuppressWarnings("unused")
     public void removeDecor(Decor decor) {
-        int indexOfRemoved = mDecors.indexOf(decor);
+        int indexOfRemoved = decors.indexOf(decor);
         if (indexOfRemoved < 0) {
             throw new IllegalArgumentException("Decor is not added to SparkleViewPagerLayout");
         }
 
-        mDecors.remove(decor);
+        decors.remove(decor);
         removeDecorView(decor);
     }
 
@@ -163,7 +164,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      */
     private void enableLayer(boolean enable) {
         final int layerType = enable ? LAYER_TYPE_HARDWARE : LAYER_TYPE_NONE;
-        for (Decor decor : mDecors) {
+        for (Decor decor : decors) {
             if (decor.withLayer) {
                 decor.contentView.setLayerType(layerType, null);
             }
@@ -179,9 +180,9 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
      */
     private void layoutDecors(int currentPage, float offset) {
         float currentPageOffset = currentPage + offset;
-        int decorsSize = mDecors.size();
+        int decorsSize = decors.size();
         for (int i = 0; i < decorsSize; i++) {
-            Decor decor = mDecors.get(i);
+            Decor decor = decors.get(i);
             if (decor.contentView.getVisibility() == VISIBLE && decor.startPage != Page.ALL_PAGES) {
                 if (decor.startPage > currentPageOffset || decor.endPage + 1 < currentPageOffset) {
                     decor.contentView.setVisibility(INVISIBLE);
@@ -197,7 +198,7 @@ public class SparkleViewPagerLayout extends FrameLayout implements ViewPager.OnP
         removeView(decor.contentView);
 
         if (decor.layoutBehindViewPage) {
-            mViewPagerIndex--;
+            viewPagerIndex--;
         }
     }
 }

@@ -11,17 +11,17 @@ import android.view.ViewTreeObserver;
  */
 final class SlideInAnimation extends Animation {
 
-    private boolean mOriginalTranslationSet;
+    private boolean originalTranslationSet;
 
     /**
      * Distance of the View to slide out of the screen.
      */
-    private float mDistance;
+    private float distance;
 
     /**
      * Translation X of the View before running this animation.
      */
-    private float mOriginalTranslationX;
+    private float originalTranslationX;
 
     public SlideInAnimation(@NonNull Page page) {
         super(page);
@@ -29,13 +29,13 @@ final class SlideInAnimation extends Animation {
 
     @Override
     public void onAnimate(View view, float offset, float offsetInPixel) {
-        if (!mOriginalTranslationSet) {
-            mOriginalTranslationSet = true;
+        if (!originalTranslationSet) {
+            originalTranslationSet = true;
             initViewPosition(view, 1 - offset);
+        } else {
+            offset = Math.abs(offset);
+            view.setTranslationX(originalTranslationX + (1 - offset) * distance);
         }
-
-        offset = Math.abs(offset);
-        view.setTranslationX(mOriginalTranslationX + (1 - offset) * mDistance);
     }
 
     /**
@@ -50,16 +50,16 @@ final class SlideInAnimation extends Animation {
             @Override
             public boolean onPreDraw() {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
-                mOriginalTranslationX = view.getTranslationX();
+                originalTranslationX = view.getTranslationX();
                 View parent = (View) view.getParent();
                 if (parent == null) {
                     return false;
                 }
 
-                mDistance = parent.getWidth() - view.getLeft();
+                distance = parent.getWidth() - view.getLeft();
 
                 // Once initialized, run the initial animation frame.
-                view.setTranslationX(mOriginalTranslationX + Math.abs(offset) * mDistance);
+                view.setTranslationX(originalTranslationX + (1 - Math.abs(offset)) * distance);
                 return false;
             }
         });

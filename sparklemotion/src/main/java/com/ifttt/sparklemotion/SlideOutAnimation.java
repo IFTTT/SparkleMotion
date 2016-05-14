@@ -10,17 +10,17 @@ import android.view.ViewTreeObserver;
  */
 final class SlideOutAnimation extends Animation {
 
-    private boolean mOriginalTranslationSet;
+    private boolean originalTranslationSet;
 
     /**
      * Distance of the View to slide out of the screen.
      */
-    private float mDistance;
+    private float distance;
 
     /**
      * Translation X of the View before running this animation.
      */
-    private float mOriginalTranslationX;
+    private float originalTranslationX;
 
     public SlideOutAnimation(Page page) {
         super(page);
@@ -28,13 +28,13 @@ final class SlideOutAnimation extends Animation {
 
     @Override
     public void onAnimate(final View view, float offset, float offsetInPixel) {
-        if (!mOriginalTranslationSet) {
-            mOriginalTranslationSet = true;
+        if (!originalTranslationSet) {
+            originalTranslationSet = true;
             initViewPosition(view, offset);
+        } else {
+            offset = Math.abs(offset);
+            view.setTranslationX(originalTranslationX + offset * distance);
         }
-
-        offset = Math.abs(offset);
-        view.setTranslationX(mOriginalTranslationX + offset * mDistance);
     }
 
     /**
@@ -49,11 +49,11 @@ final class SlideOutAnimation extends Animation {
             @Override
             public boolean onPreDraw() {
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
-                mOriginalTranslationX = view.getTranslationX();
-                mDistance = -(view.getLeft() + view.getWidth() * view.getScaleX());
+                originalTranslationX = view.getTranslationX();
+                distance = -(view.getLeft() + view.getWidth() * view.getScaleX());
 
                 // Once initialized, run the initial animation frame.
-                view.setTranslationX(mOriginalTranslationX + Math.abs(offset) * mDistance);
+                view.setTranslationX(originalTranslationX + Math.abs(offset) * distance);
                 return false;
             }
         });

@@ -14,9 +14,9 @@ import com.ifttt.sparklemotion.Page;
  */
 public class PathAnimation extends Animation {
 
-    private final PathMeasure mPathMeasure;
+    private final PathMeasure pathMeasure;
 
-    private final boolean mAbsolute;
+    private final boolean absolute;
 
     /**
      * Constructor for building a PathAnimation for a range of pages.
@@ -32,19 +32,19 @@ public class PathAnimation extends Animation {
      */
     public PathAnimation(Page page, Path path, boolean absolute) {
         super(page);
-        mPathMeasure = new PathMeasure(path, false);
-        mAbsolute = absolute;
+        pathMeasure = new PathMeasure(path, false);
+        this.absolute = absolute;
     }
 
     @Override
     public void onAnimate(View v, float offset, float offsetInPixel) {
-        if (!mAbsolute) {
+        if (!absolute) {
             offsetInPixel = 0;
         }
         offset = Math.abs(offset);
 
         float[] coordinates = new float[2];
-        mPathMeasure.getPosTan(mPathMeasure.getLength() * offset, coordinates, null);
+        pathMeasure.getPosTan(pathMeasure.getLength() * offset, coordinates, null);
         v.setTranslationX(coordinates[0] + offsetInPixel);
         v.setTranslationY(coordinates[1]);
     }
