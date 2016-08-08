@@ -70,8 +70,12 @@ public abstract class Animation {
                 offset -= pageStart;
             }
 
-            int pageOfAnimation = page >= 0 && page <= pageEnd? page - pageStart : 0;
-            offset = (offset + pageOfAnimation) / mFractionAdjustment;
+            int pageOfAnimation = page > pageStart && page <= pageEnd
+                    ? page - pageStart
+                    : 0;
+
+            if (offset != 1) //case if we get the rescue frame
+                offset = (offset + pageOfAnimation) / mFractionAdjustment;
         }
 
         if (offset < -1) {
