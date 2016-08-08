@@ -33,7 +33,7 @@ public abstract class Animation {
     /**
      * Base constructor of the class, accepting common information about the animation to this
      * instance.
-     *
+     * <p/>
      * For animations that will run on multiple pages, the progress of the animation will be evenly split
      * across the pages. For ViewPager View animation, it might not be necessary to run such animation, as the View
      * will be invisible once the page is scrolled off-screen.
@@ -58,8 +58,9 @@ public abstract class Animation {
      * @param offset        Fraction of the ViewPager scrolling, this is also the progression of the
      *                      animation.
      * @param offsetInPixel Page width offset.
+     * @param page          Page inside of ViewPager
      */
-    void animate(View v, float offset, float offsetInPixel) {
+    void animate(View v, float offset, float offsetInPixel, int page) {
         if (mInterpolator != null) {
             offset = mInterpolator.getInterpolation(offset);
         }
@@ -69,7 +70,12 @@ public abstract class Animation {
                 offset -= pageStart;
             }
 
-            offset = offset / mFractionAdjustment;
+            int pageOfAnimation = page > pageStart && page <= pageEnd
+                    ? page - pageStart
+                    : 0;
+
+            if (offset != 1) //case if we get the rescue frame
+                offset = (offset + pageOfAnimation) / mFractionAdjustment;
         }
 
         if (offset < -1) {
@@ -92,7 +98,6 @@ public abstract class Animation {
      * to the left of the window, and [0, 1] means the page is currently scrolling to the right of
      * the window.
      *
-     *
      * @param v             View being animated.
      * @param offset        Fraction of the ViewPager scrolling, this is also the progression of
      *                      the
@@ -105,7 +110,7 @@ public abstract class Animation {
     /**
      * Called when the animation is running when the View is off screen and is to the left of the
      * current screen.
-     *
+     * <p/>
      * This method is called only for Views inside ViewPager.
      *
      * @param v             View being animated.
@@ -121,7 +126,7 @@ public abstract class Animation {
     /**
      * Called when the animation is running when the View is off screen and is to the right of the
      * current screen.
-     *
+     * <p/>
      * This method is called only for Views inside ViewPager.
      *
      * @param v             View being animated.

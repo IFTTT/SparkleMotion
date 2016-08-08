@@ -2,6 +2,7 @@ package com.ifttt.sparklemotion;
 
 import android.support.v4.util.SimpleArrayMap;
 import android.view.View;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +46,7 @@ final class SparkleAnimationPresenter {
     /**
      * Add animations to the target View. The View's id is used as key.
      *
-     * @param id Id of the target View.
+     * @param id         Id of the target View.
      * @param animations Animations to be associated to this View.
      */
     public void addAnimation(int id, Animation... animations) {
@@ -63,7 +64,7 @@ final class SparkleAnimationPresenter {
     /**
      * Add animations to the target {@link Decor}.
      *
-     * @param decor Target Decor.
+     * @param decor      Target Decor.
      * @param animations Animations to be associated to this Decor.
      */
     public void addAnimation(Decor decor, Animation... animations) {
@@ -81,8 +82,8 @@ final class SparkleAnimationPresenter {
      * Run the animations based on the View animations saved within the presenter and the offset of
      * the scrolling.
      *
-     * @param parent Current page View of the ViewPager.
-     * @param offset Scrolling offset of the ViewPager.
+     * @param parent        Current page View of the ViewPager.
+     * @param offset        Scrolling offset of the ViewPager.
      * @param offsetInPixel Scrolling offset in pixels based on the page View.
      */
     void presentAnimations(View parent, float offset, float offsetInPixel) {
@@ -109,7 +110,7 @@ final class SparkleAnimationPresenter {
                     continue;
                 }
 
-                animation.animate(viewToAnimate, offset, offsetInPixel);
+                animation.animate(viewToAnimate, offset, offsetInPixel, -1);
             }
         }
     }
@@ -119,7 +120,7 @@ final class SparkleAnimationPresenter {
      * of the scrolling.
      *
      * @param position Position of the current page.
-     * @param offset Offset of the ViewPager scrolling.
+     * @param offset   Offset of the ViewPager scrolling.
      */
     void presentDecorAnimations(int position, float offset) {
         // Animate all decor or other View animations.
@@ -138,15 +139,15 @@ final class SparkleAnimationPresenter {
                 if (!animation.shouldAnimate(position)) {
                     // Add a rescue frame to the animation if the page is scrolled really fast.
                     if (mPreviousPosition < position && animation.pageEnd < position) {
-                        animation.animate(decor.contentView, 1, 0);
+                        animation.animate(decor.contentView, 1, 0, position);
                     } else if (mPreviousPosition > position && animation.pageStart > position) {
-                        animation.animate(decor.contentView, 0, 0);
+                        animation.animate(decor.contentView, 0, 0, position);
                     }
 
                     continue;
                 }
 
-                animation.animate(decor.contentView, offset, 0);
+                animation.animate(decor.contentView, offset, 0, position);
             }
         }
 
