@@ -16,12 +16,12 @@ final class SlideInAnimation extends Animation {
     /**
      * Distance of the View to slide out of the screen.
      */
-    private float mDistance;
+    float mDistance;
 
     /**
      * Translation X of the View before running this animation.
      */
-    private float mOriginalTranslationX;
+    float mOriginalTranslationX;
 
     public SlideInAnimation(@NonNull Page page) {
         super(page);

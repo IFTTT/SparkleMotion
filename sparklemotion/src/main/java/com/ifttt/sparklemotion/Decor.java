@@ -50,8 +50,8 @@ public class Decor {
      */
     final boolean withLayer;
 
-    private Decor(@NonNull View contentView, @NonNull Page page, boolean layoutBehind, Animation slideInAnimation,
-            Animation slideOutAnimation, boolean withLayer) {
+    Decor(@NonNull View contentView, @NonNull Page page, boolean layoutBehind, Animation slideInAnimation,
+          Animation slideOutAnimation, boolean withLayer) {
         this.contentView = contentView;
         this.startPage = page.start;
         this.endPage = page.end;
