@@ -15,12 +15,12 @@ final class SlideOutAnimation extends Animation {
     /**
      * Distance of the View to slide out of the screen.
      */
-    private float mDistance;
+    float mDistance;
 
     /**
      * Translation X of the View before running this animation.
      */
-    private float mOriginalTranslationX;
+    float mOriginalTranslationX;
 
     public SlideOutAnimation(Page page) {
         super(page);

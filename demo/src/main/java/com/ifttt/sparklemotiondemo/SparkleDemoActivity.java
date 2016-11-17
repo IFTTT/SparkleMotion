@@ -194,6 +194,9 @@ public final class SparkleDemoActivity extends Activity {
 
     private static class PagerAdapter extends ViewPagerAdapter {
 
+        PagerAdapter() {
+        }
+
         @Override
         protected View getView(int position, ViewGroup container) {
             switch (position) {
